@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -14,27 +15,37 @@ namespace App_WinForms
 {
     public partial class MainForm : Form, IResettableForm
     {
-        private Form startupSettingsForm = new StartupSettingsForm();
-
-        public MainForm()
+        public void Localize()
         {
+            Thread.CurrentThread.CurrentCulture = App.StartupConfig.Culture; // jezik, vrijeme
+            Thread.CurrentThread.CurrentUICulture = App.StartupConfig.Culture; // prijevodi
+        }
+
+        public void Initialize()
+        {
+            Localize();
             InitializeComponent();
 
             if (!App.FileRepository.ConfigExists())
             {
-                startupSettingsForm.Show();
+                new StartupSettingsForm().Show();
             }
+        }
+
+        public MainForm()
+        {
+            Initialize();
         }
 
         public void Reset()
         {
             this.Controls.Clear();
-            this.InitializeComponent();
+            this.Initialize();
         }
 
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            startupSettingsForm.Show();
+            new StartupSettingsForm().Show();
         }
     }
 }

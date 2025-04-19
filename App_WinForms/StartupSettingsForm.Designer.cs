@@ -63,7 +63,6 @@
             resources.ApplyResources(cb_Tournament, "cb_Tournament");
             cb_Tournament.FormattingEnabled = true;
             cb_Tournament.Name = "cb_Tournament";
-            cb_Tournament.SelectedIndexChanged += cb_Tournament_SelectedIndexChanged;
             // 
             // groupBox2
             // 
@@ -77,7 +76,6 @@
             resources.ApplyResources(cb_Language, "cb_Language");
             cb_Language.FormattingEnabled = true;
             cb_Language.Name = "cb_Language";
-            cb_Language.SelectedIndexChanged += cb_Language_SelectedIndexChanged;
             // 
             // flowLayoutPanel2
             // 

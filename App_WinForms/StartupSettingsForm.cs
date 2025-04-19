@@ -8,6 +8,7 @@ using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -15,10 +16,17 @@ namespace App_WinForms
 {
     public partial class StartupSettingsForm : Form, IResettableForm
     {
-        private void Initialize() {
-            InitializeComponent();
-            this.FormClosing += StartupSettingsForm_FormClosing;
+        public StartupSettingsForm()
+        {
+            this.Initialize();
+        }
 
+        private void Initialize()
+        {
+            Thread.CurrentThread.CurrentCulture = Application.CurrentCulture; // jezik, vrijeme
+            Thread.CurrentThread.CurrentUICulture = Application.CurrentCulture; // prijevodi
+
+            InitializeComponent();
             btn_Cancel.Enabled = App.FileRepository.ConfigExists();
 
             // Set ComboBox data sources
@@ -26,39 +34,26 @@ namespace App_WinForms
             cb_Language.DisplayMember = "DisplayName";
             cb_Language.ValueMember = "Name";
             cb_Language.SelectedItem = App.Cultures
-                .Where(cult => cult.Name == App.StartupConfig.Culture.Name)
-                .FirstOrDefault(App.Cultures[1]);
+                .FirstOrDefault(cult => cult.Name.Equals(App.StartupConfig.Culture.Name))
+                ?? App.Cultures[0];
 
-            cb_Tournament.DataSource = App.Tournaments
-                .Select(val => new { Value = val, Description = EnumHelper.GetDescription(val) })
-                .ToList();
+            cb_Tournament.DataSource = App.Tournaments;
             cb_Tournament.DisplayMember = "Description";
             cb_Tournament.ValueMember = "Value";
-            cb_Tournament.SelectedIndex = App.Tournaments.IndexOf(App.StartupConfig.Tournament);
-        }
-
-        public StartupSettingsForm()
-        {
-            Initialize();
-        }
-
-        private void StartupSettingsForm_FormClosing(object? sender, FormClosingEventArgs e)
-        {
-            this.Hide();
-            e.Cancel = true;
-        }
-
-        public void SetFirstForm()
-        {
-            this.btn_Cancel.Enabled = false;
+            cb_Tournament.SelectedItem = App.Tournaments
+                .FirstOrDefault(trnmt => trnmt.Value.Equals(App.StartupConfig.Tournament))
+                ?? App.Tournaments[0];
         }
 
         private void btn_Confirm_Click(object sender, EventArgs e)
         {
             try
             {
+                App.SetCulture(cb_Language.SelectedItem as CultureInfo);
+                App.SetTournament((cb_Tournament.SelectedItem as TournamentChoice).Value);
                 App.FileRepository.SaveConfig(App.StartupConfig);
                 this.Close();
+                App.Update();
             }
             catch (Exception ex)
             {
@@ -69,16 +64,6 @@ namespace App_WinForms
         private void btn_Cancel_Click(object sender, EventArgs e)
         {
             this.Close();
-        }
-
-        private void cb_Tournament_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            App.SetTournament((TournamentType)cb_Tournament.SelectedItem);
-        }
-
-        private void cb_Language_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            App.SetCulture(cb_Language.SelectedItem as CultureInfo);
         }
 
         public void Reset()

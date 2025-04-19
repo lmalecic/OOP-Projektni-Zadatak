@@ -6,37 +6,43 @@ using System.Runtime.InteropServices;
 
 namespace App_WinForms
 {
+    public class TournamentChoice(TournamentType value, string description)
+    {
+        public TournamentType Value { get; } = value;
+        public string Description { get; } = description;
+    }
+
     public static class App
     {
         public static IList<CultureInfo> Cultures = [ CultureInfo.CurrentCulture, new("hr"), new("en") ];
-        public static IList<TournamentType> Tournaments = Enum.GetValues(typeof(TournamentType)).Cast<TournamentType>().ToList();
+        public static IList<TournamentChoice> Tournaments = Enum.GetValues(typeof(TournamentType))
+            .Cast<TournamentType>()
+            .Select(val => new TournamentChoice(val, EnumHelper.GetDescription(val)))
+            .ToList();
 
         public static IRepository FileRepository { get; } = new FileRepository();
         public static StartupConfig StartupConfig { get; } = FileRepository.LoadConfig();
-        
-        public static void SetCulture(CultureInfo culture)
-        {
-            if (culture.Equals(StartupConfig.Culture))
-                return;
-
-            StartupConfig.Culture = culture;
-
-            Application.CurrentCulture = culture;
-            Thread.CurrentThread.CurrentCulture = culture; // jezik, vrijeme
-            Thread.CurrentThread.CurrentUICulture = culture; // prijevodi
-
-            foreach (IResettableForm form in Application.OpenForms)
-            {
-                form.Reset();
-            }
-        }
 
         public static Form Initialize()
         {
             SetCulture(StartupConfig.Culture);
             return new MainForm();
         }
-        
+
+        public static void Update()
+        {
+            Application.OpenForms.Cast<IResettableForm>().ToList().ForEach(form => form.Reset());
+        }
+
+        public static void SetCulture(CultureInfo culture)
+        {
+            if (culture.Equals(Application.CurrentCulture))
+                return;
+
+            Application.CurrentCulture = culture;
+            StartupConfig.Culture = culture;
+        }
+
         internal static void SetTournament(TournamentType tournament)
         {
             if (tournament.Equals(StartupConfig.Tournament))
