@@ -10,7 +10,6 @@ namespace DAL
     public class StartupConfig
     {
         public CultureInfo Culture { get; set; } = new CultureInfo("en");
-        public TournamentType TournamentSelection { get; set; } = TournamentType.Men;
-        public bool FirstTime = true;
+        public TournamentType Tournament { get; set; } = TournamentType.Men;
     }
 }

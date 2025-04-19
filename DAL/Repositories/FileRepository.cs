@@ -14,6 +14,9 @@ namespace DAL
     {
         readonly string configPath = "startupConfig.txt";
 
+        public bool ConfigExists()
+            => File.Exists(configPath);
+
         public StartupConfig LoadConfig()
         {
             if (!File.Exists(configPath))

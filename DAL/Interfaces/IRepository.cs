@@ -12,5 +12,6 @@ namespace DAL
     {
         public StartupConfig LoadConfig();
         public void SaveConfig(StartupConfig config);
+        public bool ConfigExists();
     }
 }
