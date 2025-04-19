@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35327.3
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App_WinForms", "App_WinForms\App_WinForms.csproj", "{394B75F3-1481-4068-AC25-09CB53A12C24}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "DAL\DAL.csproj", "{65355C69-81EE-4708-B488-8170E71C912D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{394B75F3-1481-4068-AC25-09CB53A12C24}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{394B75F3-1481-4068-AC25-09CB53A12C24}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{394B75F3-1481-4068-AC25-09CB53A12C24}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{394B75F3-1481-4068-AC25-09CB53A12C24}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65355C69-81EE-4708-B488-8170E71C912D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65355C69-81EE-4708-B488-8170E71C912D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65355C69-81EE-4708-B488-8170E71C912D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65355C69-81EE-4708-B488-8170E71C912D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EC0892C4-EC71-4635-A333-54BB606144D2}
+	EndGlobalSection
+EndGlobal
