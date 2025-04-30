@@ -14,41 +14,38 @@ namespace App_WinForms
 
     public static class App
     {
-        public static IList<CultureInfo> Cultures = [ CultureInfo.CurrentCulture, new("hr"), new("en") ];
-        public static IList<TournamentChoice> Tournaments = Enum.GetValues(typeof(TournamentType))
+        public readonly static IList<CultureInfo> Cultures = [ CultureInfo.CurrentCulture, new("hr"), new("en") ];
+        public readonly static IList<TournamentChoice> Tournaments = Enum.GetValues(typeof(TournamentType))
             .Cast<TournamentType>()
             .Select(val => new TournamentChoice(val, EnumHelper.GetDescription(val)))
             .ToList();
 
-        public static IRepository FileRepository { get; } = new FileRepository();
-        public static StartupConfig StartupConfig { get; } = FileRepository.LoadConfig();
+        public static IWorldCupRepository WorldCupRepository { get; } = RepositoryFactory.GetWorldCupRepository();
+        public static IRepository<Config> ConfigRepository = RepositoryFactory.GetConfigRepository();
+
+        public static Config Config { get; } = ConfigRepository.Get();
 
         public static Form Initialize()
         {
-            SetCulture(StartupConfig.Culture);
+            SetCulture(Config.Culture);
             return new MainForm();
         }
 
         public static void Update()
         {
-            Application.OpenForms.Cast<IResettableForm>().ToList().ForEach(form => form.Reset());
+            Application.OpenForms.Cast<IResettableForm>()
+                .ToList().ForEach(form => form.Reset());
         }
 
         public static void SetCulture(CultureInfo culture)
         {
-            if (culture.Equals(Application.CurrentCulture))
-                return;
-
             Application.CurrentCulture = culture;
-            StartupConfig.Culture = culture;
+            Config.Culture = culture;
         }
 
         internal static void SetTournament(TournamentType tournament)
         {
-            if (tournament.Equals(StartupConfig.Tournament))
-                return;
-
-            StartupConfig.Tournament = tournament;
+            Config.Tournament = tournament;
         }
     }
 

@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using DAL.Converters;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DAL
 {
-    public class StartingEleven
+    public class Player
     {
         [JsonProperty("name")]
         public string Name { get; set; }
@@ -19,6 +20,7 @@ namespace DAL
         public long ShirtNumber { get; set; }
 
         [JsonProperty("position")]
+        [JsonConverter(typeof(PositionConverter))]
         public Position Position { get; set; }
     }
 }

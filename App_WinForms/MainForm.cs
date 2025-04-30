@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -15,18 +16,14 @@ namespace App_WinForms
 {
     public partial class MainForm : Form, IResettableForm
     {
-        public void Localize()
+        public async void Initialize()
         {
-            Thread.CurrentThread.CurrentCulture = App.StartupConfig.Culture; // jezik, vrijeme
-            Thread.CurrentThread.CurrentUICulture = App.StartupConfig.Culture; // prijevodi
-        }
+            Thread.CurrentThread.CurrentCulture = App.Config.Culture; // jezik, vrijeme
+            Thread.CurrentThread.CurrentUICulture = App.Config.Culture; // prijevodi
 
-        public void Initialize()
-        {
-            Localize();
             InitializeComponent();
 
-            if (!App.FileRepository.ConfigExists())
+            if (!App.ConfigRepository.Exists())
             {
                 new StartupSettingsForm().Show();
             }

@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 using DAL.Converters;
 
 namespace DAL
@@ -28,6 +27,6 @@ namespace DAL
         public long WindSpeed { get; set; }
 
         [JsonProperty("description")]
-        public Description Description { get; set; }
+        public string Description { get; set; }
     }
 }

@@ -106,6 +106,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             CancelButton = btn_Cancel;
             Controls.Add(flowLayoutPanel1);
+            FormBorderStyle = FormBorderStyle.FixedDialog;
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "StartupSettingsForm";

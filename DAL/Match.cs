@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 
 using System.Globalization;
-using DAL;
 using DAL.Converters;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
@@ -18,10 +17,11 @@ namespace DAL
         public string Location { get; set; }
 
         [JsonProperty("status")]
+        [JsonConverter(typeof(StatusConverter))]
         public Status Status { get; set; }
 
         [JsonProperty("time")]
-        public Time Time { get; set; }
+        public string Time { get; set; }
 
         [JsonProperty("fifa_id")]
         [JsonConverter(typeof(ParseStringConverter))]
@@ -38,6 +38,7 @@ namespace DAL
         public string[] Officials { get; set; }
 
         [JsonProperty("stage_name")]
+        [JsonConverter(typeof(StageNameConverter))]
         public StageName StageName { get; set; }
 
         [JsonProperty("home_team_country")]
@@ -56,10 +57,10 @@ namespace DAL
         public string WinnerCode { get; set; }
 
         [JsonProperty("home_team")]
-        public Team HomeTeam { get; set; }
+        public MatchTeam HomeTeam { get; set; }
 
         [JsonProperty("away_team")]
-        public Team AwayTeam { get; set; }
+        public MatchTeam AwayTeam { get; set; }
 
         [JsonProperty("home_team_events")]
         public TeamEvent[] HomeTeamEvents { get; set; }
@@ -78,5 +79,10 @@ namespace DAL
 
         [JsonProperty("last_score_update_at")]
         public DateTimeOffset? LastScoreUpdateAt { get; set; }
+
+        public override string ToString()
+        {
+            return JsonConvert.SerializeObject(this, Formatting.Indented);
+        }
     }
 }

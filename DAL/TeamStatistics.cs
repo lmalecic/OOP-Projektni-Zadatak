@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using DAL.Converters;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -67,12 +68,13 @@ namespace DAL
         public long? FoulsCommitted { get; set; }
 
         [JsonProperty("tactics")]
+        [JsonConverter(typeof(TacticsConverter))]
         public Tactics Tactics { get; set; }
 
         [JsonProperty("starting_eleven")]
-        public StartingEleven[] StartingEleven { get; set; }
+        public Player[] StartingEleven { get; set; }
 
         [JsonProperty("substitutes")]
-        public StartingEleven[] Substitutes { get; set; }
+        public Player[] Substitutes { get; set; }
     }
 }

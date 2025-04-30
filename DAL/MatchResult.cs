@@ -7,7 +7,7 @@ using Newtonsoft.Json.Converters;
 
 namespace DAL
 {
-    public partial class MatchResult
+    public class MatchResult
     {
         [JsonProperty("id")]
         public long Id { get; set; }

@@ -1,17 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Dynamic;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace DAL
 {
-    public interface IRepository
+    public interface IRepository<T>
     {
-        public StartupConfig LoadConfig();
-        public void SaveConfig(StartupConfig config);
-        public bool ConfigExists();
+        public bool Exists();
+        public T Get();
+        public void Save(T config);
     }
 }

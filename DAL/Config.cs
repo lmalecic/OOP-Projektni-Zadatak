@@ -7,9 +7,12 @@ using System.Threading.Tasks;
 
 namespace DAL
 {
-    public class StartupConfig
+    public class Config
     {
         public CultureInfo Culture { get; set; } = new CultureInfo("en");
         public TournamentType Tournament { get; set; } = TournamentType.Men;
+
+        public Team FavoriteTeam { get; set; }
+        public IList<Player> FavoritePlayers { get; set; } 
     }
 }

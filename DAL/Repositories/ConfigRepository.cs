@@ -5,31 +5,30 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json.Nodes;
 using System.Threading.Tasks;
-
 using Newtonsoft.Json;
 
 namespace DAL
 {
-    public class FileRepository : IRepository
+    public class ConfigRepository : IRepository<Config>
     {
-        readonly string configPath = "startupConfig.txt";
+        readonly static string configPath = "config.json";
 
-        public bool ConfigExists()
+        public bool Exists()
             => File.Exists(configPath);
 
-        public StartupConfig LoadConfig()
+        public Config Get()
         {
             if (!File.Exists(configPath))
-                return new StartupConfig();
+                return new Config();
 
-            StartupConfig? config = JsonConvert.DeserializeObject<StartupConfig>(File.ReadAllText(configPath));
+            Config? config = JsonConvert.DeserializeObject<Config>(File.ReadAllText(configPath));
             if (config == null)
                 throw new JsonSerializationException();
 
             return config;
         }
 
-        public void SaveConfig(StartupConfig config)
+        public void Save(Config config)
         {
             File.WriteAllText(configPath, JsonConvert.SerializeObject(config));
         }

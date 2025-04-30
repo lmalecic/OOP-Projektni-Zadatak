@@ -23,25 +23,22 @@ namespace App_WinForms
 
         private void Initialize()
         {
-            Thread.CurrentThread.CurrentCulture = Application.CurrentCulture; // jezik, vrijeme
-            Thread.CurrentThread.CurrentUICulture = Application.CurrentCulture; // prijevodi
-
             InitializeComponent();
-            btn_Cancel.Enabled = App.FileRepository.ConfigExists();
+            btn_Cancel.Enabled = App.ConfigRepository.Exists();
 
             // Set ComboBox data sources
             cb_Language.DataSource = App.Cultures;
             cb_Language.DisplayMember = "DisplayName";
             cb_Language.ValueMember = "Name";
             cb_Language.SelectedItem = App.Cultures
-                .FirstOrDefault(cult => cult.Name.Equals(App.StartupConfig.Culture.Name))
+                .FirstOrDefault(cult => cult.Name.Equals(App.Config.Culture.Name))
                 ?? App.Cultures[0];
 
             cb_Tournament.DataSource = App.Tournaments;
             cb_Tournament.DisplayMember = "Description";
             cb_Tournament.ValueMember = "Value";
             cb_Tournament.SelectedItem = App.Tournaments
-                .FirstOrDefault(trnmt => trnmt.Value.Equals(App.StartupConfig.Tournament))
+                .FirstOrDefault(trnmt => trnmt.Value.Equals(App.Config.Tournament))
                 ?? App.Tournaments[0];
         }
 
@@ -51,7 +48,7 @@ namespace App_WinForms
             {
                 App.SetCulture(cb_Language.SelectedItem as CultureInfo);
                 App.SetTournament((cb_Tournament.SelectedItem as TournamentChoice).Value);
-                App.FileRepository.SaveConfig(App.StartupConfig);
+                App.ConfigRepository.Save(App.Config);
                 this.Close();
                 App.Update();
             }

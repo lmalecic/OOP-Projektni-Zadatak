@@ -22,8 +22,6 @@ namespace DAL.Converters
                 TacticsConverter.Singleton,
                 StageNameConverter.Singleton,
                 StatusConverter.Singleton,
-                TimeConverter.Singleton,
-                DescriptionConverter.Singleton,
                 new IsoDateTimeConverter { DateTimeStyles = DateTimeStyles.AssumeUniversal }
             },
         };

@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using DAL.Converters;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,7 @@ namespace DAL
         public long Id { get; set; }
 
         [JsonProperty("type_of_event")]
+        [JsonConverter(typeof(TypeOfEventConverter))]
         public TypeOfEvent TypeOfEvent { get; set; }
 
         [JsonProperty("player")]
