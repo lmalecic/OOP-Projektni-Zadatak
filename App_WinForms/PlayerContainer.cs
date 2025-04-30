@@ -12,7 +12,8 @@ namespace App_WinForms
 {
     public partial class PlayerContainer : UserControl
     {
-        private System.Windows.Forms.Timer hoverCheckTimer = new() {
+        private readonly System.Windows.Forms.Timer hoverCheckTimer = new()
+        {
             Interval = 100,
         };
 
@@ -63,6 +64,11 @@ namespace App_WinForms
                 btn_Favorite.Visible = false;
                 hoverCheckTimer.Stop();
             }
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

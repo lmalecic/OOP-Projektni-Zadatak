@@ -16,7 +16,7 @@ namespace App_WinForms
 {
     public partial class MainForm : Form, IResettableForm
     {
-        public async void Initialize()
+        public void Initialize()
         {
             Thread.CurrentThread.CurrentCulture = App.Config.Culture; // jezik, vrijeme
             Thread.CurrentThread.CurrentUICulture = App.Config.Culture; // prijevodi

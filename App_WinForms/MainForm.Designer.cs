@@ -37,9 +37,11 @@
             comboBox1 = new ComboBox();
             groupBox2 = new GroupBox();
             flowLayoutPanel3 = new FlowLayoutPanel();
+            flowLayoutPanel4 = new FlowLayoutPanel();
             groupBox3 = new GroupBox();
             flowLayoutPanel1 = new FlowLayoutPanel();
             playerContainer1 = new PlayerContainer();
+            playerContainer2 = new PlayerContainer();
             menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
             splitContainer1.Panel1.SuspendLayout();
@@ -48,6 +50,7 @@
             flowLayoutPanel2.SuspendLayout();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
+            flowLayoutPanel4.SuspendLayout();
             groupBox3.SuspendLayout();
             flowLayoutPanel1.SuspendLayout();
             SuspendLayout();
@@ -67,6 +70,7 @@
             // splitContainer1
             // 
             resources.ApplyResources(splitContainer1, "splitContainer1");
+            splitContainer1.FixedPanel = FixedPanel.Panel1;
             splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
@@ -75,7 +79,7 @@
             // 
             // splitContainer1.Panel2
             // 
-            splitContainer1.Panel2.Controls.Add(groupBox3);
+            splitContainer1.Panel2.Controls.Add(flowLayoutPanel4);
             // 
             // flowLayoutPanel2
             // 
@@ -109,6 +113,12 @@
             resources.ApplyResources(flowLayoutPanel3, "flowLayoutPanel3");
             flowLayoutPanel3.Name = "flowLayoutPanel3";
             // 
+            // flowLayoutPanel4
+            // 
+            flowLayoutPanel4.Controls.Add(groupBox3);
+            resources.ApplyResources(flowLayoutPanel4, "flowLayoutPanel4");
+            flowLayoutPanel4.Name = "flowLayoutPanel4";
+            // 
             // groupBox3
             // 
             groupBox3.Controls.Add(flowLayoutPanel1);
@@ -120,6 +130,7 @@
             // 
             flowLayoutPanel1.BackColor = SystemColors.ControlLightLight;
             flowLayoutPanel1.Controls.Add(playerContainer1);
+            flowLayoutPanel1.Controls.Add(playerContainer2);
             resources.ApplyResources(flowLayoutPanel1, "flowLayoutPanel1");
             flowLayoutPanel1.Name = "flowLayoutPanel1";
             // 
@@ -127,6 +138,11 @@
             // 
             resources.ApplyResources(playerContainer1, "playerContainer1");
             playerContainer1.Name = "playerContainer1";
+            // 
+            // playerContainer2
+            // 
+            resources.ApplyResources(playerContainer2, "playerContainer2");
+            playerContainer2.Name = "playerContainer2";
             // 
             // MainForm
             // 
@@ -148,9 +164,9 @@
             flowLayoutPanel2.PerformLayout();
             groupBox1.ResumeLayout(false);
             groupBox2.ResumeLayout(false);
+            flowLayoutPanel4.ResumeLayout(false);
             groupBox3.ResumeLayout(false);
             flowLayoutPanel1.ResumeLayout(false);
-            flowLayoutPanel1.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -167,6 +183,8 @@
         private FlowLayoutPanel flowLayoutPanel3;
         private GroupBox groupBox3;
         private FlowLayoutPanel flowLayoutPanel1;
+        private FlowLayoutPanel flowLayoutPanel4;
         private PlayerContainer playerContainer1;
+        private PlayerContainer playerContainer2;
     }
 }

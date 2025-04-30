@@ -30,143 +30,154 @@
         {
             tableLayoutPanel1 = new TableLayoutPanel();
             panel1 = new Panel();
-            lb_Captain = new Label();
-            lb_Name = new Label();
-            btn_Favorite = new Button();
             lb_Number = new Label();
             pictureBox1 = new PictureBox();
             lb_Position = new Label();
+            tableLayoutPanel2 = new TableLayoutPanel();
+            lb_Name = new Label();
+            btn_Favorite = new Button();
+            lb_Captain = new Label();
             tableLayoutPanel1.SuspendLayout();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            tableLayoutPanel2.SuspendLayout();
             SuspendLayout();
             // 
             // tableLayoutPanel1
             // 
             tableLayoutPanel1.ColumnCount = 1;
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
-            tableLayoutPanel1.Controls.Add(panel1, 0, 0);
-            tableLayoutPanel1.Controls.Add(lb_Position, 0, 1);
-            tableLayoutPanel1.Location = new Point(3, 3);
+            tableLayoutPanel1.Controls.Add(panel1, 0, 1);
+            tableLayoutPanel1.Controls.Add(lb_Position, 0, 2);
+            tableLayoutPanel1.Controls.Add(tableLayoutPanel2, 0, 0);
+            tableLayoutPanel1.Dock = DockStyle.Fill;
+            tableLayoutPanel1.Location = new Point(6, 6);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
-            tableLayoutPanel1.RowCount = 2;
+            tableLayoutPanel1.RowCount = 3;
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel1.Size = new Size(128, 128);
-            tableLayoutPanel1.TabIndex = 2;
+            tableLayoutPanel1.Size = new Size(127, 138);
+            tableLayoutPanel1.TabIndex = 0;
             // 
             // panel1
             // 
-            panel1.Controls.Add(lb_Captain);
-            panel1.Controls.Add(lb_Name);
-            panel1.Controls.Add(btn_Favorite);
             panel1.Controls.Add(lb_Number);
             panel1.Controls.Add(pictureBox1);
             panel1.Dock = DockStyle.Fill;
-            panel1.Location = new Point(0, 0);
-            panel1.Margin = new Padding(0);
+            panel1.Location = new Point(3, 33);
             panel1.Name = "panel1";
-            panel1.Size = new Size(128, 108);
+            panel1.Size = new Size(121, 82);
             panel1.TabIndex = 0;
-            // 
-            // lb_Captain
-            // 
-            lb_Captain.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            lb_Captain.BackColor = Color.Red;
-            lb_Captain.Font = new Font("Segoe UI Black", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lb_Captain.ForeColor = Color.White;
-            lb_Captain.Location = new Point(100, 0);
-            lb_Captain.Name = "lb_Captain";
-            lb_Captain.Size = new Size(28, 28);
-            lb_Captain.TabIndex = 3;
-            lb_Captain.Text = "C";
-            lb_Captain.TextAlign = ContentAlignment.MiddleCenter;
-            // 
-            // lb_Name
-            // 
-            lb_Name.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            lb_Name.AutoSize = true;
-            lb_Name.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lb_Name.Location = new Point(19, 32);
-            lb_Name.Name = "lb_Name";
-            lb_Name.Size = new Size(90, 20);
-            lb_Name.TabIndex = 2;
-            lb_Name.Text = "Luka Modrić";
-            lb_Name.TextAlign = ContentAlignment.MiddleCenter;
-            // 
-            // btn_Favorite
-            // 
-            btn_Favorite.FlatAppearance.BorderSize = 0;
-            btn_Favorite.FlatAppearance.MouseDownBackColor = Color.Transparent;
-            btn_Favorite.FlatAppearance.MouseOverBackColor = Color.Transparent;
-            btn_Favorite.FlatStyle = FlatStyle.Flat;
-            btn_Favorite.Font = new Font("Segoe UI Emoji", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btn_Favorite.ForeColor = SystemColors.GrayText;
-            btn_Favorite.Location = new Point(0, 0);
-            btn_Favorite.Margin = new Padding(0);
-            btn_Favorite.Name = "btn_Favorite";
-            btn_Favorite.Size = new Size(28, 28);
-            btn_Favorite.TabIndex = 0;
-            btn_Favorite.Text = "⭐";
-            btn_Favorite.UseVisualStyleBackColor = true;
-            btn_Favorite.MouseDown += btn_Favorite_MouseDown;
-            btn_Favorite.MouseEnter += btn_Favorite_MouseEnter;
-            btn_Favorite.MouseLeave += btn_Favorite_MouseLeave;
-            btn_Favorite.MouseHover += btn_Favorite_MouseEnter;
-            btn_Favorite.MouseUp += btn_Favorite_MouseUp;
             // 
             // lb_Number
             // 
-            lb_Number.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-            lb_Number.BackColor = Color.FromArgb(64, 64, 64);
-            lb_Number.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lb_Number.ForeColor = Color.White;
-            lb_Number.Location = new Point(48, 55);
+            lb_Number.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            lb_Number.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lb_Number.Location = new Point(47, 25);
             lb_Number.Name = "lb_Number";
-            lb_Number.Size = new Size(32, 23);
+            lb_Number.Size = new Size(27, 23);
             lb_Number.TabIndex = 1;
-            lb_Number.Text = "99";
+            lb_Number.Text = "10";
             lb_Number.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // pictureBox1
             // 
-            pictureBox1.BackgroundImageLayout = ImageLayout.Center;
             pictureBox1.Dock = DockStyle.Fill;
             pictureBox1.Image = Properties.Resources.icons8_jersey_96;
             pictureBox1.Location = new Point(0, 0);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(128, 108);
+            pictureBox1.Size = new Size(121, 82);
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
             // 
             // lb_Position
             // 
-            lb_Position.AutoSize = true;
             lb_Position.Dock = DockStyle.Fill;
-            lb_Position.Location = new Point(3, 108);
+            lb_Position.Location = new Point(3, 118);
             lb_Position.Name = "lb_Position";
-            lb_Position.Size = new Size(122, 20);
-            lb_Position.TabIndex = 2;
-            lb_Position.Text = "Position";
+            lb_Position.Size = new Size(121, 20);
+            lb_Position.TabIndex = 1;
+            lb_Position.Text = "Veznjak";
             lb_Position.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // tableLayoutPanel2
+            // 
+            tableLayoutPanel2.ColumnCount = 3;
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 28F));
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 28F));
+            tableLayoutPanel2.Controls.Add(lb_Name, 1, 0);
+            tableLayoutPanel2.Controls.Add(btn_Favorite, 0, 0);
+            tableLayoutPanel2.Controls.Add(lb_Captain, 2, 0);
+            tableLayoutPanel2.Dock = DockStyle.Fill;
+            tableLayoutPanel2.Location = new Point(0, 0);
+            tableLayoutPanel2.Margin = new Padding(0);
+            tableLayoutPanel2.Name = "tableLayoutPanel2";
+            tableLayoutPanel2.RowCount = 1;
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tableLayoutPanel2.Size = new Size(127, 30);
+            tableLayoutPanel2.TabIndex = 2;
+            // 
+            // lb_Name
+            // 
+            lb_Name.AutoSize = true;
+            lb_Name.Dock = DockStyle.Fill;
+            lb_Name.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lb_Name.Location = new Point(31, 0);
+            lb_Name.Name = "lb_Name";
+            lb_Name.Size = new Size(65, 30);
+            lb_Name.TabIndex = 0;
+            lb_Name.Text = "Luka Modrić";
+            lb_Name.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // btn_Favorite
+            // 
+            btn_Favorite.Dock = DockStyle.Fill;
+            btn_Favorite.FlatAppearance.BorderSize = 0;
+            btn_Favorite.FlatAppearance.MouseDownBackColor = Color.Transparent;
+            btn_Favorite.FlatAppearance.MouseOverBackColor = Color.Transparent;
+            btn_Favorite.FlatStyle = FlatStyle.Flat;
+            btn_Favorite.Font = new Font("Segoe UI Emoji", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btn_Favorite.ForeColor = SystemColors.ButtonShadow;
+            btn_Favorite.Location = new Point(0, 0);
+            btn_Favorite.Margin = new Padding(0);
+            btn_Favorite.Name = "btn_Favorite";
+            btn_Favorite.Size = new Size(28, 30);
+            btn_Favorite.TabIndex = 1;
+            btn_Favorite.Text = "⭐";
+            btn_Favorite.UseVisualStyleBackColor = true;
+            // 
+            // lb_Captain
+            // 
+            lb_Captain.BackColor = Color.Red;
+            lb_Captain.Dock = DockStyle.Fill;
+            lb_Captain.Font = new Font("Segoe UI Black", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lb_Captain.ForeColor = Color.White;
+            lb_Captain.Location = new Point(102, 0);
+            lb_Captain.Name = "lb_Captain";
+            lb_Captain.Size = new Size(22, 30);
+            lb_Captain.TabIndex = 2;
+            lb_Captain.Text = "C";
+            lb_Captain.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // PlayerContainer
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            AutoSize = true;
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
             Controls.Add(tableLayoutPanel1);
+            MinimumSize = new Size(120, 150);
             Name = "PlayerContainer";
-            Size = new Size(134, 134);
+            Padding = new Padding(6);
+            Size = new Size(139, 150);
             MouseEnter += PlayerContainer_MouseEnter;
             tableLayoutPanel1.ResumeLayout(false);
-            tableLayoutPanel1.PerformLayout();
             panel1.ResumeLayout(false);
-            panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            tableLayoutPanel2.ResumeLayout(false);
+            tableLayoutPanel2.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -175,10 +186,11 @@
         private TableLayoutPanel tableLayoutPanel1;
         private Panel panel1;
         private PictureBox pictureBox1;
-        private Button btn_Favorite;
-        private Label lb_Name;
-        private Label lb_Number;
         private Label lb_Position;
+        private Label lb_Number;
+        private TableLayoutPanel tableLayoutPanel2;
+        private Label lb_Name;
+        private Button btn_Favorite;
         private Label lb_Captain;
     }
 }
