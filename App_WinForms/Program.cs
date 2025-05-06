@@ -43,7 +43,7 @@ namespace App_WinForms
             Config.Culture = culture;
         }
 
-        internal static void SetTournament(TournamentType tournament)
+        public static void SetTournament(TournamentType tournament)
         {
             Config.Tournament = tournament;
         }

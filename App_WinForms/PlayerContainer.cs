@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DAL;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,61 +13,35 @@ namespace App_WinForms
 {
     public partial class PlayerContainer : UserControl
     {
-        private readonly System.Windows.Forms.Timer hoverCheckTimer = new()
-        {
-            Interval = 100,
-        };
+        public bool IsFavorite { get; set; } = false;
+        public Player? SelectedPlayer { get; set; } 
 
         public PlayerContainer()
         {
+            Initialize();
+        }
+
+        public void Initialize()
+        {
             InitializeComponent();
-            btn_Favorite.Visible = false;
 
-            hoverCheckTimer.Tick += hoverCheckTimer_Tick;
-        }
-
-        public void SetPlayer()
-        {
-
-        }
-
-        private void btn_Favorite_MouseEnter(object sender, EventArgs e)
-        {
-            btn_Favorite.ForeColor = Color.Gold;
-        }
-
-        private void btn_Favorite_MouseLeave(object sender, EventArgs e)
-        {
-            btn_Favorite.ForeColor = Color.Gray;
-        }
-
-        private void btn_Favorite_MouseDown(object sender, MouseEventArgs e)
-        {
-            btn_Favorite.ForeColor = Color.Yellow;
-        }
-
-        private void btn_Favorite_MouseUp(object sender, MouseEventArgs e)
-        {
-            btn_Favorite.ForeColor = Color.Gray;
-        }
-
-        private void PlayerContainer_MouseEnter(object sender, EventArgs e)
-        {
-            btn_Favorite.Visible = true;
-            hoverCheckTimer.Start();
-        }
-
-        private void hoverCheckTimer_Tick(object sender, EventArgs e)
-        {
-            var cursorPos = this.PointToClient(Cursor.Position);
-            if (!this.ClientRectangle.Contains(cursorPos))
+            if (SelectedPlayer == null)
             {
-                btn_Favorite.Visible = false;
-                hoverCheckTimer.Stop();
+                lb_Captain.Visible = false;
+                lb_Name.Text = "Empty slot";
+                lb_Number.Text = "";
+                lb_Position.Text = "";
+                img_Player.Image = Properties.Resources.PlayerSlot;
+                return;
             }
+
+            lb_Name.Text = SelectedPlayer.Name;
+            lb_Number.Text = SelectedPlayer.ShirtNumber.ToString();
+            lb_Position.Text = SelectedPlayer.Position.ToString();
+            lb_Captain.Visible = SelectedPlayer.Captain;
         }
 
-        private void pictureBox1_Click(object sender, EventArgs e)
+        public void SetPlayer(Player player)
         {
 
         }

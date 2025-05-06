@@ -22,5 +22,19 @@ namespace DAL
         [JsonProperty("position")]
         [JsonConverter(typeof(PositionConverter))]
         public Position Position { get; set; }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is Player player &&
+                   Name == player.Name;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Name);
+        }
+
+        public override string ToString()
+            => $"{ShirtNumber} {Name}\n{Position}" + (Captain ? " C" : "");
     }
 }

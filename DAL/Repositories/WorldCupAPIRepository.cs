@@ -46,5 +46,10 @@ namespace DAL
         {
             throw new NotImplementedException();
         }
+
+        public Task<IList<Player>> GetPlayers(TournamentType tournamentType)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

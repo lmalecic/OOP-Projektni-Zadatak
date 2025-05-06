@@ -15,5 +15,7 @@ namespace DAL
         public Task<IList<Team>> GetTeams(TournamentType tournamentType);
         public Task<IList<MatchResult>> GetTeamResults(TournamentType tournamentType);
         public Task<IList<MatchResultsByGroup>> GetTeamResultsByGroup(TournamentType tournamentType);
+
+        public Task<IList<Player>> GetTeamPlayers(TournamentType tournamentType, Team team);
     }
 }

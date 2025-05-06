@@ -72,9 +72,9 @@ namespace DAL
         public Tactics Tactics { get; set; }
 
         [JsonProperty("starting_eleven")]
-        public Player[] StartingEleven { get; set; }
+        public IList<Player> StartingEleven { get; set; }
 
         [JsonProperty("substitutes")]
-        public Player[] Substitutes { get; set; }
+        public IList<Player> Substitutes { get; set; }
     }
 }

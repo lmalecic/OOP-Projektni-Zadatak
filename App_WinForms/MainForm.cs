@@ -16,6 +16,19 @@ namespace App_WinForms
 {
     public partial class MainForm : Form, IResettableForm
     {
+        private StartupSettingsForm startupSettingsForm = new();
+
+        private void OpenSettings()
+        {
+            if (startupSettingsForm.IsDisposed)
+            {
+                startupSettingsForm = new();
+            }
+
+            startupSettingsForm.Focus();
+            startupSettingsForm.Show();
+        }
+
         public void Initialize()
         {
             Thread.CurrentThread.CurrentCulture = App.Config.Culture; // jezik, vrijeme
@@ -24,9 +37,9 @@ namespace App_WinForms
             InitializeComponent();
 
             if (!App.ConfigRepository.Exists())
-            {
-                new StartupSettingsForm().Show();
-            }
+                OpenSettings();
+
+
         }
 
         public MainForm()
@@ -40,9 +53,28 @@ namespace App_WinForms
             this.Initialize();
         }
 
+        private void SetFavoriteTeam(Team team)
+        {
+            App.Config.FavoriteTeam = team;
+            p_Players.Controls.Clear();
+        }
+
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            new StartupSettingsForm().Show();
+            OpenSettings();
+        }
+
+        private void cb_FavoriteTeam_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void flowLayoutPanel3_Paint(object sender, PaintEventArgs e)
+        {
+            for (int i = 0; i < 3; i++)
+            {
+
+            }
         }
     }
 }
