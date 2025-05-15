@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using DAL.Extensions;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -12,24 +13,16 @@ namespace DAL
 {
     public class WorldCupFileRepository : IWorldCupRepository
     {
-        readonly string rootDir;
+        private readonly string rootDir;
 
-        public WorldCupFileRepository(string rootDir) => this.rootDir = rootDir;
-        
-        private string getTournamentPath(TournamentType tournamentType)
+        public WorldCupFileRepository(string rootDir)
         {
-            return tournamentType switch
-            {
-                TournamentType.Men => Path.Combine(rootDir, "men"),
-                TournamentType.Women => Path.Combine(rootDir, "women"),
-                _ => throw new Exception("Invalid tournament type!"),
-            };
+            this.rootDir = rootDir;
         }
 
         public async Task<IList<Match>> GetMatches(TournamentType tournamentType)
         {
-            string path = Path.Combine(getTournamentPath(tournamentType), "matches.json");
-            return await Task.Run(() => JsonConvert.DeserializeObject<IList<Match>>(File.ReadAllText(path)) ?? []);
+            return await Task.Run(() => JsonConvert.DeserializeObject<IList<Match>>(File.ReadAllText(tournamentType.GetMatchesFilePath())) ?? []);
         }
 
         public async Task<IList<Match>> GetMatchesByFifaCode(TournamentType tournamentType, string fifaCode)
@@ -38,22 +31,19 @@ namespace DAL
                 .Where(m => m.HomeTeam.Code.ToLower().Equals(fifaCode.ToLower()) || m.AwayTeam.Code.ToLower().Equals(fifaCode.ToLower())).ToList();
         }
 
+        public async Task<IList<Team>> GetTeams(TournamentType tournamentType)
+        {
+            return await Task.Run(() => JsonConvert.DeserializeObject<IList<Team>>(File.ReadAllText(tournamentType.GetTeamsFilePath())) ?? []);
+        }
+
         public async Task<IList<MatchResult>> GetTeamResults(TournamentType tournamentType)
         {
-            string path = Path.Combine(getTournamentPath(tournamentType), "results.json");
-            return await Task.Run(() => JsonConvert.DeserializeObject<IList<MatchResult>>(File.ReadAllText(path)) ?? []);
+            return await Task.Run(() => JsonConvert.DeserializeObject<IList<MatchResult>>(File.ReadAllText(tournamentType.GetResultsFilePath())) ?? []);
         }
 
         public async Task<IList<MatchResultsByGroup>> GetTeamResultsByGroup(TournamentType tournamentType)
         {
-            string path = Path.Combine(getTournamentPath(tournamentType), "group_results.json");
-            return await Task.Run(() => JsonConvert.DeserializeObject<IList<MatchResultsByGroup>>(File.ReadAllText(path)) ?? []);
-        }
-
-        public async Task<IList<Team>> GetTeams(TournamentType tournamentType)
-        {
-            string path = Path.Combine(getTournamentPath(tournamentType), "teams.json");
-            return await Task.Run(() => JsonConvert.DeserializeObject<IList<Team>>(File.ReadAllText(path)) ?? []);
+            return await Task.Run(() => JsonConvert.DeserializeObject<IList<MatchResultsByGroup>>(File.ReadAllText(tournamentType.GetGroupResultsFilePath())) ?? []);
         }
 
         public async Task<IList<Player>> GetTeamPlayers(TournamentType tournamentType, Team team)
@@ -89,7 +79,6 @@ namespace DAL
         public async Task<PlayerStats> GetPlayerStats(TournamentType tournamentType, Player player)
         {
             IList<Match> matches = await GetPlayerMatches(tournamentType, player);
-
             IList<TeamEvent> PlayerEvents = matches
                 .SelectMany(match => match.HomeTeamEvents.Concat(match.AwayTeamEvents))
                 .Where(e => e.Player.Equals(player.Name, StringComparison.OrdinalIgnoreCase))
@@ -134,6 +123,25 @@ namespace DAL
             return (await GetTeamMatches(tournamentType, team))
                 .Select(match => GetVisitorStats(tournamentType, match))
                 .ToList();
+        }
+
+        public async Task<Team?> GetTeamByFifaCode(TournamentType tournamentType, string Code)
+        {
+            return (await GetTeams(tournamentType))
+                .Where(team => team.FifaCode == Code)
+                .FirstOrDefault();
+        }
+
+        public async Task<Team?> GetAnyTeamByFifaCode(string value)
+        {
+            foreach (TournamentType tournament in typeof(TournamentType).GetEnumValues())
+            {
+                Team? team = await GetTeamByFifaCode(tournament, value);
+                if (team != null)
+                    return team;
+            }
+
+            return null;
         }
     }
 }

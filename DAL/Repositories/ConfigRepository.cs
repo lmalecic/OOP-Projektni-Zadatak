@@ -11,17 +11,15 @@ namespace DAL
 {
     public class ConfigRepository : IRepository<Config>
     {
-        readonly static string configPath = "config.json";
-
         public bool Exists()
-            => File.Exists(configPath);
+            => File.Exists(Constants.CONFIG_PATH);
 
         public Config Get()
         {
-            if (!File.Exists(configPath))
+            if (!File.Exists(Constants.CONFIG_PATH))
                 return new Config();
 
-            Config? config = JsonConvert.DeserializeObject<Config>(File.ReadAllText(configPath));
+            Config? config = JsonConvert.DeserializeObject<Config>(File.ReadAllText(Constants.CONFIG_PATH));
             if (config == null)
                 throw new JsonSerializationException();
 
@@ -30,7 +28,7 @@ namespace DAL
 
         public void Save(Config config)
         {
-            File.WriteAllText(configPath, JsonConvert.SerializeObject(config));
+            File.WriteAllText(Constants.CONFIG_PATH, JsonConvert.SerializeObject(config));
         }
     }
 }

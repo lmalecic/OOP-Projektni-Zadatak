@@ -27,6 +27,7 @@ namespace DAL
         public long WindSpeed { get; set; }
 
         [JsonProperty("description")]
-        public string Description { get; set; }
+        [JsonConverter(typeof(WeatherDescriptionConverter))]
+        public WeatherDescription Description { get; set; }
     }
 }

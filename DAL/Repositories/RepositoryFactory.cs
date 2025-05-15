@@ -25,7 +25,11 @@ namespace DAL
         {
             if (worldCupRepository == null)
             {
-                worldCupRepository = new WorldCupFileRepository("worldcup.sfg.io");
+                //worldCupRepository = new WorldCupFileRepository("worldcup.sfg.io");
+                worldCupRepository = new WorldCupAPIRepository(new HttpClient
+                {
+                    BaseAddress = new Uri(Constants.REPO_API_PATH),
+                });
             }
 
             return worldCupRepository;

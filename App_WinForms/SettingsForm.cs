@@ -14,9 +14,9 @@ using System.Windows.Forms;
 
 namespace App_WinForms
 {
-    public partial class StartupSettingsForm : Form, IResettableForm
+    public partial class SettingsForm : Form
     {
-        public StartupSettingsForm()
+        public SettingsForm()
         {
             this.Initialize();
         }
@@ -35,7 +35,7 @@ namespace App_WinForms
                 ?? App.Cultures[0];
 
             cb_Tournament.DataSource = App.Tournaments;
-            cb_Tournament.DisplayMember = "Description";
+            cb_Tournament.DisplayMember = "DisplayText";
             cb_Tournament.ValueMember = "Value";
             cb_Tournament.SelectedItem = App.Tournaments
                 .FirstOrDefault(trnmt => trnmt.Value.Equals(App.Config.Tournament))
@@ -50,7 +50,7 @@ namespace App_WinForms
                 App.SetTournament((cb_Tournament.SelectedItem as TournamentChoice).Value);
                 App.ConfigRepository.Save(App.Config);
                 this.Close();
-                App.Update();
+                App.Reset();
             }
             catch (Exception ex)
             {

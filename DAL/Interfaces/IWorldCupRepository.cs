@@ -16,6 +16,14 @@ namespace DAL
         public Task<IList<MatchResult>> GetTeamResults(TournamentType tournamentType);
         public Task<IList<MatchResultsByGroup>> GetTeamResultsByGroup(TournamentType tournamentType);
 
+        public Task<Team?> GetAnyTeamByFifaCode(string value);
+        public Task<Team?> GetTeamByFifaCode(TournamentType tournamentType, string Code);
         public Task<IList<Player>> GetTeamPlayers(TournamentType tournamentType, Team team);
+        public Task<IList<Match>> GetPlayerMatches(TournamentType tournamentType, Player player);
+        public Task<IList<Match>> GetTeamMatches(TournamentType tournamentType, Team team);
+        public Task<PlayerStats> GetPlayerStats(TournamentType tournamentType, Player player);
+        public VisitorStats GetVisitorStats(TournamentType tournamentType, Match match);
+        public Task<IList<PlayerStats>> GetPlayersLeaderboard(TournamentType tournamentType, Team team);
+        public Task<IList<VisitorStats>> GetVisitorLeaderboards(TournamentType tournamentType, Team team);
     }
 }

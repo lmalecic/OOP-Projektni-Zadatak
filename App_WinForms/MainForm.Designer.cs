@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             settingsToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1 = new MenuStrip();
@@ -36,13 +37,11 @@
             groupBox1 = new GroupBox();
             cb_FavoriteTeam = new ComboBox();
             groupBox2 = new GroupBox();
-            p_FavoritePlayers = new FlowLayoutPanel();
-            favPlayerSlot1 = new PlayerContainer();
-            favPlayerSlot2 = new PlayerContainer();
-            favPlayerSlot3 = new PlayerContainer();
+            panel_FavoritePlayers = new PlayersPanel();
             flowLayoutPanel4 = new FlowLayoutPanel();
             groupBox3 = new GroupBox();
-            p_Players = new FlowLayoutPanel();
+            panel_Players = new PlayersPanel();
+            playerBindingSource = new BindingSource(components);
             menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
             splitContainer1.Panel1.SuspendLayout();
@@ -51,9 +50,9 @@
             flowLayoutPanel2.SuspendLayout();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
-            p_FavoritePlayers.SuspendLayout();
             flowLayoutPanel4.SuspendLayout();
             groupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)playerBindingSource).BeginInit();
             SuspendLayout();
             // 
             // settingsToolStripMenuItem
@@ -64,7 +63,9 @@
             // 
             // menuStrip1
             // 
+            menuStrip1.ImageScalingSize = new Size(20, 20);
             menuStrip1.Items.AddRange(new ToolStripItem[] { settingsToolStripMenuItem });
+            menuStrip1.LayoutStyle = ToolStripLayoutStyle.Flow;
             resources.ApplyResources(menuStrip1, "menuStrip1");
             menuStrip1.Name = "menuStrip1";
             // 
@@ -101,45 +102,25 @@
             resources.ApplyResources(cb_FavoriteTeam, "cb_FavoriteTeam");
             cb_FavoriteTeam.FormattingEnabled = true;
             cb_FavoriteTeam.Name = "cb_FavoriteTeam";
-            cb_FavoriteTeam.SelectedIndexChanged += cb_FavoriteTeam_SelectedIndexChanged;
+            cb_FavoriteTeam.Sorted = true;
+            cb_FavoriteTeam.SelectionChangeCommitted += cb_FavoriteTeam_SelectionChangeCommitted;
             // 
             // groupBox2
             // 
-            groupBox2.Controls.Add(p_FavoritePlayers);
+            groupBox2.Controls.Add(panel_FavoritePlayers);
             resources.ApplyResources(groupBox2, "groupBox2");
             groupBox2.Name = "groupBox2";
             groupBox2.TabStop = false;
             // 
-            // p_FavoritePlayers
+            // panel_FavoritePlayers
             // 
-            p_FavoritePlayers.BackColor = SystemColors.Window;
-            p_FavoritePlayers.BorderStyle = BorderStyle.FixedSingle;
-            p_FavoritePlayers.Controls.Add(favPlayerSlot1);
-            p_FavoritePlayers.Controls.Add(favPlayerSlot2);
-            p_FavoritePlayers.Controls.Add(favPlayerSlot3);
-            resources.ApplyResources(p_FavoritePlayers, "p_FavoritePlayers");
-            p_FavoritePlayers.Name = "p_FavoritePlayers";
-            // 
-            // favPlayerSlot1
-            // 
-            favPlayerSlot1.IsFavorite = false;
-            resources.ApplyResources(favPlayerSlot1, "favPlayerSlot1");
-            favPlayerSlot1.Name = "favPlayerSlot1";
-            favPlayerSlot1.SelectedPlayer = null;
-            // 
-            // favPlayerSlot2
-            // 
-            favPlayerSlot2.IsFavorite = false;
-            resources.ApplyResources(favPlayerSlot2, "favPlayerSlot2");
-            favPlayerSlot2.Name = "favPlayerSlot2";
-            favPlayerSlot2.SelectedPlayer = null;
-            // 
-            // favPlayerSlot3
-            // 
-            favPlayerSlot3.IsFavorite = false;
-            resources.ApplyResources(favPlayerSlot3, "favPlayerSlot3");
-            favPlayerSlot3.Name = "favPlayerSlot3";
-            favPlayerSlot3.SelectedPlayer = null;
+            panel_FavoritePlayers.AllowDrop = true;
+            panel_FavoritePlayers.BackColor = SystemColors.Window;
+            panel_FavoritePlayers.BorderStyle = BorderStyle.FixedSingle;
+            resources.ApplyResources(panel_FavoritePlayers, "panel_FavoritePlayers");
+            panel_FavoritePlayers.Name = "panel_FavoritePlayers";
+            panel_FavoritePlayers.DragDrop += panel_FavoritePlayers_DragDrop;
+            panel_FavoritePlayers.DragEnter += panel_FavoritePlayers_DragEnter;
             // 
             // flowLayoutPanel4
             // 
@@ -149,17 +130,24 @@
             // 
             // groupBox3
             // 
-            groupBox3.Controls.Add(p_Players);
+            groupBox3.Controls.Add(panel_Players);
             resources.ApplyResources(groupBox3, "groupBox3");
             groupBox3.Name = "groupBox3";
             groupBox3.TabStop = false;
             // 
-            // p_Players
+            // panel_Players
             // 
-            p_Players.BackColor = SystemColors.Window;
-            p_Players.BorderStyle = BorderStyle.FixedSingle;
-            resources.ApplyResources(p_Players, "p_Players");
-            p_Players.Name = "p_Players";
+            panel_Players.AllowDrop = true;
+            panel_Players.BackColor = SystemColors.Window;
+            panel_Players.BorderStyle = BorderStyle.FixedSingle;
+            resources.ApplyResources(panel_Players, "panel_Players");
+            panel_Players.Name = "panel_Players";
+            panel_Players.DragDrop += panel_Players_DragDrop;
+            panel_Players.DragEnter += panel_Players_DragEnter;
+            // 
+            // playerBindingSource
+            // 
+            playerBindingSource.DataSource = typeof(DAL.Player);
             // 
             // MainForm
             // 
@@ -180,9 +168,9 @@
             flowLayoutPanel2.ResumeLayout(false);
             groupBox1.ResumeLayout(false);
             groupBox2.ResumeLayout(false);
-            p_FavoritePlayers.ResumeLayout(false);
             flowLayoutPanel4.ResumeLayout(false);
             groupBox3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)playerBindingSource).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -196,12 +184,10 @@
         private GroupBox groupBox1;
         private ComboBox cb_FavoriteTeam;
         private GroupBox groupBox2;
-        private FlowLayoutPanel p_FavoritePlayers;
         private GroupBox groupBox3;
-        private FlowLayoutPanel p_Players;
         private FlowLayoutPanel flowLayoutPanel4;
-        private PlayerContainer favPlayerSlot1;
-        private PlayerContainer favPlayerSlot2;
-        private PlayerContainer favPlayerSlot3;
+        private PlayersPanel panel_FavoritePlayers;
+        private PlayersPanel panel_Players;
+        private BindingSource playerBindingSource;
     }
 }

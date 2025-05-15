@@ -23,6 +23,15 @@ namespace DAL
 
             [JsonProperty("penalties")]
             public long Penalties { get; set; }
+
+            public override bool Equals(object? obj)
+            {
+                if (obj is MatchTeam matchTeam)
+                    return this.Code == matchTeam.Code || this.Country == matchTeam.Country;
+                if (obj is Team team)
+                    return this.Code == team.FifaCode || this.Country == team.Country;
+                return false;
+            }
         }
 
         [JsonProperty("venue")]
@@ -32,8 +41,7 @@ namespace DAL
         public string Location { get; set; }
 
         [JsonProperty("status")]
-        [JsonConverter(typeof(StatusConverter))]
-        public Status Status { get; set; }
+        public string Status { get; set; }
 
         [JsonProperty("time")]
         public string Time { get; set; }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DAL
 {
-    public class Player
+    public class Player : IComparable<Player>
     {
         [JsonProperty("name")]
         public string Name { get; set; }
@@ -23,10 +23,25 @@ namespace DAL
         [JsonConverter(typeof(PositionConverter))]
         public Position Position { get; set; }
 
+        public int CompareTo(Player? other)
+        {
+            if (other == null)
+                return 1;
+
+            int captainResult = Captain.CompareTo(other.Captain);
+            return captainResult switch
+            {
+                1 => -1,
+                -1 => 1,
+                _ => ShirtNumber.CompareTo(other.ShirtNumber),
+            };
+        }
+
         public override bool Equals(object? obj)
         {
             return obj is Player player &&
-                   Name == player.Name;
+                   Name == player.Name &&
+                   ShirtNumber == player.ShirtNumber;
         }
 
         public override int GetHashCode()
