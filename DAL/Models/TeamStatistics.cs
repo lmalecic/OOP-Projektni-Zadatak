@@ -13,59 +13,59 @@ namespace DAL
         [JsonProperty("country")]
         public string Country { get; set; }
 
-        [JsonProperty("attempts_on_goal")]
-        public long AttemptsOnGoal { get; set; }
+        [JsonProperty("attempts_on_goal", NullValueHandling = NullValueHandling.Ignore)]
+        public long AttemptsOnGoal { get; set; } = 0;
 
-        [JsonProperty("on_target")]
-        public long OnTarget { get; set; }
+        [JsonProperty("on_target", NullValueHandling = NullValueHandling.Ignore)]
+        public long OnTarget { get; set; } = 0;
 
-        [JsonProperty("off_target")]
-        public long OffTarget { get; set; }
+        [JsonProperty("off_target", NullValueHandling = NullValueHandling.Ignore)]
+        public long OffTarget { get; set; } = 0;
 
-        [JsonProperty("blocked")]
-        public long Blocked { get; set; }
+        [JsonProperty("blocked", NullValueHandling = NullValueHandling.Ignore)]
+        public long Blocked { get; set; } = 0;
 
-        [JsonProperty("woodwork")]
-        public long Woodwork { get; set; }
+        [JsonProperty("woodwork", NullValueHandling = NullValueHandling.Ignore)]
+        public long Woodwork { get; set; } = 0;
 
-        [JsonProperty("corners")]
-        public long Corners { get; set; }
+        [JsonProperty("corners", NullValueHandling = NullValueHandling.Ignore)]
+        public long Corners { get; set; } = 0;
 
-        [JsonProperty("offsides")]
-        public long Offsides { get; set; }
+        [JsonProperty("offsides", NullValueHandling = NullValueHandling.Ignore)]
+        public long Offsides { get; set; } = 0;
 
-        [JsonProperty("ball_possession")]
-        public long BallPossession { get; set; }
+        [JsonProperty("ball_possession", NullValueHandling = NullValueHandling.Ignore)]
+        public long BallPossession { get; set; } = 0;
 
-        [JsonProperty("pass_accuracy")]
-        public long PassAccuracy { get; set; }
+        [JsonProperty("pass_accuracy", NullValueHandling = NullValueHandling.Ignore)]
+        public long PassAccuracy { get; set; } = 0;
 
-        [JsonProperty("num_passes")]
-        public long NumPasses { get; set; }
+        [JsonProperty("num_passes", NullValueHandling = NullValueHandling.Ignore)]
+        public long NumPasses { get; set; } = 0;
 
-        [JsonProperty("passes_completed")]
-        public long PassesCompleted { get; set; }
+        [JsonProperty("passes_completed", NullValueHandling = NullValueHandling.Ignore)]
+        public long PassesCompleted { get; set; } = 0;
 
-        [JsonProperty("distance_covered")]
-        public long DistanceCovered { get; set; }
+        [JsonProperty("distance_covered", NullValueHandling = NullValueHandling.Ignore)]
+        public long DistanceCovered { get; set; } = 0;
 
-        [JsonProperty("balls_recovered")]
-        public long BallsRecovered { get; set; }
+        [JsonProperty("balls_recovered", NullValueHandling = NullValueHandling.Ignore)]
+        public long BallsRecovered { get; set; } = 0;
 
-        [JsonProperty("tackles")]
-        public long Tackles { get; set; }
+        [JsonProperty("tackles", NullValueHandling = NullValueHandling.Ignore)]
+        public long Tackles { get; set; } = 0;
 
-        [JsonProperty("clearances")]
-        public long Clearances { get; set; }
+        [JsonProperty("clearances", NullValueHandling = NullValueHandling.Ignore)]
+        public long Clearances { get; set; } = 0;
 
-        [JsonProperty("yellow_cards")]
-        public long YellowCards { get; set; }
+        [JsonProperty("yellow_cards", NullValueHandling = NullValueHandling.Ignore)]
+        public long YellowCards { get; set; } = 0;
 
-        [JsonProperty("red_cards")]
-        public long RedCards { get; set; }
+        [JsonProperty("red_cards", NullValueHandling = NullValueHandling.Ignore)]
+        public long RedCards { get; set; } = 0;
 
-        [JsonProperty("fouls_committed")]
-        public long? FoulsCommitted { get; set; }
+        [JsonProperty("fouls_committed", NullValueHandling = NullValueHandling.Ignore)]
+        public long FoulsCommitted { get; set; } = 0;
 
         [JsonProperty("tactics")]
         [JsonConverter(typeof(TacticsConverter))]

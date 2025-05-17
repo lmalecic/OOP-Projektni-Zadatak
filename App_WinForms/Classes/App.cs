@@ -1,24 +1,33 @@
 ﻿using DAL;
 using DAL.Extensions;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.Diagnostics;
 using System.Globalization;
+using System.Runtime.CompilerServices;
 
 namespace App_WinForms
 {
-    public static class App
+    internal static class App
     {
-        public readonly static IList<CultureInfo> Cultures = [ CultureInfo.CurrentCulture, new("hr"), new("en") ];
+        public readonly static IList<CultureInfo> Cultures = [CultureInfo.CurrentCulture, new("hr"), new("en")];
         public readonly static IList<TournamentChoice> Tournaments = Enum.GetValues(typeof(TournamentType))
             .Cast<TournamentType>()
             .Select(val => new TournamentChoice(val, val.ToDisplayString()))
             .ToList();
 
-        public static IWorldCupRepository WorldCupRepository { get; } = RepositoryFactory.GetWorldCupRepository();
-        public static IRepository<Config> ConfigRepository = RepositoryFactory.GetConfigRepository();
+        public static readonly IWorldCupRepository WorldCupRepository = RepositoryFactory.GetWorldCupRepository();
+        public static readonly IRepository<Config> ConfigRepository = RepositoryFactory.GetConfigRepository();
 
-        public static Config Config { get; } = ConfigRepository.Get();
+        public static Config Config { get; private set; } = ConfigRepository.Get();
 
-        public static MainForm MainForm = new MainForm();
-        public static SettingsForm SettingsForm { get; set; } = new SettingsForm();
+        public static MainForm MainForm { get; private set; } = new();
+        public static SettingsForm SettingsForm { get; private set; } = new();
+
+        public static async void Initialize()
+        {
+            SetCulture(Config.Culture);
+        }
 
         public static void Save()
         {
@@ -28,7 +37,17 @@ namespace App_WinForms
         public static void Reset()
         {
             MainForm.Reset();
-            
+        }
+
+        public static void OpenSettings()
+        {
+            if (SettingsForm == null || SettingsForm.IsDisposed)
+            {
+                SettingsForm = new();
+            }
+
+            SettingsForm.Focus();
+            SettingsForm.Show();
         }
 
         public static void SetCulture(CultureInfo culture)
@@ -40,54 +59,41 @@ namespace App_WinForms
         public static void SetTournament(TournamentType tournament)
         {
             Config.Tournament = tournament;
-            MainForm.UpdateForm();
+            MainForm.OnTournamentChanged(tournament);
         }
 
         public static void SetFavoriteTeam(Team? team)
         {
             Config.FavoriteTeam = team;
-            MainForm.UpdateForm();
+            MainForm.OnFavoriteTeamChanged(team);
         }
 
         public static void AddFavoritePlayer(Player player)
         {
-            if (!Config.FavoritePlayers.Contains(player) || Config.FavoritePlayers.Count < 3)
+            try
             {
-                Config.FavoritePlayers.Add(player);
+                Config.AddFavoritePlayer(player);
+                MainForm.OnPlayerFavoriteAdded(player);
             }
-
-            MainForm.UpdateForm();
+            catch (AlreadyFavoriteException)
+            {
+                MessageBox.Show("Player is already favorited!", "Action failed");
+            }
+            catch (MaxPlayersFavoritedException)
+            {
+                MessageBox.Show("You can only add to favorites up to 3 players maximum!", "Action failed");
+            }
         }
 
         public static void RemoveFavoritePlayer(Player player)
         {
-            if (Config.FavoritePlayers.Contains(player))
-            {
-                Config.FavoritePlayers.Remove(player);
-            }
-            else
-            {
-
-            }
-
-            MainForm.UpdateForm();
+            Config.RemoveFavoritePlayer(player);
+            MainForm.OnPlayerFavoriteRemoved(player);
         }
 
-        public static Form Initialize()
+        static App()
         {
-            SetCulture(Config.Culture);
-            return MainForm;
-        }
-
-        internal static void OpenSettings()
-        {
-            if (SettingsForm.IsDisposed)
-            {
-                SettingsForm = new();
-            }
-
-            SettingsForm.Focus();
-            SettingsForm.Show();
+            Initialize();
         }
     }
 }

@@ -66,6 +66,8 @@ namespace App_WinForms
             foreach (Control child in parent.Controls)
             {
                 child.MouseDown += (sender, e) => OnMouseDown(e);
+                child.MouseMove += (sender, e) => OnMouseMove(e);
+                child.MouseClick += (sender, e) => OnMouseClick(e);
 
                 if (child.HasChildren)
                     ForwardEvents(child);

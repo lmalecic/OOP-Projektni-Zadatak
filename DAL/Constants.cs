@@ -18,7 +18,7 @@ namespace DAL
         public static string CONFIG_PATH = "config.json";
 
         public static string REPO_API_PATH = "https://worldcup-vua.nullbit.hr";
-        public static string MEN_API_PATH = "men";
-        public static string WOMEN_API_PATH = "women";
+        public static string MEN_API_PATH = $"{REPO_API_PATH}/men";
+        public static string WOMEN_API_PATH = $"{REPO_API_PATH}/women";
     }
 }

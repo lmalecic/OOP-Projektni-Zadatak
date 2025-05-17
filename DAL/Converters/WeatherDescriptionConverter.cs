@@ -21,6 +21,8 @@ namespace DAL.Converters
                     return WeatherDescription.ClearNight;
                 case "Cloudy":
                     return WeatherDescription.Cloudy;
+                case "Cloudy Night":
+                    return WeatherDescription.CloudyNight;
                 case "Partly Cloudy":
                     return WeatherDescription.PartlyCloudy;
                 case "Partly Cloudy Night":
@@ -46,6 +48,9 @@ namespace DAL.Converters
                     return;
                 case WeatherDescription.Cloudy:
                     serializer.Serialize(writer, "Cloudy");
+                    return;
+                case WeatherDescription.CloudyNight:
+                    serializer.Serialize(writer, "Cloudy Night");
                     return;
                 case WeatherDescription.PartlyCloudy:
                     serializer.Serialize(writer, "Partly Cloudy");

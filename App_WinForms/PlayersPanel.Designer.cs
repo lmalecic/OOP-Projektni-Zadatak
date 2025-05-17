@@ -28,32 +28,29 @@
         /// </summary>
         private void InitializeComponent()
         {
-            panel_Items = new FlowLayoutPanel();
-            SuspendLayout();
+            this.panel_Items = new FlowLayoutPanel();
+            this.SuspendLayout();
             // 
             // panel_Items
             // 
-            panel_Items.AllowDrop = true;
-            panel_Items.BackColor = SystemColors.Highlight;
-            panel_Items.Dock = DockStyle.Fill;
-            panel_Items.Location = new Point(20, 20);
-            panel_Items.Margin = new Padding(0);
-            panel_Items.Name = "panel_Items";
-            panel_Items.Size = new Size(129, 157);
-            panel_Items.TabIndex = 0;
+            this.panel_Items.AutoScroll = true;
+            this.panel_Items.BackColor = Color.Transparent;
+            this.panel_Items.Dock = DockStyle.Fill;
+            this.panel_Items.Location = new Point(0, 0);
+            this.panel_Items.Margin = new Padding(0);
+            this.panel_Items.Name = "panel_Items";
+            this.panel_Items.Size = new Size(148, 148);
+            this.panel_Items.TabIndex = 0;
             // 
             // PlayersPanel
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
-            AutoScaleMode = AutoScaleMode.Font;
-            BackColor = SystemColors.Window;
-            BorderStyle = BorderStyle.FixedSingle;
-            Controls.Add(panel_Items);
-            Margin = new Padding(3, 4, 3, 4);
-            Name = "PlayersPanel";
-            Padding = new Padding(20);
-            Size = new Size(169, 197);
-            ResumeLayout(false);
+            this.AutoScaleMode = AutoScaleMode.Inherit;
+            this.BackColor = SystemColors.Window;
+            this.BorderStyle = BorderStyle.FixedSingle;
+            this.Controls.Add(this.panel_Items);
+            this.Name = "PlayersPanel";
+            this.Size = new Size(148, 148);
+            this.ResumeLayout(false);
         }
 
         #endregion

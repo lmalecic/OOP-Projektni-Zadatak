@@ -21,7 +21,7 @@ namespace DAL
 
         public async Task<IList<Match>> GetMatches(TournamentType tournamentType)
         {
-            return JsonConvert.DeserializeObject<IList<Match>>(await _httpClient.GetStringAsync(tournamentType.GetMatchesApiPath())) ?? new List<Match>();
+            return JsonConvert.DeserializeObject<IList<Match>>(await _httpClient.GetStringAsync(tournamentType.GetMatchesApiPath())) ?? [];
         }
 
         public async Task<IList<Match>> GetMatchesByFifaCode(TournamentType tournamentType, string fifaCode)

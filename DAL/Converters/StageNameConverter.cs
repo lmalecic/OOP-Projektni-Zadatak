@@ -14,20 +14,23 @@ namespace DAL.Converters
         public override object ReadJson(JsonReader reader, Type t, object existingValue, JsonSerializer serializer)
         {
             if (reader.TokenType == JsonToken.Null) return null;
-            var value = serializer.Deserialize<string>(reader);
+            var value = serializer.Deserialize<string>(reader)?.ToLower();
             switch (value)
             {
-                case "Final":
+                case "final":
                     return StageName.Final;
-                case "First stage":
+                case "first stage":
                     return StageName.FirstStage;
-                case "Play-off for third place":
+                case "match for third place":
+                case "play-off for third place":
                     return StageName.PlayOffForThirdPlace;
-                case "Quarter-finals":
+                case "quarter-finals":
+                case "quarter-final":
                     return StageName.QuarterFinals;
-                case "Round of 16":
+                case "round of 16":
                     return StageName.RoundOf16;
-                case "Semi-finals":
+                case "semi-finals":
+                case "semi-final":
                     return StageName.SemiFinals;
             }
             throw new Exception("Cannot unmarshal type StageName");

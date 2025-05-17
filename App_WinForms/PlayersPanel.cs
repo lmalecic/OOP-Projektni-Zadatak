@@ -13,7 +13,7 @@ using DAL;
 
 namespace App_WinForms
 {
-    public partial class PlayersPanel : UserControl, IForwardableEventsControl
+    public partial class PlayersPanel : UserControl
     {
         public ObservableCollection<Player> Players { get; set; } = new();
 
@@ -23,9 +23,7 @@ namespace App_WinForms
         public PlayersPanel()
         {
             InitializeComponent();
-            panel_Items.AllowDrop = this.AllowDrop;
             Players.CollectionChanged += Players_CollectionChanged;
-            ForwardEvents(this);
         }
 
         private void AddPlayerContainer(Player player)
@@ -46,11 +44,6 @@ namespace App_WinForms
                 PlayerContainerRemoved.Invoke(this, new(playerContainer));
                 panel_Items.Controls.Remove(playerContainer);
             }
-        }
-
-        private void ClearPlayerContainers(Player player)
-        {
-            panel_Items.Controls.Clear();
         }
 
         private void Players_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
@@ -89,13 +82,6 @@ namespace App_WinForms
                 default:
                     break;
             }
-        }
-
-        public void ForwardEvents(Control parent)
-        {
-            panel_Items.DragDrop += (sender, e) => OnDragDrop(e);
-            panel_Items.DragEnter += (sender, e) => OnDragEnter(e);
-            panel_Items.DragLeave += (sender, e) => OnDragLeave(e);
         }
     }
 

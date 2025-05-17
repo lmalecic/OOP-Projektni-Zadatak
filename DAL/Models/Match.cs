@@ -8,32 +8,8 @@ using Newtonsoft.Json.Converters;
 
 namespace DAL
 {
-    public class Match
+    public partial class Match
     {
-        public class MatchTeam
-        {
-            [JsonProperty("country")]
-            public string Country { get; set; }
-
-            [JsonProperty("code")]
-            public string Code { get; set; }
-
-            [JsonProperty("goals")]
-            public long Goals { get; set; }
-
-            [JsonProperty("penalties")]
-            public long Penalties { get; set; }
-
-            public override bool Equals(object? obj)
-            {
-                if (obj is MatchTeam matchTeam)
-                    return this.Code == matchTeam.Code || this.Country == matchTeam.Country;
-                if (obj is Team team)
-                    return this.Code == team.FifaCode || this.Country == team.Country;
-                return false;
-            }
-        }
-
         [JsonProperty("venue")]
         public string Venue { get; set; }
 
@@ -41,10 +17,12 @@ namespace DAL
         public string Location { get; set; }
 
         [JsonProperty("status")]
-        public string Status { get; set; }
+        [JsonConverter(typeof(StatusConverter))]
+        public Status Status { get; set; }
 
         [JsonProperty("time")]
-        public string Time { get; set; }
+        [JsonConverter(typeof(TimeConverter))]
+        public Time Time { get; set; }
 
         [JsonProperty("fifa_id")]
         [JsonConverter(typeof(ParseStringConverter))]
@@ -58,7 +36,7 @@ namespace DAL
         public long Attendance { get; set; }
 
         [JsonProperty("officials")]
-        public string[] Officials { get; set; }
+        public IList<string> Officials { get; set; }
 
         [JsonProperty("stage_name")]
         [JsonConverter(typeof(StageNameConverter))]
@@ -86,10 +64,10 @@ namespace DAL
         public MatchTeam AwayTeam { get; set; }
 
         [JsonProperty("home_team_events")]
-        public TeamEvent[] HomeTeamEvents { get; set; }
+        public IList<TeamEvent> HomeTeamEvents { get; set; }
 
         [JsonProperty("away_team_events")]
-        public TeamEvent[] AwayTeamEvents { get; set; }
+        public IList<TeamEvent> AwayTeamEvents { get; set; }
 
         [JsonProperty("home_team_statistics")]
         public TeamStatistics HomeTeamStatistics { get; set; }
