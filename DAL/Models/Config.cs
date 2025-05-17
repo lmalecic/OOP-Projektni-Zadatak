@@ -19,17 +19,14 @@ namespace DAL
         public TournamentType Tournament { get; set; } = TournamentType.Men;
 
         public Team? FavoriteTeam { get; set; }
-        public Dictionary<string, IList<Player>> FavoritePlayersByTeam = [];
+        public Dictionary<TournamentType, Dictionary<string, IList<Player>>> FavoritePlayersByTeam = [];
 
         public IList<Player> GetFavoritePlayers()
         {
-            if (FavoriteTeam == null)
+            if (FavoriteTeam == null || !FavoritePlayersByTeam.ContainsKey(this.Tournament) || !FavoritePlayersByTeam[this.Tournament].ContainsKey(FavoriteTeam.FifaCode))
                 return [];
 
-            if (FavoritePlayersByTeam.ContainsKey(FavoriteTeam.FifaCode))
-                return FavoritePlayersByTeam[FavoriteTeam.FifaCode];
-
-            return [];
+            return FavoritePlayersByTeam[this.Tournament][FavoriteTeam.FifaCode];
         }
 
         public void AddFavoritePlayer(Player player)
@@ -37,28 +34,33 @@ namespace DAL
             if (FavoriteTeam == null)
                 return;
 
-            if (FavoritePlayersByTeam.ContainsKey(FavoriteTeam.FifaCode))
+            if (!this.FavoritePlayersByTeam.ContainsKey(this.Tournament))
             {
-                if (FavoritePlayersByTeam[FavoriteTeam.FifaCode].Contains(player))
+                this.FavoritePlayersByTeam[this.Tournament] = [];
+            }
+
+            if (FavoritePlayersByTeam[this.Tournament].ContainsKey(FavoriteTeam.FifaCode))
+            {
+                if (FavoritePlayersByTeam[this.Tournament][FavoriteTeam.FifaCode].Contains(player))
                     throw new AlreadyFavoriteException("Player is already favorited!");
-                else if (FavoritePlayersByTeam[FavoriteTeam.FifaCode].Count >= MAX_FAVORITE_PLAYERS)
+                else if (FavoritePlayersByTeam[this.Tournament][FavoriteTeam.FifaCode].Count >= MAX_FAVORITE_PLAYERS)
                     throw new MaxPlayersFavoritedException("Maximum number of favorite players reached!");
 
-                FavoritePlayersByTeam[FavoriteTeam.FifaCode].Add(player);
+                FavoritePlayersByTeam[this.Tournament][FavoriteTeam.FifaCode].Add(player);
             }
             else
             {
-                FavoritePlayersByTeam[FavoriteTeam.FifaCode] = [ player ];
+                FavoritePlayersByTeam[this.Tournament][FavoriteTeam.FifaCode] = [ player ];
             }
         }
 
         public void RemoveFavoritePlayer(Player player)
         {
-            if (FavoriteTeam == null)
+            if (FavoriteTeam == null || !FavoritePlayersByTeam.ContainsKey(this.Tournament))
                 return;
 
-            if (FavoritePlayersByTeam.ContainsKey(FavoriteTeam.FifaCode))
-                FavoritePlayersByTeam[FavoriteTeam.FifaCode].Remove(player);
+            if (FavoritePlayersByTeam[this.Tournament].ContainsKey(FavoriteTeam.FifaCode))
+                FavoritePlayersByTeam[this.Tournament][FavoriteTeam.FifaCode].Remove(player);
         }
     }
 }
