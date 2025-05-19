@@ -16,14 +16,23 @@ namespace App_WinForms
     public partial class PlayersPanel : UserControl
     {
         public ObservableCollection<Player> Players { get; set; } = new();
+        private readonly HashSet<PlayerContainer> selectedContainers = new();
 
+        public IReadOnlyCollection<PlayerContainer> SelectedContainers => selectedContainers;
         public event EventHandler<PlayerPanelContainerEventArgs> PlayerContainerAdded;
         public event EventHandler<PlayerPanelContainerEventArgs> PlayerContainerRemoved;
 
         public PlayersPanel()
         {
             InitializeComponent();
-            Players.CollectionChanged += Players_CollectionChanged;
+            Players.CollectionChanged += PlayersChanged;
+        }
+
+        public PlayerContainer? GetPlayerContainer(Player player)
+        {
+            return panel_Items.Controls.Cast<PlayerContainer>()
+                .Where(container => player.Equals(container.Player))
+                .FirstOrDefault();
         }
 
         private void AddPlayerContainer(Player player)
@@ -46,7 +55,36 @@ namespace App_WinForms
             }
         }
 
-        private void Players_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        public void SelectContainer(PlayerContainer container, bool multiSelect)
+        {
+            if (!multiSelect)
+            {
+                foreach (var c in selectedContainers)
+                    c.BackColor = SystemColors.Control;
+                selectedContainers.Clear();
+            }
+
+            if (!selectedContainers.Contains(container))
+            {
+                selectedContainers.Add(container);
+                container.BackColor = Color.LightBlue;
+            }
+        }
+
+        public void DeselectContainer(PlayerContainer container)
+        {
+            if (selectedContainers.Remove(container))
+                container.BackColor = SystemColors.Control;
+        }
+
+        public void ClearSelection()
+        {
+            foreach (var c in selectedContainers)
+                c.BackColor = SystemColors.Control;
+            selectedContainers.Clear();
+        }
+
+        private void PlayersChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             switch (e.Action)
             {

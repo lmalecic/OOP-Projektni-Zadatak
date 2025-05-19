@@ -20,5 +20,8 @@ namespace DAL
         public static string REPO_API_PATH = "https://worldcup-vua.nullbit.hr";
         public static string MEN_API_PATH = $"{REPO_API_PATH}/men";
         public static string WOMEN_API_PATH = $"{REPO_API_PATH}/women";
+
+        public static string IMAGES_PATH = "images";
+        public static string IMAGES_PLAYERS_PATH = Path.Combine(IMAGES_PATH, "players");
     }
 }

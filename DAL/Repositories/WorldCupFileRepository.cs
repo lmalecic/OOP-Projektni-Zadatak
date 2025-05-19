@@ -22,7 +22,10 @@ namespace DAL
 
         public async Task<IList<Match>> GetMatches(TournamentType tournamentType)
         {
-            return await Task.Run(() => JsonConvert.DeserializeObject<IList<Match>>(File.ReadAllText(tournamentType.GetMatchesFilePath())) ?? []);
+            string path = tournamentType.GetMatchesFilePath();
+            string text = await File.ReadAllTextAsync(path);
+
+            return JsonConvert.DeserializeObject<IList<Match>>(text) ?? [];
         }
 
         public async Task<IList<Match>> GetMatchesByFifaCode(TournamentType tournamentType, string fifaCode)
@@ -33,17 +36,24 @@ namespace DAL
 
         public async Task<IList<Team>> GetTeams(TournamentType tournamentType)
         {
-            return await Task.Run(() => JsonConvert.DeserializeObject<IList<Team>>(File.ReadAllText(tournamentType.GetTeamsFilePath())) ?? []);
+            string path = tournamentType.GetTeamsFilePath();
+            string text = await File.ReadAllTextAsync(path);
+            return JsonConvert.DeserializeObject<IList<Team>>(text) ?? [];
         }
 
         public async Task<IList<MatchResult>> GetTeamResults(TournamentType tournamentType)
         {
-            return await Task.Run(() => JsonConvert.DeserializeObject<IList<MatchResult>>(File.ReadAllText(tournamentType.GetResultsFilePath())) ?? []);
+            string path = tournamentType.GetResultsFilePath();
+            string text = await File.ReadAllTextAsync(path);
+            return JsonConvert.DeserializeObject<IList<MatchResult>>(text) ?? [];
         }
 
         public async Task<IList<MatchResultsByGroup>> GetTeamResultsByGroup(TournamentType tournamentType)
         {
-            return await Task.Run(() => JsonConvert.DeserializeObject<IList<MatchResultsByGroup>>(File.ReadAllText(tournamentType.GetGroupResultsFilePath())) ?? []);
+            string path = tournamentType.GetGroupResultsFilePath();
+            string text = await File.ReadAllTextAsync(path);
+
+            return JsonConvert.DeserializeObject<IList<MatchResultsByGroup>>(text) ?? [];
         }
 
         public async Task<IList<Player>> GetTeamPlayers(TournamentType tournamentType, Team team)

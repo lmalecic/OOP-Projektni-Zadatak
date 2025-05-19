@@ -9,7 +9,7 @@ using Newtonsoft.Json;
 
 namespace DAL
 {
-    public class ConfigRepository : IRepository<Config>
+    internal class ConfigRepository : IRepository<Config>
     {
         public bool Exists()
             => File.Exists(Constants.CONFIG_PATH);

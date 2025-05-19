@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,6 +23,12 @@ namespace DAL
         [JsonProperty("position")]
         [JsonConverter(typeof(PositionConverter))]
         public Position Position { get; set; }
+
+        public string FormatImageFileName()
+            => $"{Name.Replace(" ", "_")}_{ShirtNumber}";
+
+        public string FormatImageFileName(string extension)
+            => $"{Name.Replace(" ", "_")}_{ShirtNumber}{extension}";
 
         public int CompareTo(Player? other)
         {
@@ -50,6 +57,6 @@ namespace DAL
         }
 
         public override string ToString()
-            => $"{ShirtNumber} {Name}\n{Position}" + (Captain ? " C" : "");
+            => $"{Name}";
     }
 }

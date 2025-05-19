@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.settingsToolStripMenuItem = new ToolStripMenuItem();
             this.menuStrip1 = new MenuStrip();
@@ -41,7 +40,6 @@
             this.flowLayoutPanel4 = new FlowLayoutPanel();
             this.groupBox3 = new GroupBox();
             this.panel_Players = new PlayersPanel();
-            this.playerBindingSource = new BindingSource(this.components);
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)this.splitContainer1).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -52,7 +50,6 @@
             this.groupBox2.SuspendLayout();
             this.flowLayoutPanel4.SuspendLayout();
             this.groupBox3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)this.playerBindingSource).BeginInit();
             this.SuspendLayout();
             // 
             // settingsToolStripMenuItem
@@ -144,10 +141,6 @@
             this.panel_Players.DragDrop += this.panel_Players_DragDrop;
             this.panel_Players.DragEnter += this.panel_Players_DragEnter;
             // 
-            // playerBindingSource
-            // 
-            this.playerBindingSource.DataSource = typeof(DAL.Player);
-            // 
             // MainForm
             // 
             resources.ApplyResources(this, "$this");
@@ -158,6 +151,7 @@
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.SizeGripStyle = SizeGripStyle.Hide;
+            this.FormClosing += this.MainForm_FormClosing;
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
@@ -169,7 +163,6 @@
             this.groupBox2.ResumeLayout(false);
             this.flowLayoutPanel4.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)this.playerBindingSource).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
         }
@@ -187,6 +180,5 @@
         private FlowLayoutPanel flowLayoutPanel4;
         private PlayersPanel panel_FavoritePlayers;
         private PlayersPanel panel_Players;
-        private BindingSource playerBindingSource;
     }
 }

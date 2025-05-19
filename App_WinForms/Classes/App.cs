@@ -18,7 +18,8 @@ namespace App_WinForms
 
         public static readonly IWorldCupRepository WorldCupRepository = RepositoryFactory.GetWorldCupRepository();
         public static readonly IRepository<Config> ConfigRepository = RepositoryFactory.GetConfigRepository();
-
+        public static readonly ImageRepository ImageRepository = RepositoryFactory.GetImageRepository();
+        
         public static Config Config { get; private set; } = ConfigRepository.Get();
 
         public static MainForm MainForm { get; private set; } = new();
@@ -41,13 +42,17 @@ namespace App_WinForms
 
         public static void OpenSettings()
         {
-            if (SettingsForm == null || SettingsForm.IsDisposed)
-            {
-                SettingsForm = new();
+            using var settingsForm = new SettingsForm();
+            if (settingsForm.ShowDialog() == DialogResult.OK) {
+                ConfigRepository.Save(Config);
+                Reset();
             }
+            //if (SettingsForm == null || SettingsForm.IsDisposed) {
+            //    SettingsForm = new();
+            //}
 
-            SettingsForm.Focus();
-            SettingsForm.Show();
+            //SettingsForm.Focus();
+            //SettingsForm.Show();
         }
 
         public static void SetCulture(CultureInfo culture)
@@ -70,18 +75,15 @@ namespace App_WinForms
 
         public static void AddFavoritePlayer(Player player)
         {
-            try
-            {
+            try {
                 Config.AddFavoritePlayer(player);
                 MainForm.OnPlayerFavoriteAdded(player);
             }
-            catch (AlreadyFavoriteException)
-            {
-                MessageBox.Show("Player is already favorited!", "Action failed");
+            catch (AlreadyFavoriteException) {
+                MessageBox.Show("Player is already favorited!", "Action failed", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
-            catch (MaxPlayersFavoritedException)
-            {
-                MessageBox.Show("You can only add to favorites up to 3 players maximum!", "Action failed");
+            catch (MaxPlayersFavoritedException) {
+                MessageBox.Show("You can only add to favorites up to 3 players maximum!", "Action failed", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
         }
 
@@ -90,6 +92,9 @@ namespace App_WinForms
             Config.RemoveFavoritePlayer(player);
             MainForm.OnPlayerFavoriteRemoved(player);
         }
+
+        public static bool IsPlayerFavorite(Player player)
+            => Config.GetFavoritePlayers().Contains(player);
 
         static App()
         {

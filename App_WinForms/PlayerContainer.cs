@@ -15,56 +15,115 @@ namespace App_WinForms
 {
     public partial class PlayerContainer : UserControl, IForwardableEventsControl
     {
-        private Player? player = null;
+        public event EventHandler<Player?>? PlayerChanged;
+        public event EventHandler<bool>? SelectedChanged;
+        public event EventHandler<bool>? FavoriteChanged;
 
-        public bool IsFavorite { get; set; } = false;
-        public Player? Player
-        {
+        private bool selected = false;
+        public bool Selected {
+            get => selected;
+            set {
+                selected = value;
+                SelectedChanged?.Invoke(this, new());
+            }
+        }
+
+        private bool favorite = false;
+        public bool Favorite {
+            get => favorite;
+            set {
+                favorite = value;
+                FavoriteChanged?.Invoke(this, favorite);
+            }
+        }
+
+        private Player? player = null;
+        public Player? Player {
             get => player;
-            set
-            {
+            set {
                 player = value;
-                this.Controls.Clear();
-                Initialize();
+                PlayerChanged?.Invoke(this, player);
             }
         }
 
         public PlayerContainer()
         {
-            Initialize();
-        }
+            InitializeComponent();
+            PlayerChanged += OnPlayerChanged;
+            FavoriteChanged += OnFavoriteChanged;
 
-        public PlayerContainer(Player player)
-        {
-            this.player = player;
-            Initialize();
+            MouseClick += this.PlayerContainer_MouseClick;
             ForwardEvents(this);
         }
 
-        private void Initialize()
+        private void OnFavoriteChanged(object? sender, bool e)
         {
-            InitializeComponent();
+            ico_Favorite.Visible = Favorite;
+        }
 
-            if (Player == null)
-            {
+        public PlayerContainer(Player player) : this()
+        {
+            this.Player = player;
+        }
+
+        private async void OnPlayerChanged(object? sender, Player? player)
+        {
+            if (player == null) {
+                this.Selected = false;
+                this.Favorite = false;
+
                 lb_Name.Text = "Empty slot";
-                lb_Position.Visible = false;
                 lb_Number.Text = "";
                 lb_Position.Text = "";
+
                 img_Player.Image = Properties.Resources.PlayerSlot;
+                ico_Captain.Visible = false;
+                ico_Favorite.Visible = false;
 
                 return;
             }
 
-            lb_Name.Text = $"{(Player.Captain ? "[C] " : "")}{Player.Name}";
-            lb_Number.Text = Player.ShirtNumber.ToString();
-            lb_Position.Text = Player.Position.ToString();
+            this.Selected = false;
+            this.Favorite = App.IsPlayerFavorite(player);
+
+            lb_Name.Text = player.ToString();
+            lb_Number.Text = player.ShirtNumber.ToString();
+            lb_Position.Text = player.Position.ToString();
+
+            ico_Captain.Visible = player.Captain;
+            ico_Favorite.Visible = this.Favorite;
+
+            var image = await App.ImageRepository.LoadPlayerImage(player);
+            img_Player.Image = image != null ? Image.FromStream(new MemoryStream(image)) : Properties.Resources.PlayerSlot;
+        }
+
+        private void PlayerContainer_MouseClick(object? sender, MouseEventArgs e)
+        {
+            if (this.Player == null)
+                return;
+
+            switch (e.Button) {
+                case MouseButtons.Left:
+                    // Select the container
+
+                    break;
+                case MouseButtons.Right:
+                    // Show context menu
+                    OpenContextMenu(e.Location);
+                    break;
+            }
+        }
+
+        private void OpenContextMenu(Point mousePos)
+        {
+            this.AddFavoriteButton.Visible = !this.Favorite;
+            this.RemoveFavoriteButton.Visible = this.Favorite;
+            contextMenuStrip.Show(this, mousePos);
         }
 
         public void ForwardEvents(Control parent)
         {
-            foreach (Control child in parent.Controls)
-            {
+            foreach (Control child in parent.Controls) {
                 child.MouseDown += (sender, e) => OnMouseDown(e);
                 child.MouseMove += (sender, e) => OnMouseMove(e);
                 child.MouseClick += (sender, e) => OnMouseClick(e);
@@ -72,6 +131,20 @@ namespace App_WinForms
                 if (child.HasChildren)
                     ForwardEvents(child);
             }
+        }
+
+        private async void ChangePictureButton_Click(object sender, EventArgs e)
+        {
+            if (this.Player == null)
+                return;
+
+            openFileDialog1.Filter = "Image Files|*.jpg;*.jpeg;*.png;";
+            var result = openFileDialog1.ShowDialog(this);
+
+            if (result != DialogResult.OK)
+                return;
+
+            App.ImageRepository.SavePlayerImage(this.Player, await File.ReadAllBytesAsync(openFileDialog1.FileName));
         }
     }
 }
