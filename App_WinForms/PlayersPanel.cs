@@ -15,10 +15,10 @@ namespace App_WinForms
 {
     public partial class PlayersPanel : UserControl
     {
-        public ObservableCollection<Player> Players { get; set; } = new();
         private readonly HashSet<PlayerContainer> selectedContainers = new();
 
         public IReadOnlyCollection<PlayerContainer> SelectedContainers => selectedContainers;
+        public ObservableCollection<Player> Players { get; set; } = new();
         public event EventHandler<PlayerPanelContainerEventArgs> PlayerContainerAdded;
         public event EventHandler<PlayerPanelContainerEventArgs> PlayerContainerRemoved;
 

@@ -32,12 +32,17 @@ namespace App_WinForms
 
             InitializeComponent();
 
-            if (!App.ConfigRepository.Exists()) {
-                App.OpenSettings();
-            }
+            Task.Run(() =>
+            {
+                if (!App.ConfigRepository.Exists())
+                {
+                    App.OpenSettings();
+                }
+            });
 
             cb_FavoriteTeam.DisplayMember = "DisplayName";
             cb_FavoriteTeam.ValueMember = "Country";
+            cb_FavoriteTeam.SelectionChangeCommitted += cb_FavoriteTeam_SelectionChangeCommitted;
 
             panel_Players.PlayerContainerAdded += Panel_Players_ContainerAdded;
             panel_Players.PlayerContainerRemoved += Panel_Players_ContainerRemoved;
@@ -49,12 +54,14 @@ namespace App_WinForms
 
         private void FavoritePlayers_Changed(object? sender, NotifyCollectionChangedEventArgs e)
         {
-            switch (e.Action) {
+            switch (e.Action)
+            {
                 case NotifyCollectionChangedAction.Add:
                     if (e.NewItems == null)
                         break;
 
-                    foreach (var player in e.NewItems.Cast<Player>()) {
+                    foreach (var player in e.NewItems.Cast<Player>())
+                    {
                         panel_FavoritePlayers.Players.Add(player);
                     }
 
@@ -63,7 +70,8 @@ namespace App_WinForms
                     if (e.OldItems == null)
                         break;
 
-                    foreach (var player in e.OldItems.Cast<Player>()) {
+                    foreach (var player in e.OldItems.Cast<Player>())
+                    {
                         panel_FavoritePlayers.Players.Remove(player);
                     }
 
@@ -78,12 +86,14 @@ namespace App_WinForms
 
         private void Players_Changed(object? sender, NotifyCollectionChangedEventArgs e)
         {
-            switch (e.Action) {
+            switch (e.Action)
+            {
                 case NotifyCollectionChangedAction.Add:
                     if (e.NewItems == null)
                         break;
 
-                    foreach (var player in e.NewItems.Cast<Player>()) {
+                    foreach (var player in e.NewItems.Cast<Player>())
+                    {
                         panel_Players.Players.Add(player);
                     }
 
@@ -92,7 +102,8 @@ namespace App_WinForms
                     if (e.OldItems == null)
                         break;
 
-                    foreach (var player in e.OldItems.Cast<Player>()) {
+                    foreach (var player in e.OldItems.Cast<Player>())
+                    {
                         panel_Players.Players.Remove(player);
                     }
 
@@ -144,7 +155,8 @@ namespace App_WinForms
 
         private void Container_MouseDown(object? sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Left) {
+            if (e.Button == MouseButtons.Left)
+            {
                 this.dragStart = e.Location;
             }
         }
@@ -198,7 +210,7 @@ namespace App_WinForms
             App.OpenSettings();
         }
 
-        private void cb_FavoriteTeam_SelectionChangeCommitted(object sender, EventArgs e)
+        private void cb_FavoriteTeam_SelectionChangeCommitted(object? sender, EventArgs e)
         {
             Team? team = cb_FavoriteTeam.SelectedItem as Team;
             if (team != null && team.Equals(App.Config.FavoriteTeam))
@@ -212,7 +224,8 @@ namespace App_WinForms
             if (e.Data == null || e.Data.GetData(typeof(PlayerContainer)) is not PlayerContainer sourceContainer ||
                 sourceContainer.Parent?.Parent is not PlayersPanel sourcePanel ||
                 sourceContainer.Player == null ||
-                sourcePanel != panel_FavoritePlayers) {
+                sourcePanel != panel_FavoritePlayers)
+            {
                 return;
             }
 
@@ -232,7 +245,8 @@ namespace App_WinForms
             if (e.Data == null || e.Data.GetData(typeof(PlayerContainer)) is not PlayerContainer sourceContainer ||
                 sourceContainer?.Parent?.Parent is not PlayersPanel sourcePanel ||
                 sourceContainer.Player == null ||
-                sourcePanel != panel_Players) {
+                sourcePanel != panel_Players)
+            {
                 return;
             }
 
@@ -265,11 +279,13 @@ namespace App_WinForms
             if (team == null)
                 return;
 
-            foreach (var player in await App.WorldCupRepository.GetTeamPlayers(App.Config.Tournament, team)) {
+            foreach (var player in await App.WorldCupRepository.GetTeamPlayers(App.Config.Tournament, team))
+            {
                 panel_Players.Players.Add(player);
             }
 
-            foreach (var player in App.Config.GetFavoritePlayers()) {
+            foreach (var player in App.Config.GetFavoritePlayers())
+            {
                 panel_FavoritePlayers.Players.Add(player);
             }
         }
@@ -279,7 +295,8 @@ namespace App_WinForms
             panel_FavoritePlayers.Players.Add(player);
 
             var container = panel_Players.GetPlayerContainer(player);
-            if (container != null) {
+            if (container != null)
+            {
                 container.Favorite = true;
             }
         }
@@ -289,7 +306,8 @@ namespace App_WinForms
             panel_FavoritePlayers.Players.Remove(player);
 
             var container = panel_Players.GetPlayerContainer(player);
-            if (container != null) {
+            if (container != null)
+            {
                 container.Favorite = false;
             }
         }
@@ -297,9 +315,20 @@ namespace App_WinForms
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             using var confirmDialog = new ExitConfirmationForm();
-            if (confirmDialog.ShowDialog(this) == DialogResult.Cancel) {
+            if (confirmDialog.ShowDialog(this) == DialogResult.Cancel)
+            {
                 e.Cancel = true;
             }
+        }
+
+        private void btn_RankedListPlayers_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btn_RankedListImpressions_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

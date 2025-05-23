@@ -22,12 +22,13 @@ namespace App_WinForms
         
         public static Config Config { get; private set; } = ConfigRepository.Get();
 
-        public static MainForm MainForm { get; private set; } = new();
-        public static SettingsForm SettingsForm { get; private set; } = new();
+        public static MainForm MainForm { get; private set; }
 
-        public static async void Initialize()
+        public static Form Initialize()
         {
             SetCulture(Config.Culture);
+            MainForm = new();
+            return MainForm;
         }
 
         public static void Save()

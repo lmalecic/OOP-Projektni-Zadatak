@@ -16,8 +16,20 @@ namespace App_WinForms
         {
             InitializeComponent();
 
-            btn_Cancel.Click += (s, e) => this.DialogResult = DialogResult.Cancel;
-            btn_Confirm.Click += (s, e) => this.DialogResult = DialogResult.OK;
+            btn_Cancel.Click += Btn_Cancel_Click;
+            btn_Confirm.Click += Btn_Confirm_Click;
+        }
+
+        private void Btn_Confirm_Click(object? sender, EventArgs e)
+        {
+            this.DialogResult = DialogResult.OK;
+            Close();
+        }
+
+        private void Btn_Cancel_Click(object? sender, EventArgs e)
+        {
+            this.DialogResult = DialogResult.Cancel;
+            Close();
         }
     }
 }
