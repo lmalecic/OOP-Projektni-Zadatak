@@ -20,27 +20,33 @@ namespace App_WinForms
         public event EventHandler<bool>? FavoriteChanged;
 
         private bool selected = false;
-        public bool Selected {
+        public bool Selected
+        {
             get => selected;
-            set {
+            set
+            {
                 selected = value;
                 SelectedChanged?.Invoke(this, new());
             }
         }
 
         private bool favorite = false;
-        public bool Favorite {
+        public bool Favorite
+        {
             get => favorite;
-            set {
+            set
+            {
                 favorite = value;
                 FavoriteChanged?.Invoke(this, favorite);
             }
         }
 
         private Player? player = null;
-        public Player? Player {
+        public Player? Player
+        {
             get => player;
-            set {
+            set
+            {
                 player = value;
                 PlayerChanged?.Invoke(this, player);
             }
@@ -68,7 +74,8 @@ namespace App_WinForms
 
         private async void OnPlayerChanged(object? sender, Player? player)
         {
-            if (player == null) {
+            if (player == null)
+            {
                 this.Selected = false;
                 this.Favorite = false;
 
@@ -102,7 +109,8 @@ namespace App_WinForms
             if (this.Player == null)
                 return;
 
-            switch (e.Button) {
+            switch (e.Button)
+            {
                 case MouseButtons.Left:
                     // Select the container
 
@@ -123,7 +131,8 @@ namespace App_WinForms
 
         public void ForwardEvents(Control parent)
         {
-            foreach (Control child in parent.Controls) {
+            foreach (Control child in parent.Controls)
+            {
                 child.MouseDown += (sender, e) => OnMouseDown(e);
                 child.MouseMove += (sender, e) => OnMouseMove(e);
                 child.MouseClick += (sender, e) => OnMouseClick(e);
@@ -145,6 +154,22 @@ namespace App_WinForms
                 return;
 
             App.ImageRepository.SavePlayerImage(this.Player, await File.ReadAllBytesAsync(openFileDialog1.FileName));
+        }
+
+        private void AddFavoriteButton_Click(object sender, EventArgs e)
+        {
+            if (this.Player == null)
+                return;
+
+            App.AddFavoritePlayer(this.Player);
+        }
+
+        private void RemoveFavoriteButton_Click(object sender, EventArgs e)
+        {
+            if (this.Player == null)
+                return;
+
+            App.RemoveFavoritePlayer(this.Player);
         }
     }
 }

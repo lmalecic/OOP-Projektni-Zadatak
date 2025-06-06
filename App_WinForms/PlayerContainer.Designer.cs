@@ -28,206 +28,208 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.tableLayoutPanel1 = new TableLayoutPanel();
-            this.lb_Position = new Label();
-            this.lb_Number = new Label();
-            this.panel1 = new Panel();
-            this.img_Player = new PictureBox();
-            this.panel2 = new Panel();
-            this.tableLayoutPanel2 = new TableLayoutPanel();
-            this.lb_Name = new Label();
-            this.ico_Favorite = new PictureBox();
-            this.ico_Captain = new Label();
-            this.contextMenuStrip = new ContextMenuStrip(this.components);
-            this.AddFavoriteButton = new ToolStripMenuItem();
-            this.RemoveFavoriteButton = new ToolStripMenuItem();
-            this.ChangePictureButton = new ToolStripMenuItem();
-            this.openFileDialog1 = new OpenFileDialog();
-            this.tableLayoutPanel1.SuspendLayout();
-            this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)this.img_Player).BeginInit();
-            this.panel2.SuspendLayout();
-            this.tableLayoutPanel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)this.ico_Favorite).BeginInit();
-            this.contextMenuStrip.SuspendLayout();
-            this.SuspendLayout();
+            components = new System.ComponentModel.Container();
+            tableLayoutPanel1 = new TableLayoutPanel();
+            lb_Position = new Label();
+            lb_Number = new Label();
+            panel1 = new Panel();
+            img_Player = new PictureBox();
+            panel2 = new Panel();
+            tableLayoutPanel2 = new TableLayoutPanel();
+            lb_Name = new Label();
+            ico_Favorite = new PictureBox();
+            ico_Captain = new Label();
+            contextMenuStrip = new ContextMenuStrip(components);
+            AddFavoriteButton = new ToolStripMenuItem();
+            RemoveFavoriteButton = new ToolStripMenuItem();
+            ChangePictureButton = new ToolStripMenuItem();
+            openFileDialog1 = new OpenFileDialog();
+            tableLayoutPanel1.SuspendLayout();
+            panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)img_Player).BeginInit();
+            panel2.SuspendLayout();
+            tableLayoutPanel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)ico_Favorite).BeginInit();
+            contextMenuStrip.SuspendLayout();
+            SuspendLayout();
             // 
             // tableLayoutPanel1
             // 
-            this.tableLayoutPanel1.ColumnCount = 1;
-            this.tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Controls.Add(this.lb_Position, 0, 3);
-            this.tableLayoutPanel1.Controls.Add(this.lb_Number, 0, 2);
-            this.tableLayoutPanel1.Controls.Add(this.panel1, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.panel2, 0, 0);
-            this.tableLayoutPanel1.Dock = DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new Point(6, 6);
-            this.tableLayoutPanel1.Margin = new Padding(0);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 4;
-            this.tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 36F));
-            this.tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            this.tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new Size(121, 169);
-            this.tableLayoutPanel1.TabIndex = 0;
+            tableLayoutPanel1.ColumnCount = 1;
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            tableLayoutPanel1.Controls.Add(lb_Position, 0, 3);
+            tableLayoutPanel1.Controls.Add(lb_Number, 0, 2);
+            tableLayoutPanel1.Controls.Add(panel1, 0, 1);
+            tableLayoutPanel1.Controls.Add(panel2, 0, 0);
+            tableLayoutPanel1.Dock = DockStyle.Fill;
+            tableLayoutPanel1.Location = new Point(6, 6);
+            tableLayoutPanel1.Margin = new Padding(0);
+            tableLayoutPanel1.Name = "tableLayoutPanel1";
+            tableLayoutPanel1.RowCount = 4;
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 36F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            tableLayoutPanel1.Size = new Size(121, 169);
+            tableLayoutPanel1.TabIndex = 0;
             // 
             // lb_Position
             // 
-            this.lb_Position.Dock = DockStyle.Fill;
-            this.lb_Position.Location = new Point(3, 149);
-            this.lb_Position.Name = "lb_Position";
-            this.lb_Position.Size = new Size(115, 20);
-            this.lb_Position.TabIndex = 8;
-            this.lb_Position.TextAlign = ContentAlignment.MiddleCenter;
+            lb_Position.Dock = DockStyle.Fill;
+            lb_Position.Location = new Point(3, 149);
+            lb_Position.Name = "lb_Position";
+            lb_Position.Size = new Size(115, 20);
+            lb_Position.TabIndex = 8;
+            lb_Position.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // lb_Number
             // 
-            this.lb_Number.Dock = DockStyle.Fill;
-            this.lb_Number.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            this.lb_Number.Location = new Point(3, 129);
-            this.lb_Number.Name = "lb_Number";
-            this.lb_Number.Size = new Size(115, 20);
-            this.lb_Number.TabIndex = 7;
-            this.lb_Number.TextAlign = ContentAlignment.MiddleCenter;
+            lb_Number.Dock = DockStyle.Fill;
+            lb_Number.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lb_Number.Location = new Point(3, 129);
+            lb_Number.Name = "lb_Number";
+            lb_Number.Size = new Size(115, 20);
+            lb_Number.TabIndex = 7;
+            lb_Number.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.img_Player);
-            this.panel1.Dock = DockStyle.Fill;
-            this.panel1.Location = new Point(3, 39);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new Size(115, 87);
-            this.panel1.TabIndex = 0;
+            panel1.Controls.Add(img_Player);
+            panel1.Dock = DockStyle.Fill;
+            panel1.Location = new Point(3, 39);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(115, 87);
+            panel1.TabIndex = 0;
             // 
             // img_Player
             // 
-            this.img_Player.Dock = DockStyle.Fill;
-            this.img_Player.Image = Properties.Resources.PlayerSlot;
-            this.img_Player.Location = new Point(0, 0);
-            this.img_Player.Margin = new Padding(0);
-            this.img_Player.Name = "img_Player";
-            this.img_Player.Size = new Size(115, 87);
-            this.img_Player.SizeMode = PictureBoxSizeMode.Zoom;
-            this.img_Player.TabIndex = 0;
-            this.img_Player.TabStop = false;
+            img_Player.Dock = DockStyle.Fill;
+            img_Player.Image = Properties.Resources.PlayerSlot;
+            img_Player.Location = new Point(0, 0);
+            img_Player.Margin = new Padding(0);
+            img_Player.Name = "img_Player";
+            img_Player.Size = new Size(115, 87);
+            img_Player.SizeMode = PictureBoxSizeMode.Zoom;
+            img_Player.TabIndex = 0;
+            img_Player.TabStop = false;
             // 
             // panel2
             // 
-            this.panel2.Controls.Add(this.tableLayoutPanel2);
-            this.panel2.Dock = DockStyle.Fill;
-            this.panel2.Location = new Point(0, 0);
-            this.panel2.Margin = new Padding(0);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new Size(121, 36);
-            this.panel2.TabIndex = 10;
+            panel2.Controls.Add(tableLayoutPanel2);
+            panel2.Dock = DockStyle.Fill;
+            panel2.Location = new Point(0, 0);
+            panel2.Margin = new Padding(0);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(121, 36);
+            panel2.TabIndex = 10;
             // 
             // tableLayoutPanel2
             // 
-            this.tableLayoutPanel2.ColumnCount = 3;
-            this.tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 16F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 16F));
-            this.tableLayoutPanel2.Controls.Add(this.lb_Name, 1, 0);
-            this.tableLayoutPanel2.Controls.Add(this.ico_Favorite, 0, 0);
-            this.tableLayoutPanel2.Controls.Add(this.ico_Captain, 2, 0);
-            this.tableLayoutPanel2.Dock = DockStyle.Fill;
-            this.tableLayoutPanel2.Location = new Point(0, 0);
-            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 1;
-            this.tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            this.tableLayoutPanel2.Size = new Size(121, 36);
-            this.tableLayoutPanel2.TabIndex = 14;
+            tableLayoutPanel2.ColumnCount = 3;
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 16F));
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 16F));
+            tableLayoutPanel2.Controls.Add(lb_Name, 1, 0);
+            tableLayoutPanel2.Controls.Add(ico_Favorite, 0, 0);
+            tableLayoutPanel2.Controls.Add(ico_Captain, 2, 0);
+            tableLayoutPanel2.Dock = DockStyle.Fill;
+            tableLayoutPanel2.Location = new Point(0, 0);
+            tableLayoutPanel2.Name = "tableLayoutPanel2";
+            tableLayoutPanel2.RowCount = 1;
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutPanel2.Size = new Size(121, 36);
+            tableLayoutPanel2.TabIndex = 14;
             // 
             // lb_Name
             // 
-            this.lb_Name.Dock = DockStyle.Fill;
-            this.lb_Name.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            this.lb_Name.Location = new Point(16, 0);
-            this.lb_Name.Margin = new Padding(0);
-            this.lb_Name.Name = "lb_Name";
-            this.lb_Name.Size = new Size(89, 36);
-            this.lb_Name.TabIndex = 13;
-            this.lb_Name.Text = "Name";
-            this.lb_Name.TextAlign = ContentAlignment.MiddleCenter;
+            lb_Name.Dock = DockStyle.Fill;
+            lb_Name.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lb_Name.Location = new Point(16, 0);
+            lb_Name.Margin = new Padding(0);
+            lb_Name.Name = "lb_Name";
+            lb_Name.Size = new Size(89, 36);
+            lb_Name.TabIndex = 13;
+            lb_Name.Text = "Name";
+            lb_Name.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // ico_Favorite
             // 
-            this.ico_Favorite.Dock = DockStyle.Fill;
-            this.ico_Favorite.Image = Properties.Resources.icons8_favorite_32;
-            this.ico_Favorite.Location = new Point(0, 10);
-            this.ico_Favorite.Margin = new Padding(0, 10, 0, 10);
-            this.ico_Favorite.Name = "ico_Favorite";
-            this.ico_Favorite.Size = new Size(16, 16);
-            this.ico_Favorite.SizeMode = PictureBoxSizeMode.Zoom;
-            this.ico_Favorite.TabIndex = 11;
-            this.ico_Favorite.TabStop = false;
-            this.ico_Favorite.Visible = false;
+            ico_Favorite.Dock = DockStyle.Fill;
+            ico_Favorite.Image = Properties.Resources.icons8_favorite_32;
+            ico_Favorite.Location = new Point(0, 10);
+            ico_Favorite.Margin = new Padding(0, 10, 0, 10);
+            ico_Favorite.Name = "ico_Favorite";
+            ico_Favorite.Size = new Size(16, 16);
+            ico_Favorite.SizeMode = PictureBoxSizeMode.Zoom;
+            ico_Favorite.TabIndex = 11;
+            ico_Favorite.TabStop = false;
+            ico_Favorite.Visible = false;
             // 
             // ico_Captain
             // 
-            this.ico_Captain.BackColor = Color.Red;
-            this.ico_Captain.Dock = DockStyle.Fill;
-            this.ico_Captain.Font = new Font("Segoe UI Black", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            this.ico_Captain.ForeColor = SystemColors.Control;
-            this.ico_Captain.Location = new Point(105, 10);
-            this.ico_Captain.Margin = new Padding(0, 10, 0, 10);
-            this.ico_Captain.Name = "ico_Captain";
-            this.ico_Captain.Size = new Size(16, 16);
-            this.ico_Captain.TabIndex = 12;
-            this.ico_Captain.Text = "C";
-            this.ico_Captain.Visible = false;
+            ico_Captain.BackColor = Color.Red;
+            ico_Captain.Dock = DockStyle.Fill;
+            ico_Captain.Font = new Font("Segoe UI Black", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            ico_Captain.ForeColor = SystemColors.Control;
+            ico_Captain.Location = new Point(105, 10);
+            ico_Captain.Margin = new Padding(0, 10, 0, 10);
+            ico_Captain.Name = "ico_Captain";
+            ico_Captain.Size = new Size(16, 16);
+            ico_Captain.TabIndex = 12;
+            ico_Captain.Text = "C";
+            ico_Captain.Visible = false;
             // 
             // contextMenuStrip
             // 
-            this.contextMenuStrip.Items.AddRange(new ToolStripItem[] { this.AddFavoriteButton, this.RemoveFavoriteButton, this.ChangePictureButton });
-            this.contextMenuStrip.Name = "contextMenuStrip";
-            this.contextMenuStrip.Size = new Size(172, 70);
+            contextMenuStrip.Items.AddRange(new ToolStripItem[] { AddFavoriteButton, RemoveFavoriteButton, ChangePictureButton });
+            contextMenuStrip.Name = "contextMenuStrip";
+            contextMenuStrip.Size = new Size(181, 92);
             // 
             // AddFavoriteButton
             // 
-            this.AddFavoriteButton.Image = Properties.Resources.icons8_favorite_32;
-            this.AddFavoriteButton.Name = "AddFavoriteButton";
-            this.AddFavoriteButton.Size = new Size(171, 22);
-            this.AddFavoriteButton.Text = "Dodaj u omiljene";
+            AddFavoriteButton.Image = Properties.Resources.icons8_favorite_32;
+            AddFavoriteButton.Name = "AddFavoriteButton";
+            AddFavoriteButton.Size = new Size(180, 22);
+            AddFavoriteButton.Text = "Dodaj u omiljene";
+            AddFavoriteButton.Click += AddFavoriteButton_Click;
             // 
             // RemoveFavoriteButton
             // 
-            this.RemoveFavoriteButton.Image = Properties.Resources.icons8_sad_32;
-            this.RemoveFavoriteButton.Name = "RemoveFavoriteButton";
-            this.RemoveFavoriteButton.Size = new Size(171, 22);
-            this.RemoveFavoriteButton.Text = "Makni iz omiljenih";
+            RemoveFavoriteButton.Image = Properties.Resources.icons8_sad_32;
+            RemoveFavoriteButton.Name = "RemoveFavoriteButton";
+            RemoveFavoriteButton.Size = new Size(180, 22);
+            RemoveFavoriteButton.Text = "Makni iz omiljenih";
+            RemoveFavoriteButton.Click += RemoveFavoriteButton_Click;
             // 
             // ChangePictureButton
             // 
-            this.ChangePictureButton.Image = Properties.Resources.icons8_picture_32;
-            this.ChangePictureButton.Name = "ChangePictureButton";
-            this.ChangePictureButton.Size = new Size(171, 22);
-            this.ChangePictureButton.Text = "Promijeni sliku";
-            this.ChangePictureButton.Click += this.ChangePictureButton_Click;
+            ChangePictureButton.Image = Properties.Resources.icons8_picture_32;
+            ChangePictureButton.Name = "ChangePictureButton";
+            ChangePictureButton.Size = new Size(180, 22);
+            ChangePictureButton.Text = "Promijeni sliku";
+            ChangePictureButton.Click += ChangePictureButton_Click;
             // 
             // openFileDialog1
             // 
-            this.openFileDialog1.FileName = "openFileDialog";
+            openFileDialog1.FileName = "openFileDialog";
             // 
             // PlayerContainer
             // 
-            this.AutoScaleMode = AutoScaleMode.None;
-            this.Controls.Add(this.tableLayoutPanel1);
-            this.Name = "PlayerContainer";
-            this.Padding = new Padding(6);
-            this.Size = new Size(133, 181);
-            this.tableLayoutPanel1.ResumeLayout(false);
-            this.panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)this.img_Player).EndInit();
-            this.panel2.ResumeLayout(false);
-            this.tableLayoutPanel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)this.ico_Favorite).EndInit();
-            this.contextMenuStrip.ResumeLayout(false);
-            this.ResumeLayout(false);
+            AutoScaleMode = AutoScaleMode.None;
+            Controls.Add(tableLayoutPanel1);
+            Name = "PlayerContainer";
+            Padding = new Padding(6);
+            Size = new Size(133, 181);
+            tableLayoutPanel1.ResumeLayout(false);
+            panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)img_Player).EndInit();
+            panel2.ResumeLayout(false);
+            tableLayoutPanel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)ico_Favorite).EndInit();
+            contextMenuStrip.ResumeLayout(false);
+            ResumeLayout(false);
         }
 
         #endregion

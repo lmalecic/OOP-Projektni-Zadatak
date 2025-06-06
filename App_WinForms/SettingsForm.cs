@@ -16,7 +16,7 @@ namespace App_WinForms
 {
     public partial class SettingsForm : Form
     {
-        public SettingsForm()
+        private SettingsForm()
         {
             this.Initialize();
         }
@@ -46,8 +46,8 @@ namespace App_WinForms
         {
             try
             {
-                App.SetCulture(cb_Language.SelectedItem as CultureInfo);
-                App.SetTournament((cb_Tournament.SelectedItem as TournamentChoice).Value);
+                App.SetCulture(cb_Language.SelectedItem as CultureInfo ?? App.Cultures[0]);
+                App.SetTournament((cb_Tournament.SelectedItem as TournamentChoice ?? App.Tournaments[0]).Value);
                 App.ConfigRepository.Save(App.Config);
                 this.Close();
                 App.Reset();
@@ -67,6 +67,16 @@ namespace App_WinForms
         {
             this.Controls.Clear();
             this.Initialize();
+        }
+
+        public static void Open()
+        {
+            var settingsForm = new SettingsForm();
+            if (settingsForm.ShowDialog() == DialogResult.OK)
+            {
+                App.ConfigRepository.Save(App.Config);
+                App.Reset();
+            }
         }
     }
 }

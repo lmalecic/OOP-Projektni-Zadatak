@@ -32,10 +32,6 @@ namespace App_WinForms
 
             InitializeComponent();
 
-            if (!App.ConfigRepository.Exists()) {
-                App.OpenSettings();
-            }
-
             cb_FavoriteTeam.DisplayMember = "DisplayName";
             cb_FavoriteTeam.ValueMember = "Country";
 
@@ -45,6 +41,11 @@ namespace App_WinForms
             panel_FavoritePlayers.PlayerContainerRemoved += Panel_FavoritePlayers_ContainerRemoved;
 
             OnTournamentChanged(App.Config.Tournament);
+
+            if (!App.ConfigRepository.Exists())
+            {
+                SettingsForm.Open();
+            }
         }
 
         private void FavoritePlayers_Changed(object? sender, NotifyCollectionChangedEventArgs e)
@@ -195,7 +196,7 @@ namespace App_WinForms
 
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            App.OpenSettings();
+            SettingsForm.Open();
         }
 
         private void cb_FavoriteTeam_SelectionChangeCommitted(object sender, EventArgs e)
@@ -296,10 +297,7 @@ namespace App_WinForms
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            using var confirmDialog = new ExitConfirmationForm();
-            if (confirmDialog.ShowDialog(this) == DialogResult.Cancel) {
-                e.Cancel = true;
-            }
+            e.Cancel = ExitConfirmationForm.Open() != DialogResult.OK;
         }
     }
 }

@@ -12,12 +12,18 @@ namespace App_WinForms
 {
     public partial class ExitConfirmationForm : Form
     {
-        public ExitConfirmationForm()
+        private ExitConfirmationForm()
         {
             InitializeComponent();
 
             btn_Cancel.Click += (s, e) => this.DialogResult = DialogResult.Cancel;
             btn_Confirm.Click += (s, e) => this.DialogResult = DialogResult.OK;
+        }
+
+        public static DialogResult Open()
+        {
+            var form = new ExitConfirmationForm();
+            return form.ShowDialog();
         }
     }
 }
