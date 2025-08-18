@@ -26,6 +26,19 @@ namespace App_WinForms
         {
             InitializeComponent();
             Players.CollectionChanged += PlayersChanged;
+            App.PlayerImageChanged += PlayerImageChanged;
+        }
+
+        private void PlayerImageChanged(object? sender, PlayerImageChangedEventArgs e)
+        {
+            PlayerContainer? playerContainer = this.GetPlayerContainer(e.Player);
+            if (playerContainer == null)
+                return;
+
+            if (sender == playerContainer)
+                return;
+
+            playerContainer.SetImage(e.Image);
         }
 
         public PlayerContainer? GetPlayerContainer(Player player)

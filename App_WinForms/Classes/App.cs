@@ -24,6 +24,8 @@ namespace App_WinForms
 
         public static MainForm MainForm { get; private set; }
 
+        public static EventHandler<PlayerImageChangedEventArgs> PlayerImageChanged;
+
         public static Form Initialize()
         {
             SetCulture(Config.Culture);
