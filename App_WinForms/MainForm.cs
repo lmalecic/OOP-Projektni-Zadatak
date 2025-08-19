@@ -50,14 +50,6 @@ namespace App_WinForms
             panel_FavoritePlayers.DragEnter += panel_FavoritePlayers_DragEnter;
             panel_FavoritePlayers.DragDrop += panel_FavoritePlayers_DragDrop;
 
-            Task.Run(() =>
-            {
-                if (!App.ConfigRepository.Exists())
-                {
-                    App.OpenSettings();
-                }
-            });
-
             cb_FavoriteTeam.DisplayMember = "DisplayName";
             cb_FavoriteTeam.ValueMember = "Country";
             cb_FavoriteTeam.SelectionChangeCommitted += cb_FavoriteTeam_SelectionChangeCommitted;
@@ -261,7 +253,7 @@ namespace App_WinForms
 
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            App.OpenSettings();
+            SettingsForm.Open();
         }
 
         private void cb_FavoriteTeam_SelectionChangeCommitted(object? sender, EventArgs e)
@@ -420,21 +412,19 @@ namespace App_WinForms
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            using var confirmDialog = new ExitConfirmationForm();
-            if (confirmDialog.ShowDialog(this) == DialogResult.Cancel)
-            {
-                e.Cancel = true;
-            }
+            e.Cancel = ExitConfirmationForm.Open() != DialogResult.OK;
         }
 
         private void btn_RankedListPlayers_Click(object sender, EventArgs e)
         {
-
+            PlayersRankedListForm PlayersRankedListForm = new();
+            PlayersRankedListForm.Show(this);
         }
 
         private void btn_RankedListImpressions_Click(object sender, EventArgs e)
         {
-
+            VisitorsRankedListForm VisitorsRankedListForm = new();
+            VisitorsRankedListForm.Show(this);
         }
     }
 }

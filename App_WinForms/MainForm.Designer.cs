@@ -29,8 +29,6 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            settingsToolStripMenuItem = new ToolStripMenuItem();
-            menuStrip1 = new MenuStrip();
             splitContainer1 = new SplitContainer();
             flowLayoutPanel2 = new FlowLayoutPanel();
             groupBox1 = new GroupBox();
@@ -43,7 +41,8 @@
             flowLayoutPanel4 = new FlowLayoutPanel();
             groupBox3 = new GroupBox();
             panel_Players = new PlayersPanel();
-            menuStrip1.SuspendLayout();
+            settingsToolStripMenuItem = new ToolStripMenuItem();
+            menuStrip1 = new MenuStrip();
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
             splitContainer1.Panel1.SuspendLayout();
             splitContainer1.Panel2.SuspendLayout();
@@ -54,21 +53,8 @@
             flowLayoutPanel1.SuspendLayout();
             flowLayoutPanel4.SuspendLayout();
             groupBox3.SuspendLayout();
+            menuStrip1.SuspendLayout();
             SuspendLayout();
-            // 
-            // settingsToolStripMenuItem
-            // 
-            settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            resources.ApplyResources(settingsToolStripMenuItem, "settingsToolStripMenuItem");
-            settingsToolStripMenuItem.Click += settingsToolStripMenuItem_Click;
-            // 
-            // menuStrip1
-            // 
-            menuStrip1.ImageScalingSize = new Size(20, 20);
-            menuStrip1.Items.AddRange(new ToolStripItem[] { settingsToolStripMenuItem });
-            menuStrip1.LayoutStyle = ToolStripLayoutStyle.Flow;
-            resources.ApplyResources(menuStrip1, "menuStrip1");
-            menuStrip1.Name = "menuStrip1";
             // 
             // splitContainer1
             // 
@@ -77,24 +63,26 @@
             // 
             // splitContainer1.Panel1
             // 
+            resources.ApplyResources(splitContainer1.Panel1, "splitContainer1.Panel1");
             splitContainer1.Panel1.Controls.Add(flowLayoutPanel2);
             // 
             // splitContainer1.Panel2
             // 
+            resources.ApplyResources(splitContainer1.Panel2, "splitContainer1.Panel2");
             splitContainer1.Panel2.Controls.Add(flowLayoutPanel4);
             // 
             // flowLayoutPanel2
             // 
+            resources.ApplyResources(flowLayoutPanel2, "flowLayoutPanel2");
             flowLayoutPanel2.Controls.Add(groupBox1);
             flowLayoutPanel2.Controls.Add(groupBox2);
             flowLayoutPanel2.Controls.Add(flowLayoutPanel1);
-            resources.ApplyResources(flowLayoutPanel2, "flowLayoutPanel2");
             flowLayoutPanel2.Name = "flowLayoutPanel2";
             // 
             // groupBox1
             // 
-            groupBox1.Controls.Add(cb_FavoriteTeam);
             resources.ApplyResources(groupBox1, "groupBox1");
+            groupBox1.Controls.Add(cb_FavoriteTeam);
             groupBox1.Name = "groupBox1";
             groupBox1.TabStop = false;
             // 
@@ -107,24 +95,24 @@
             // 
             // groupBox2
             // 
-            groupBox2.Controls.Add(panel_FavoritePlayers);
             resources.ApplyResources(groupBox2, "groupBox2");
+            groupBox2.Controls.Add(panel_FavoritePlayers);
             groupBox2.Name = "groupBox2";
             groupBox2.TabStop = false;
             // 
             // panel_FavoritePlayers
             // 
+            resources.ApplyResources(panel_FavoritePlayers, "panel_FavoritePlayers");
             panel_FavoritePlayers.AllowDrop = true;
             panel_FavoritePlayers.BackColor = SystemColors.Window;
             panel_FavoritePlayers.BorderStyle = BorderStyle.FixedSingle;
-            resources.ApplyResources(panel_FavoritePlayers, "panel_FavoritePlayers");
             panel_FavoritePlayers.Name = "panel_FavoritePlayers";
             // 
             // flowLayoutPanel1
             // 
+            resources.ApplyResources(flowLayoutPanel1, "flowLayoutPanel1");
             flowLayoutPanel1.Controls.Add(btn_RankedListPlayers);
             flowLayoutPanel1.Controls.Add(btn_RankedListImpressions);
-            resources.ApplyResources(flowLayoutPanel1, "flowLayoutPanel1");
             flowLayoutPanel1.Name = "flowLayoutPanel1";
             // 
             // btn_RankedListPlayers
@@ -143,24 +131,38 @@
             // 
             // flowLayoutPanel4
             // 
-            flowLayoutPanel4.Controls.Add(groupBox3);
             resources.ApplyResources(flowLayoutPanel4, "flowLayoutPanel4");
+            flowLayoutPanel4.Controls.Add(groupBox3);
             flowLayoutPanel4.Name = "flowLayoutPanel4";
             // 
             // groupBox3
             // 
-            groupBox3.Controls.Add(panel_Players);
             resources.ApplyResources(groupBox3, "groupBox3");
+            groupBox3.Controls.Add(panel_Players);
             groupBox3.Name = "groupBox3";
             groupBox3.TabStop = false;
             // 
             // panel_Players
             // 
+            resources.ApplyResources(panel_Players, "panel_Players");
             panel_Players.AllowDrop = true;
             panel_Players.BackColor = SystemColors.Window;
             panel_Players.BorderStyle = BorderStyle.FixedSingle;
-            resources.ApplyResources(panel_Players, "panel_Players");
             panel_Players.Name = "panel_Players";
+            // 
+            // settingsToolStripMenuItem
+            // 
+            resources.ApplyResources(settingsToolStripMenuItem, "settingsToolStripMenuItem");
+            settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
+            settingsToolStripMenuItem.Click += settingsToolStripMenuItem_Click;
+            // 
+            // menuStrip1
+            // 
+            resources.ApplyResources(menuStrip1, "menuStrip1");
+            menuStrip1.ImageScalingSize = new Size(20, 20);
+            menuStrip1.Items.AddRange(new ToolStripItem[] { settingsToolStripMenuItem });
+            menuStrip1.LayoutStyle = ToolStripLayoutStyle.Flow;
+            menuStrip1.Name = "menuStrip1";
             // 
             // MainForm
             // 
@@ -173,8 +175,6 @@
             Name = "MainForm";
             SizeGripStyle = SizeGripStyle.Hide;
             FormClosing += MainForm_FormClosing;
-            menuStrip1.ResumeLayout(false);
-            menuStrip1.PerformLayout();
             splitContainer1.Panel1.ResumeLayout(false);
             splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)splitContainer1).EndInit();
@@ -185,6 +185,8 @@
             flowLayoutPanel1.ResumeLayout(false);
             flowLayoutPanel4.ResumeLayout(false);
             groupBox3.ResumeLayout(false);
+            menuStrip1.ResumeLayout(false);
+            menuStrip1.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }

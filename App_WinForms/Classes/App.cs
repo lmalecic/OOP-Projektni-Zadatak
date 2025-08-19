@@ -22,9 +22,14 @@ namespace App_WinForms
         
         public static Config Config { get; private set; } = ConfigRepository.Get();
 
-        public static MainForm MainForm { get; private set; }
+        public static MainForm MainForm { get; private set; } = new();
 
         public static EventHandler<PlayerImageChangedEventArgs>? PlayerImageChanged;
+
+        static App()
+        {
+            SetCulture(Config.Culture);
+        }
 
         public static void Save()
         {
@@ -34,21 +39,6 @@ namespace App_WinForms
         public static void Reset()
         {
             MainForm.Reset();
-        }
-
-        public static void OpenSettings()
-        {
-            using var settingsForm = new SettingsForm();
-            if (settingsForm.ShowDialog() == DialogResult.OK) {
-                ConfigRepository.Save(Config);
-                Reset();
-            }
-            //if (SettingsForm == null || SettingsForm.IsDisposed) {
-            //    SettingsForm = new();
-            //}
-
-            //SettingsForm.Focus();
-            //SettingsForm.Show();
         }
 
         public static void SetCulture(CultureInfo culture)
@@ -91,11 +81,5 @@ namespace App_WinForms
 
         public static bool IsPlayerFavorite(Player player)
             => Config.GetFavoritePlayers().Contains(player);
-
-        static App()
-        {
-            SetCulture(Config.Culture);
-            MainForm = new MainForm();
-        }
     }
 }
