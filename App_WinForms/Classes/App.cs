@@ -24,14 +24,7 @@ namespace App_WinForms
 
         public static MainForm MainForm { get; private set; }
 
-        public static EventHandler<PlayerImageChangedEventArgs> PlayerImageChanged;
-
-        public static Form Initialize()
-        {
-            SetCulture(Config.Culture);
-            MainForm = new();
-            return MainForm;
-        }
+        public static EventHandler<PlayerImageChangedEventArgs>? PlayerImageChanged;
 
         public static void Save()
         {
@@ -101,7 +94,8 @@ namespace App_WinForms
 
         static App()
         {
-            Initialize();
+            SetCulture(Config.Culture);
+            MainForm = new MainForm();
         }
     }
 }

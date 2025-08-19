@@ -26,7 +26,7 @@ namespace App_WinForms
             set
             {
                 selected = value;
-                SelectedChanged?.Invoke(this, new());
+                SelectedChanged?.Invoke(this, value);
             }
         }
 
@@ -58,8 +58,13 @@ namespace App_WinForms
             PlayerChanged += OnPlayerChanged;
             FavoriteChanged += OnFavoriteChanged;
 
-            MouseClick += this.PlayerContainer_MouseClick;
+            SelectedChanged += PlayerContainer_SelectedChanged;
             ForwardEvents(this);
+        }
+
+        private void PlayerContainer_SelectedChanged(object? sender, bool selected)
+        {
+            this.BackColor = selected == true ? SystemColors.Highlight : SystemColors.Control;
         }
 
         private void OnFavoriteChanged(object? sender, bool e)
@@ -104,31 +109,6 @@ namespace App_WinForms
             this.SetImage(image != null ? Image.FromStream(new MemoryStream(image)) : Properties.Resources.PlayerSlot);
         }
 
-        private void PlayerContainer_MouseClick(object? sender, MouseEventArgs e)
-        {
-            if (this.Player == null)
-                return;
-
-            switch (e.Button)
-            {
-                case MouseButtons.Left:
-                    // Select the container
-
-                    break;
-                case MouseButtons.Right:
-                    // Show context menu
-                    OpenContextMenu(e.Location);
-                    break;
-            }
-        }
-
-        private void OpenContextMenu(Point mousePos)
-        {
-            this.AddFavoriteButton.Visible = !this.Favorite;
-            this.RemoveFavoriteButton.Visible = this.Favorite;
-            contextMenuStrip.Show(this, mousePos);
-        }
-
         public void ForwardEvents(Control parent)
         {
             foreach (Control child in parent.Controls)
@@ -142,48 +122,9 @@ namespace App_WinForms
             }
         }
 
-        private async void ChangePictureButton_Click(object sender, EventArgs e)
-        {
-            if (this.Player == null)
-                return;
-
-            openFileDialog1.Filter = "Image Files|*.jpg;*.jpeg;*.png;";
-            var result = openFileDialog1.ShowDialog(this);
-
-            if (result != DialogResult.OK)
-                return;
-
-            var imageBytes = await File.ReadAllBytesAsync(openFileDialog1.FileName);
-            var image = imageBytes != null ? Image.FromStream(new MemoryStream(imageBytes)) : Properties.Resources.PlayerSlot;
-
-            if (imageBytes != null)
-            {
-                App.ImageRepository.SavePlayerImage(this.Player, imageBytes);
-            }
-
-            this.SetImage(image);
-            App.PlayerImageChanged?.Invoke(this, new PlayerImageChangedEventArgs(this.Player, image));
-        }
-
         public void SetImage(Image image)
         {
             img_Player.Image = image;
-        }
-
-        private void AddFavoriteButton_Click(object sender, EventArgs e)
-        {
-            if (Player == null)
-                return;
-
-            App.AddFavoritePlayer(Player);
-        }
-
-        private void RemoveFavoriteButton_Click(object sender, EventArgs e)
-        {
-            if (Player == null)
-                return;
-
-            App.RemoveFavoritePlayer(Player);
         }
     }
 }

@@ -28,33 +28,77 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.panel_Items = new FlowLayoutPanel();
-            this.SuspendLayout();
+            components = new System.ComponentModel.Container();
+            panel_Items = new FlowLayoutPanel();
+            openFileDialog1 = new OpenFileDialog();
+            contextMenuStrip = new ContextMenuStrip(components);
+            AddFavoriteButton = new ToolStripMenuItem();
+            RemoveFavoriteButton = new ToolStripMenuItem();
+            ChangePictureButton = new ToolStripMenuItem();
+            contextMenuStrip.SuspendLayout();
+            SuspendLayout();
             // 
             // panel_Items
             // 
-            this.panel_Items.AutoScroll = true;
-            this.panel_Items.BackColor = Color.Transparent;
-            this.panel_Items.Dock = DockStyle.Fill;
-            this.panel_Items.Location = new Point(0, 0);
-            this.panel_Items.Margin = new Padding(0);
-            this.panel_Items.Name = "panel_Items";
-            this.panel_Items.Size = new Size(148, 148);
-            this.panel_Items.TabIndex = 0;
+            panel_Items.AutoScroll = true;
+            panel_Items.BackColor = Color.Transparent;
+            panel_Items.Dock = DockStyle.Fill;
+            panel_Items.Location = new Point(0, 0);
+            panel_Items.Margin = new Padding(0);
+            panel_Items.Name = "panel_Items";
+            panel_Items.Size = new Size(148, 148);
+            panel_Items.TabIndex = 0;
+            // 
+            // openFileDialog1
+            // 
+            openFileDialog1.FileName = "openFileDialog";
+            // 
+            // contextMenuStrip
+            // 
+            contextMenuStrip.Items.AddRange(new ToolStripItem[] { AddFavoriteButton, RemoveFavoriteButton, ChangePictureButton });
+            contextMenuStrip.Name = "contextMenuStrip";
+            contextMenuStrip.Size = new Size(181, 92);
+            // 
+            // AddFavoriteButton
+            // 
+            AddFavoriteButton.Image = Properties.Resources.icons8_favorite_32;
+            AddFavoriteButton.Name = "AddFavoriteButton";
+            AddFavoriteButton.Size = new Size(180, 22);
+            AddFavoriteButton.Text = "Dodaj u omiljene";
+            // 
+            // RemoveFavoriteButton
+            // 
+            RemoveFavoriteButton.Image = Properties.Resources.icons8_sad_32;
+            RemoveFavoriteButton.Name = "RemoveFavoriteButton";
+            RemoveFavoriteButton.Size = new Size(180, 22);
+            RemoveFavoriteButton.Text = "Makni iz omiljenih";
+            // 
+            // ChangePictureButton
+            // 
+            ChangePictureButton.Image = Properties.Resources.icons8_picture_32;
+            ChangePictureButton.Name = "ChangePictureButton";
+            ChangePictureButton.Size = new Size(180, 22);
+            ChangePictureButton.Text = "Promijeni sliku";
             // 
             // PlayersPanel
             // 
-            this.AutoScaleMode = AutoScaleMode.Inherit;
-            this.BackColor = SystemColors.Window;
-            this.BorderStyle = BorderStyle.FixedSingle;
-            this.Controls.Add(this.panel_Items);
-            this.Name = "PlayersPanel";
-            this.Size = new Size(148, 148);
-            this.ResumeLayout(false);
+            AutoScaleMode = AutoScaleMode.Inherit;
+            BackColor = SystemColors.Window;
+            BorderStyle = BorderStyle.FixedSingle;
+            Controls.Add(panel_Items);
+            Name = "PlayersPanel";
+            Size = new Size(148, 148);
+            contextMenuStrip.ResumeLayout(false);
+            ResumeLayout(false);
         }
 
         #endregion
 
         private FlowLayoutPanel panel_Items;
+        private OpenFileDialog openFileDialog1;
+        private ContextMenuStrip contextMenuStrip;
+        private ToolStripMenuItem AddFavoriteButton;
+        private ToolStripMenuItem RemoveFavoriteButton;
+        private ToolStripMenuItem ChangePictureButton;
     }
 }
