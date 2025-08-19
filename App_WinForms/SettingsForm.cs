@@ -77,6 +77,8 @@ namespace App_WinForms
                 App.ConfigRepository.Save(App.Config);
                 App.Reset();
             }
+
+            settingsForm.Dispose();
         }
     }
 }

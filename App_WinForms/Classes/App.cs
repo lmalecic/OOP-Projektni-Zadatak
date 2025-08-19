@@ -24,7 +24,9 @@ namespace App_WinForms
 
         public static MainForm MainForm { get; private set; } = new();
 
-        public static void Initialize()
+        public static EventHandler<PlayerImageChangedEventArgs>? PlayerImageChanged;
+
+        static App()
         {
             SetCulture(Config.Culture);
         }
@@ -79,10 +81,5 @@ namespace App_WinForms
 
         public static bool IsPlayerFavorite(Player player)
             => Config.GetFavoritePlayers().Contains(player);
-
-        static App()
-        {
-            Initialize();
-        }
     }
 }

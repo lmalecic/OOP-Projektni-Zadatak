@@ -20,6 +20,18 @@ namespace App_WinForms
     {
         private Point dragStart = new();
 
+        // Payload used for drag & drop to support multi-select and knowing the source panel
+        private sealed class DragPlayersData
+        {
+            public PlayersPanel Source { get; }
+            public List<Player> Players { get; }
+            public DragPlayersData(PlayersPanel source, List<Player> players)
+            {
+                Source = source;
+                Players = players;
+            }
+        }
+
         public MainForm()
         {
             this.Initialize();
@@ -32,8 +44,15 @@ namespace App_WinForms
 
             InitializeComponent();
 
+            // Ensure drop targets are wired
+            panel_Players.DragEnter += panel_Players_DragEnter;
+            panel_Players.DragDrop += panel_Players_DragDrop;
+            panel_FavoritePlayers.DragEnter += panel_FavoritePlayers_DragEnter;
+            panel_FavoritePlayers.DragDrop += panel_FavoritePlayers_DragDrop;
+
             cb_FavoriteTeam.DisplayMember = "DisplayName";
             cb_FavoriteTeam.ValueMember = "Country";
+            cb_FavoriteTeam.SelectionChangeCommitted += cb_FavoriteTeam_SelectionChangeCommitted;
 
             panel_Players.PlayerContainerAdded += Panel_Players_ContainerAdded;
             panel_Players.PlayerContainerRemoved += Panel_Players_ContainerRemoved;
@@ -41,21 +60,18 @@ namespace App_WinForms
             panel_FavoritePlayers.PlayerContainerRemoved += Panel_FavoritePlayers_ContainerRemoved;
 
             OnTournamentChanged(App.Config.Tournament);
-
-            if (!App.ConfigRepository.Exists())
-            {
-                SettingsForm.Open();
-            }
         }
 
         private void FavoritePlayers_Changed(object? sender, NotifyCollectionChangedEventArgs e)
         {
-            switch (e.Action) {
+            switch (e.Action)
+            {
                 case NotifyCollectionChangedAction.Add:
                     if (e.NewItems == null)
                         break;
 
-                    foreach (var player in e.NewItems.Cast<Player>()) {
+                    foreach (var player in e.NewItems.Cast<Player>())
+                    {
                         panel_FavoritePlayers.Players.Add(player);
                     }
 
@@ -64,7 +80,8 @@ namespace App_WinForms
                     if (e.OldItems == null)
                         break;
 
-                    foreach (var player in e.OldItems.Cast<Player>()) {
+                    foreach (var player in e.OldItems.Cast<Player>())
+                    {
                         panel_FavoritePlayers.Players.Remove(player);
                     }
 
@@ -79,12 +96,14 @@ namespace App_WinForms
 
         private void Players_Changed(object? sender, NotifyCollectionChangedEventArgs e)
         {
-            switch (e.Action) {
+            switch (e.Action)
+            {
                 case NotifyCollectionChangedAction.Add:
                     if (e.NewItems == null)
                         break;
 
-                    foreach (var player in e.NewItems.Cast<Player>()) {
+                    foreach (var player in e.NewItems.Cast<Player>())
+                    {
                         panel_Players.Players.Add(player);
                     }
 
@@ -93,7 +112,8 @@ namespace App_WinForms
                     if (e.OldItems == null)
                         break;
 
-                    foreach (var player in e.OldItems.Cast<Player>()) {
+                    foreach (var player in e.OldItems.Cast<Player>())
+                    {
                         panel_Players.Players.Remove(player);
                     }
 
@@ -145,17 +165,54 @@ namespace App_WinForms
 
         private void Container_MouseDown(object? sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Left) {
+            if (sender is PlayerContainer container && container.Parent?.Parent is PlayersPanel sourcePanel)
+            {
+                if (ReferenceEquals(sourcePanel, panel_Players))
+                {
+                    panel_FavoritePlayers.ClearSelection();
+                }
+                else if (ReferenceEquals(sourcePanel, panel_FavoritePlayers))
+                {
+                    panel_Players.ClearSelection();
+                }
+            }
+
+            if (e.Button == MouseButtons.Left)
+            {
                 this.dragStart = e.Location;
             }
         }
 
-        private void Panel_FavoritePlayers_ContainerMouseMove(object? sender, MouseEventArgs e)
+        private void BeginDragFromContainer(PlayerContainer container)
         {
-            if (e.Button != MouseButtons.Left || IsDragTresholdReached(e.Location) || sender is not PlayerContainer container || container.Player == null)
+            if (container.Player == null)
                 return;
 
-            container.DoDragDrop(container, DragDropEffects.Copy);
+            if (container.Parent?.Parent is not PlayersPanel sourcePanel)
+                return;
+
+            if (!sourcePanel.SelectedContainers.Contains(container))
+            {
+                sourcePanel.SelectContainer(container, multiSelect: false);
+            }
+
+            var selectedPlayers = sourcePanel.SelectedContainers
+                .Select(c => c.Player)
+                .Where(p => p != null)
+                .Cast<Player>()
+                .Distinct()
+                .ToList();
+
+            var payload = new DragPlayersData(sourcePanel, selectedPlayers);
+            container.DoDragDrop(payload, DragDropEffects.Copy);
+        }
+
+        private void Panel_FavoritePlayers_ContainerMouseMove(object? sender, MouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Left || !IsDragTresholdReached(e.Location) || sender is not PlayerContainer container || container.Player == null)
+                return;
+
+            BeginDragFromContainer(container);
         }
 
         private void Panel_Players_ContainerRemoved(object? sender, PlayerPanelContainerEventArgs e)
@@ -180,10 +237,10 @@ namespace App_WinForms
 
         private void Panel_Players_ContainerMouseMove(object? sender, MouseEventArgs e)
         {
-            if (e.Button != MouseButtons.Left || IsDragTresholdReached(e.Location) || sender is not PlayerContainer container || container.Player == null)
+            if (e.Button != MouseButtons.Left || !IsDragTresholdReached(e.Location) || sender is not PlayerContainer container || container.Player == null)
                 return;
 
-            container.DoDragDrop(container, DragDropEffects.Copy);
+            BeginDragFromContainer(container);
         }
 
         private void Panel_Players_ContainerMouseDown(object? sender, MouseEventArgs e)
@@ -199,7 +256,7 @@ namespace App_WinForms
             SettingsForm.Open();
         }
 
-        private void cb_FavoriteTeam_SelectionChangeCommitted(object sender, EventArgs e)
+        private void cb_FavoriteTeam_SelectionChangeCommitted(object? sender, EventArgs e)
         {
             Team? team = cb_FavoriteTeam.SelectedItem as Team;
             if (team != null && team.Equals(App.Config.FavoriteTeam))
@@ -210,41 +267,95 @@ namespace App_WinForms
 
         private void panel_Players_DragDrop(object sender, DragEventArgs e)
         {
-            if (e.Data == null || e.Data.GetData(typeof(PlayerContainer)) is not PlayerContainer sourceContainer ||
-                sourceContainer.Parent?.Parent is not PlayersPanel sourcePanel ||
-                sourceContainer.Player == null ||
-                sourcePanel != panel_FavoritePlayers) {
+            if (e.Data == null || e.Data.GetData(typeof(DragPlayersData)) is not DragPlayersData payload)
                 return;
-            }
 
-            App.RemoveFavoritePlayer(sourceContainer.Player);
+            if (payload.Source != panel_FavoritePlayers)
+                return;
+
+            var toRemove = payload.Players
+                .Where(p => p != null && App.IsPlayerFavorite(p))
+                .Distinct()
+                .ToList();
+
+            foreach (var p in toRemove)
+            {
+                App.RemoveFavoritePlayer(p);
+            }
         }
 
         private void panel_Players_DragEnter(object sender, DragEventArgs e)
         {
-            if (e.Data == null || e.Data.GetData(typeof(PlayerContainer)) is not PlayerContainer)
+            if (e.Data == null || e.Data.GetData(typeof(DragPlayersData)) is not DragPlayersData payload)
+            {
+                e.Effect = DragDropEffects.None;
                 return;
+            }
 
-            e.Effect = DragDropEffects.Copy;
+            e.Effect = payload.Source == panel_FavoritePlayers ? DragDropEffects.Copy : DragDropEffects.None;
         }
 
         private void panel_FavoritePlayers_DragDrop(object sender, DragEventArgs e)
         {
-            if (e.Data == null || e.Data.GetData(typeof(PlayerContainer)) is not PlayerContainer sourceContainer ||
-                sourceContainer?.Parent?.Parent is not PlayersPanel sourcePanel ||
-                sourceContainer.Player == null ||
-                sourcePanel != panel_Players) {
+            if (e.Data == null || e.Data.GetData(typeof(DragPlayersData)) is not DragPlayersData payload)
+                return;
+
+            if (payload.Source != panel_Players)
+                return;
+
+            var currentFavoritesCount = App.Config.GetFavoritePlayers().Count;
+            var availableSlots = App.Config.MAX_FAVORITE_PLAYERS - currentFavoritesCount;
+            if (availableSlots <= 0)
+            {
+                MessageBox.Show(
+                    $"Can have max {App.Config.MAX_FAVORITE_PLAYERS} favorite players!",
+                    "Invalid operation!",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
                 return;
             }
 
-            App.AddFavoritePlayer(sourceContainer.Player);
+            var toAdd = payload.Players
+                .Where(p => p != null && !App.IsPlayerFavorite(p))
+                .Distinct()
+                .ToList();
+
+            if (toAdd.Count == 0)
+                return;
+
+            if (toAdd.Count > availableSlots)
+            {
+                MessageBox.Show(
+                    $"Can have max {App.Config.MAX_FAVORITE_PLAYERS} favorite players!",
+                    "Invalid operation!",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+                return;
+            }
+
+            foreach (var p in toAdd)
+            {
+                App.AddFavoritePlayer(p);
+            }
         }
 
         private void panel_FavoritePlayers_DragEnter(object sender, DragEventArgs e)
         {
-            if (e.Data == null || e.Data.GetData(typeof(PlayerContainer)) == null)
+            if (e.Data == null || e.Data.GetData(typeof(DragPlayersData)) is not DragPlayersData payload)
+            {
+                e.Effect = DragDropEffects.None;
                 return;
+            }
 
+            if (payload.Source != panel_Players)
+            {
+                e.Effect = DragDropEffects.None;
+                return;
+            }
+
+            //var availableSlots = App.Config.MAX_FAVORITE_PLAYERS - App.Config.GetFavoritePlayers().Count;
+            //var toAddCount = payload.Players.Where(p => p != null && !App.IsPlayerFavorite(p)).Distinct().Count();
+            //e.Effect = toAddCount > 0 && toAddCount <= availableSlots ? DragDropEffects.Copy : DragDropEffects.None;
             e.Effect = DragDropEffects.Copy;
         }
 
@@ -266,11 +377,13 @@ namespace App_WinForms
             if (team == null)
                 return;
 
-            foreach (var player in await App.WorldCupRepository.GetTeamPlayers(App.Config.Tournament, team)) {
+            foreach (var player in await App.WorldCupRepository.GetTeamPlayers(App.Config.Tournament, team))
+            {
                 panel_Players.Players.Add(player);
             }
 
-            foreach (var player in App.Config.GetFavoritePlayers()) {
+            foreach (var player in App.Config.GetFavoritePlayers())
+            {
                 panel_FavoritePlayers.Players.Add(player);
             }
         }
@@ -280,7 +393,8 @@ namespace App_WinForms
             panel_FavoritePlayers.Players.Add(player);
 
             var container = panel_Players.GetPlayerContainer(player);
-            if (container != null) {
+            if (container != null)
+            {
                 container.Favorite = true;
             }
         }
@@ -290,7 +404,8 @@ namespace App_WinForms
             panel_FavoritePlayers.Players.Remove(player);
 
             var container = panel_Players.GetPlayerContainer(player);
-            if (container != null) {
+            if (container != null)
+            {
                 container.Favorite = false;
             }
         }
@@ -298,6 +413,18 @@ namespace App_WinForms
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             e.Cancel = ExitConfirmationForm.Open() != DialogResult.OK;
+        }
+
+        private void btn_RankedListPlayers_Click(object sender, EventArgs e)
+        {
+            PlayersRankedListForm PlayersRankedListForm = new();
+            PlayersRankedListForm.Show(this);
+        }
+
+        private void btn_RankedListImpressions_Click(object sender, EventArgs e)
+        {
+            VisitorsRankedListForm VisitorsRankedListForm = new();
+            VisitorsRankedListForm.Show(this);
         }
     }
 }

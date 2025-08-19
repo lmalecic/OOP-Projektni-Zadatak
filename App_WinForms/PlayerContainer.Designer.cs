@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
             tableLayoutPanel1 = new TableLayoutPanel();
             lb_Position = new Label();
             lb_Number = new Label();
@@ -39,18 +38,12 @@
             lb_Name = new Label();
             ico_Favorite = new PictureBox();
             ico_Captain = new Label();
-            contextMenuStrip = new ContextMenuStrip(components);
-            AddFavoriteButton = new ToolStripMenuItem();
-            RemoveFavoriteButton = new ToolStripMenuItem();
-            ChangePictureButton = new ToolStripMenuItem();
-            openFileDialog1 = new OpenFileDialog();
             tableLayoutPanel1.SuspendLayout();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)img_Player).BeginInit();
             panel2.SuspendLayout();
             tableLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)ico_Favorite).BeginInit();
-            contextMenuStrip.SuspendLayout();
             SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -181,40 +174,6 @@
             ico_Captain.Text = "C";
             ico_Captain.Visible = false;
             // 
-            // contextMenuStrip
-            // 
-            contextMenuStrip.Items.AddRange(new ToolStripItem[] { AddFavoriteButton, RemoveFavoriteButton, ChangePictureButton });
-            contextMenuStrip.Name = "contextMenuStrip";
-            contextMenuStrip.Size = new Size(181, 92);
-            // 
-            // AddFavoriteButton
-            // 
-            AddFavoriteButton.Image = Properties.Resources.icons8_favorite_32;
-            AddFavoriteButton.Name = "AddFavoriteButton";
-            AddFavoriteButton.Size = new Size(180, 22);
-            AddFavoriteButton.Text = "Dodaj u omiljene";
-            AddFavoriteButton.Click += AddFavoriteButton_Click;
-            // 
-            // RemoveFavoriteButton
-            // 
-            RemoveFavoriteButton.Image = Properties.Resources.icons8_sad_32;
-            RemoveFavoriteButton.Name = "RemoveFavoriteButton";
-            RemoveFavoriteButton.Size = new Size(180, 22);
-            RemoveFavoriteButton.Text = "Makni iz omiljenih";
-            RemoveFavoriteButton.Click += RemoveFavoriteButton_Click;
-            // 
-            // ChangePictureButton
-            // 
-            ChangePictureButton.Image = Properties.Resources.icons8_picture_32;
-            ChangePictureButton.Name = "ChangePictureButton";
-            ChangePictureButton.Size = new Size(180, 22);
-            ChangePictureButton.Text = "Promijeni sliku";
-            ChangePictureButton.Click += ChangePictureButton_Click;
-            // 
-            // openFileDialog1
-            // 
-            openFileDialog1.FileName = "openFileDialog";
-            // 
             // PlayerContainer
             // 
             AutoScaleMode = AutoScaleMode.None;
@@ -228,7 +187,6 @@
             panel2.ResumeLayout(false);
             tableLayoutPanel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)ico_Favorite).EndInit();
-            contextMenuStrip.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -239,15 +197,10 @@
         private PictureBox img_Player;
         private Label lb_Number;
         private Label lb_Position;
-        private ContextMenuStrip contextMenuStrip;
-        private ToolStripMenuItem AddFavoriteButton;
-        private ToolStripMenuItem RemoveFavoriteButton;
-        private ToolStripMenuItem ChangePictureButton;
         private Panel panel2;
         private Label lb_Name;
         private Label ico_Captain;
         private PictureBox ico_Favorite;
         private TableLayoutPanel tableLayoutPanel2;
-        private OpenFileDialog openFileDialog1;
     }
 }
