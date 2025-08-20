@@ -23,9 +23,9 @@ namespace App_WPF
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
-            StartupSettings settingsWindow = new();
+            SettingsWindow settingsWindow = new();
             settingsWindow.Owner = this;
-            settingsWindow.Show();
+            settingsWindow.ShowDialog();
         }
     }
 }

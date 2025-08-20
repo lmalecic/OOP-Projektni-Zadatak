@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 using DAL.Converters;
 using System.Collections.ObjectModel;
+using DAL.Enums;
 
 namespace DAL
 {
@@ -17,6 +18,7 @@ namespace DAL
 
         public CultureInfo Culture { get; set; } = new CultureInfo("en");
         public TournamentType Tournament { get; set; } = TournamentType.Men;
+        public SizeSetting SizeSetting { get; set; } = SizeSetting.Fullscreen;
 
         public Team? FavoriteTeam { get; set; }
         public Dictionary<TournamentType, Dictionary<string, IList<Player>>> FavoritePlayersByTeam = [];
