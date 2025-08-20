@@ -11,6 +11,7 @@ namespace App_WPF
     public partial class App : Application
     {
         public static IRepository<Config> ConfigRepository = RepositoryFactory.GetConfigRepository();
+        public static IWorldCupRepository WorldCupRepository = RepositoryFactory.GetWorldCupRepository();
 
         public static Config Config { get; private set; } = ConfigRepository.Get();
 

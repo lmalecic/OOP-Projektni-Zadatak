@@ -9,7 +9,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\football_field.png" />
+    <None Remove="Images\PlayerSlot.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\DAL\DAL.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\football_field.png" />
+    <Resource Include="Images\PlayerSlot.png" />
   </ItemGroup>
 
 </Project>
