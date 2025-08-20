@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "App_WPF": {
+      "commandName": "Project",
+      "workingDirectory": "$(SolutionDir)"
+    }
+  }
+}

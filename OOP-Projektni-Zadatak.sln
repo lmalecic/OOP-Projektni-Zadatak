@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "App_WinForms", "App_WinForm
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DAL", "DAL\DAL.csproj", "{65355C69-81EE-4708-B488-8170E71C912D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App_WPF", "App_WPF\App_WPF.csproj", "{05C82BDD-B8BD-4AEA-B9E5-934C4AB6BAB3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{65355C69-81EE-4708-B488-8170E71C912D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{65355C69-81EE-4708-B488-8170E71C912D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{65355C69-81EE-4708-B488-8170E71C912D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05C82BDD-B8BD-4AEA-B9E5-934C4AB6BAB3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05C82BDD-B8BD-4AEA-B9E5-934C4AB6BAB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05C82BDD-B8BD-4AEA-B9E5-934C4AB6BAB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05C82BDD-B8BD-4AEA-B9E5-934C4AB6BAB3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

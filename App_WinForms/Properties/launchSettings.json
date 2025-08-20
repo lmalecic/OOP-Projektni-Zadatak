@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "App_WinForms": {
+      "commandName": "Project",
+      "workingDirectory": "$(SolutionDir)"
+    }
+  }
+}
