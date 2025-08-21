@@ -54,7 +54,7 @@
                 </Grid.ColumnDefinitions>
                 <ComboBox ItemsSource="{Binding Teams1}"
                           SelectedItem="{Binding Team1, Mode=TwoWay}" VerticalContentAlignment="Center"/>
-                <Button x:Name="team1StatsButton" Style="{StaticResource TeamInfoButton}" Grid.Row="1" Grid.Column="3" Click="team1StatsButton_Click"/>
+                <Button x:Name="team1StatsButton" Style="{StaticResource TeamInfoButton}" Grid.Row="1" Grid.Column="3" Click="team1StatsButton_Click" IsEnabled="False"/>
             </Grid>
         </GroupBox>
 
@@ -67,7 +67,7 @@
                 <ComboBox x:Name="teams2ComboBox"
                           ItemsSource="{Binding Teams2}"
                           SelectedItem="{Binding Team2, Mode=TwoWay}" IsEnabled="False" FlowDirection="LeftToRight" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"/>
-                <Button x:Name="team2StatsButton" Style="{StaticResource TeamInfoButton}" Grid.Row="1" Grid.Column="3" Click="team2StatsButton_Click"/>
+                <Button x:Name="team2StatsButton" Style="{StaticResource TeamInfoButton}" Grid.Row="1" Grid.Column="3" Click="team2StatsButton_Click" IsEnabled="False"/>
             </Grid>
         </GroupBox>
 

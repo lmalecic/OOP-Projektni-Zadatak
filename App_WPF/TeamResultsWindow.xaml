@@ -5,24 +5,224 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:App_WPF"
         mc:Ignorable="d"
-        Title="Team Stats" Height="300" Width="400"
+        Title="Team Stats" Height="200" Width="300"
         ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
-    <Grid>
+    <Window.Resources>
+        <ExponentialEase x:Key="ExpoOut" EasingMode="EaseOut" Exponent="5"/>
+        <Style TargetType="Grid" x:Key="StatsGridStyle">
+            <Style.Resources>
+                <Style TargetType="Label">
+                    <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                </Style>
+            </Style.Resources>
+        </Style>
+    </Window.Resources>
+    <Window.Triggers>
+        <EventTrigger RoutedEvent="Window.Loaded">
+            <BeginStoryboard>
+                <Storyboard>
+                    <DoubleAnimation Storyboard.TargetName="TitleLabel"
+                                     Storyboard.TargetProperty="Opacity"
+                                     From="0" To="1" Duration="0:0:0.5"
+                                     EasingFunction="{StaticResource ExpoOut}"/>
+                    <DoubleAnimation Storyboard.TargetName="TitleLabel"
+                                     Storyboard.TargetProperty="RenderTransform.(TranslateTransform.Y)"
+                                     From="15" To="0" Duration="0:0:0.5"
+                                     EasingFunction="{StaticResource ExpoOut}"/>
+
+                    <DoubleAnimation Storyboard.TargetName="FifaLabel"
+                                     Storyboard.TargetProperty="Opacity"
+                                     BeginTime="0:0:0.1"
+                                     From="0" To="1" Duration="0:0:0.5"
+                                     EasingFunction="{StaticResource ExpoOut}"/>
+                    <DoubleAnimation Storyboard.TargetName="FifaLabel"
+                                     Storyboard.TargetProperty="RenderTransform.(TranslateTransform.Y)"
+                                     BeginTime="0:0:0.1"
+                                     From="15" To="0" Duration="0:0:0.5"
+                                     EasingFunction="{StaticResource ExpoOut}"/>
+                    <DoubleAnimation Storyboard.TargetName="GamesLabel"
+                                     Storyboard.TargetProperty="Opacity"
+                                     BeginTime="0:0:0.2"
+                                     From="0" To="1" Duration="0:0:0.5"
+                                     EasingFunction="{StaticResource ExpoOut}"/>
+                    <DoubleAnimation Storyboard.TargetName="GamesLabel"
+                                     Storyboard.TargetProperty="RenderTransform.(TranslateTransform.Y)"
+                                     BeginTime="0:0:0.2"
+                                     From="15" To="0" Duration="0:0:0.5"
+                                     EasingFunction="{StaticResource ExpoOut}"/>
+                    <DoubleAnimation Storyboard.TargetName="WinsLabel"
+                                     Storyboard.TargetProperty="Opacity"
+                                     BeginTime="0:0:0.3"
+                                     From="0" To="1" Duration="0:0:0.5"
+                                     EasingFunction="{StaticResource ExpoOut}"/>
+                    <DoubleAnimation Storyboard.TargetName="WinsLabel"
+                                     Storyboard.TargetProperty="RenderTransform.(TranslateTransform.Y)"
+                                     BeginTime="0:0:0.3"
+                                     From="15" To="0" Duration="0:0:0.5"
+                                     EasingFunction="{StaticResource ExpoOut}"/>
+                    <DoubleAnimation Storyboard.TargetName="LossesLabel"
+                                     Storyboard.TargetProperty="Opacity"
+                                     BeginTime="0:0:0.4"
+                                     From="0" To="1" Duration="0:0:0.5"
+                                     EasingFunction="{StaticResource ExpoOut}"/>
+                    <DoubleAnimation Storyboard.TargetName="LossesLabel"
+                                     Storyboard.TargetProperty="RenderTransform.(TranslateTransform.Y)"
+                                     BeginTime="0:0:0.4"
+                                     From="15" To="0" Duration="0:0:0.5"
+                                     EasingFunction="{StaticResource ExpoOut}"/>
+                    <DoubleAnimation Storyboard.TargetName="DrawsLabel"
+                                     Storyboard.TargetProperty="Opacity"
+                                     BeginTime="0:0:0.5"
+                                     From="0" To="1" Duration="0:0:0.5"
+                                     EasingFunction="{StaticResource ExpoOut}"/>
+                    <DoubleAnimation Storyboard.TargetName="DrawsLabel"
+                                     Storyboard.TargetProperty="RenderTransform.(TranslateTransform.Y)"
+                                     BeginTime="0:0:0.5"
+                                     From="15" To="0" Duration="0:0:0.5"
+                                     EasingFunction="{StaticResource ExpoOut}"/>
+                    <DoubleAnimation Storyboard.TargetName="GoalsForLabel"
+                                     Storyboard.TargetProperty="Opacity"
+                                     BeginTime="0:0:0.6"
+                                     From="0" To="1" Duration="0:0:0.5"
+                                     EasingFunction="{StaticResource ExpoOut}"/>
+                    <DoubleAnimation Storyboard.TargetName="GoalsForLabel"
+                                     Storyboard.TargetProperty="RenderTransform.(TranslateTransform.Y)"
+                                     BeginTime="0:0:0.6"
+                                     From="15" To="0" Duration="0:0:0.5"
+                                     EasingFunction="{StaticResource ExpoOut}"/>
+                    <DoubleAnimation Storyboard.TargetName="GoalsAgainstLabel"
+                                     Storyboard.TargetProperty="Opacity"
+                                     BeginTime="0:0:0.7"
+                                     From="0" To="1" Duration="0:0:0.5"
+                                     EasingFunction="{StaticResource ExpoOut}"/>
+                    <DoubleAnimation Storyboard.TargetName="GoalsAgainstLabel"
+                                     Storyboard.TargetProperty="RenderTransform.(TranslateTransform.Y)"
+                                     BeginTime="0:0:0.7"
+                                     From="15" To="0" Duration="0:0:0.5"
+                                     EasingFunction="{StaticResource ExpoOut}"/>
+                    <DoubleAnimation Storyboard.TargetName="GoalDiffLabel"
+                                     Storyboard.TargetProperty="Opacity"
+                                     BeginTime="0:0:0.8"
+                                     From="0" To="1" Duration="0:0:0.5"
+                                     EasingFunction="{StaticResource ExpoOut}"/>
+                    <DoubleAnimation Storyboard.TargetName="GoalDiffLabel"
+                                     Storyboard.TargetProperty="RenderTransform.(TranslateTransform.Y)"
+                                     BeginTime="0:0:0.8"
+                                     From="15" To="0" Duration="0:0:0.5"
+                                     EasingFunction="{StaticResource ExpoOut}"/>
+                </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+    </Window.Triggers>
+
+    <Grid Style="{StaticResource StatsGridStyle}" x:Name="RootGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <Label Content="{Binding TeamResults}" FontWeight="Bold" FontSize="16"/>
-        <StackPanel Grid.Row="1">
-            <Label Content="{Binding TeamResults.FifaCode}" ContentStringFormat="FIFA Code: {0}"/>
-            <Label Content="{Binding TeamResults.GamesPlayed}" ContentStringFormat="Matches played: {0}"/>
-            <Label Content="{Binding TeamResults.Wins}" ContentStringFormat="Wins: {0}"/>
-            <Label Content="{Binding TeamResults.Losses}" ContentStringFormat="Losses: {0}"/>
-            <Label Content="{Binding TeamResults.Draws}" ContentStringFormat="Draws: {0}"/>
-            <Label Content="{Binding TeamResults.GoalsFor}" ContentStringFormat="Goals scored: {0}"/>
-            <Label Content="{Binding TeamResults.GoalsAgainst}" ContentStringFormat="Goals conceded: {0}"/>
-            <Label Content="{Binding TeamResults.GoalDifferential}" ContentStringFormat="Goal differential: {0}"/>
-        </StackPanel>
+        <Label x:Name="TitleLabel" Content="{Binding TeamResults}" FontWeight="Bold" FontSize="16" Opacity="0" HorizontalAlignment="Center">
+            <Label.RenderTransform>
+                <TranslateTransform Y="0"/>
+            </Label.RenderTransform>
+        </Label>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <StackPanel>
+                <Grid x:Name="FifaLabel" Opacity="0" HorizontalAlignment="Stretch">
+                    <Grid.RenderTransform>
+                        <TranslateTransform Y="0"/>
+                    </Grid.RenderTransform>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="FIFA Code:"/>
+                    <Label Grid.Column="1" Content="{Binding TeamResults.FifaCode}" HorizontalAlignment="Right"/>
+                </Grid>
+                <Grid x:Name="GamesLabel" Opacity="0" HorizontalAlignment="Stretch">
+                    <Grid.RenderTransform>
+                        <TranslateTransform Y="0"/>
+                    </Grid.RenderTransform>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Matches played:"/>
+                    <Label Grid.Column="1" Content="{Binding TeamResults.GamesPlayed}" HorizontalAlignment="Right"/>
+                </Grid>
+                <Grid x:Name="WinsLabel" Opacity="0" HorizontalAlignment="Stretch">
+                    <Grid.RenderTransform>
+                        <TranslateTransform Y="0"/>
+                    </Grid.RenderTransform>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Wins:"/>
+                    <Label Grid.Column="1" Content="{Binding TeamResults.Wins}" HorizontalAlignment="Right"/>
+                </Grid>
+                <Grid x:Name="LossesLabel" Opacity="0" HorizontalAlignment="Stretch">
+                    <Grid.RenderTransform>
+                        <TranslateTransform Y="0"/>
+                    </Grid.RenderTransform>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Losses:"/>
+                    <Label Grid.Column="1" Content="{Binding TeamResults.Losses}" HorizontalAlignment="Right"/>
+                </Grid>
+                <Grid x:Name="DrawsLabel" Opacity="0" HorizontalAlignment="Stretch">
+                    <Grid.RenderTransform>
+                        <TranslateTransform Y="0"/>
+                    </Grid.RenderTransform>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Draws:"/>
+                    <Label Grid.Column="1" Content="{Binding TeamResults.Draws}" HorizontalAlignment="Right"/>
+                </Grid>
+            </StackPanel>
+            <StackPanel Grid.Column="1">
+                <Grid x:Name="GoalsForLabel" Opacity="0" HorizontalAlignment="Stretch">
+                    <Grid.RenderTransform>
+                        <TranslateTransform Y="0"/>
+                    </Grid.RenderTransform>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Goals scored:"/>
+                    <Label Grid.Column="1" Content="{Binding TeamResults.GoalsFor}" HorizontalAlignment="Right"/>
+                </Grid>
+                <Grid x:Name="GoalsAgainstLabel" Opacity="0" HorizontalAlignment="Stretch">
+                    <Grid.RenderTransform>
+                        <TranslateTransform Y="0"/>
+                    </Grid.RenderTransform>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Goals conceded:"/>
+                    <Label Grid.Column="1" Content="{Binding TeamResults.GoalsAgainst}" HorizontalAlignment="Right"/>
+                </Grid>
+                <Grid x:Name="GoalDiffLabel" Opacity="0" HorizontalAlignment="Stretch">
+                    <Grid.RenderTransform>
+                        <TranslateTransform Y="0"/>
+                    </Grid.RenderTransform>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Goal differential:"/>
+                    <Label Grid.Column="1" Content="{Binding TeamResults.GoalDifferential}" HorizontalAlignment="Right"/>
+                </Grid>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Window>

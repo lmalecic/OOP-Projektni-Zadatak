@@ -48,8 +48,8 @@ namespace App_WPF
             }
         }
 
-        private Team team1;
-        public Team Team1
+        private Team? team1;
+        public Team? Team1
         {
             get => team1;
             set
@@ -62,8 +62,8 @@ namespace App_WPF
             }
         }
 
-        private Match.MatchTeam team2;
-        public Match.MatchTeam Team2
+        private Match.MatchTeam? team2;
+        public Match.MatchTeam? Team2
         {
             get => team2;
             set
@@ -99,12 +99,13 @@ namespace App_WPF
             if (e.PropertyName == nameof(Team1))
             {
                 App.Config.FavoriteTeam = Team1;
+                team1StatsButton.IsEnabled = Team1 != null;
                 loadTeams2();
             }
             else if (e.PropertyName == nameof(Team2))
             {
+                team2StatsButton.IsEnabled = Team2 != null;
                 loadMatch();
-
             }
         }
 
@@ -188,6 +189,13 @@ namespace App_WPF
 
         private async void loadTeams2()
         {
+            if (Team1 == null)
+            {
+                this.Teams2 = [];
+                this.teams2ComboBox.IsEnabled = false;
+                return;
+            }
+
             team1Matches = await App.WorldCupRepository.GetMatchesByFifaCode(App.Config.Tournament, Team1.FifaCode);
 
             var availableTeams = team1Matches
@@ -212,14 +220,25 @@ namespace App_WPF
             settingsWindow.ShowDialog();
         }
 
-        private void team1StatsButton_Click(object sender, RoutedEventArgs e)
+        private async void team1StatsButton_Click(object sender, RoutedEventArgs e)
         {
-            showTeamStats(Team1.FifaCode);
+            if (Team1 == null)
+            {
+                MessageBox.Show("Please select a team first.", "Statistics", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+            await showTeamStats(Team1.FifaCode);
         }
 
-        private void team2StatsButton_Click(object sender, RoutedEventArgs e)
+        private async void team2StatsButton_Click(object sender, RoutedEventArgs e)
         {
-            showTeamStats(Team2.Code);
+            if (Team2 == null)
+            {
+                MessageBox.Show("Please select a team first.", "Statistics", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            await showTeamStats(Team2.Code);
         }
 
         private async Task showTeamStats(string fifaCode)
