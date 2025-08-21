@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DAL
 {
-    public class MatchResultsByGroup
+    public class TeamResultsByGroup
     {
         [JsonProperty("id")]
         public long Id { get; set; }
@@ -16,6 +16,6 @@ namespace DAL
         public string Letter { get; set; }
 
         [JsonProperty("ordered_teams")]
-        public MatchResult[] Teams { get; set; }
+        public TeamResult[] Teams { get; set; }
     }
 }

@@ -41,19 +41,19 @@ namespace DAL
             return JsonConvert.DeserializeObject<IList<Team>>(text) ?? [];
         }
 
-        public async Task<IList<MatchResult>> GetTeamResults(TournamentType tournamentType)
+        public async Task<IList<TeamResult>> GetTeamResults(TournamentType tournamentType)
         {
             string path = tournamentType.GetResultsFilePath();
             string text = await File.ReadAllTextAsync(path);
-            return JsonConvert.DeserializeObject<IList<MatchResult>>(text) ?? [];
+            return JsonConvert.DeserializeObject<IList<TeamResult>>(text) ?? [];
         }
 
-        public async Task<IList<MatchResultsByGroup>> GetTeamResultsByGroup(TournamentType tournamentType)
+        public async Task<IList<TeamResultsByGroup>> GetTeamResultsByGroup(TournamentType tournamentType)
         {
             string path = tournamentType.GetGroupResultsFilePath();
             string text = await File.ReadAllTextAsync(path);
 
-            return JsonConvert.DeserializeObject<IList<MatchResultsByGroup>>(text) ?? [];
+            return JsonConvert.DeserializeObject<IList<TeamResultsByGroup>>(text) ?? [];
         }
 
         public async Task<IList<Player>> GetTeamPlayers(TournamentType tournamentType, Team team)
@@ -152,6 +152,12 @@ namespace DAL
             }
 
             return null;
+        }
+
+        public async Task<TeamResult?> GetTeamResultsFor(TournamentType tournamentType, string fifaCode)
+        {
+            return (await GetTeamResults(tournamentType))
+                .FirstOrDefault(result => result.FifaCode.Equals(fifaCode, StringComparison.OrdinalIgnoreCase));
         }
     }
 }

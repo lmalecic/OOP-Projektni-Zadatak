@@ -1,8 +1,10 @@
 ﻿using DAL;
 using System.ComponentModel;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -32,8 +34,8 @@ namespace App_WPF
             }
         }
 
-        private IList<Team> teams2 = [];
-        public IList<Team> Teams2
+        private IList<Match.MatchTeam> teams2 = [];
+        public IList<Match.MatchTeam> Teams2
         {
             get => teams2;
             set
@@ -60,8 +62,8 @@ namespace App_WPF
             }
         }
 
-        private Team team2;
-        public Team Team2
+        private Match.MatchTeam team2;
+        public Match.MatchTeam Team2
         {
             get => team2;
             set
@@ -74,6 +76,9 @@ namespace App_WPF
             }
         }
 
+        private IList<Match> team1Matches = [];
+        private Match? selectedMatch;
+
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged(string propertyName)
         {
@@ -84,10 +89,117 @@ namespace App_WPF
         {
             InitializeComponent();
             this.DataContext = this;
-            loadData();
+            loadTeams1();
+
+            PropertyChanged += MainWindow_PropertyChanged;
         }
 
-        private async void loadData()
+        private void MainWindow_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(Team1))
+            {
+                App.Config.FavoriteTeam = Team1;
+                loadTeams2();
+            }
+            else if (e.PropertyName == nameof(Team2))
+            {
+                loadMatch();
+
+            }
+        }
+
+        private void loadMatch()
+        {
+            selectedMatch = team1Matches
+                .FirstOrDefault(m => (m.HomeTeam.Equals(team1) && m.AwayTeam.Equals(team2)) ||
+                                     (m.AwayTeam.Equals(team1) && m.HomeTeam.Equals(team2)));
+            if (selectedMatch == null)
+            {
+                matchResultPanel.Visibility = Visibility.Hidden;
+                return;
+            }
+
+            var firstTeam = selectedMatch.HomeTeam.Equals(team1) ? selectedMatch.HomeTeam : selectedMatch.AwayTeam;
+            var secondTeam = selectedMatch.HomeTeam.Equals(team1) ? selectedMatch.AwayTeam : selectedMatch.HomeTeam;
+
+            var firstTeamStatistics = selectedMatch.HomeTeam.Equals(team1) ? selectedMatch.HomeTeamStatistics : selectedMatch.AwayTeamStatistics;
+            var secondTeamStatistics = selectedMatch.HomeTeam.Equals(team1) ? selectedMatch.AwayTeamStatistics : selectedMatch.HomeTeamStatistics;
+
+            matchResultLabel.Content = $"{firstTeam.Goals} : {secondTeam.Goals}";
+            matchResultPanel.Visibility = Visibility.Visible;
+
+            Forward1.Children.Clear();
+            Forward2.Children.Clear();
+            Midfield1.Children.Clear();
+            Midfield2.Children.Clear();
+            Defenders1.Children.Clear();
+            Defenders2.Children.Clear();
+            Goalie1.Children.Clear();
+            Goalie2.Children.Clear();
+
+            foreach (var player in firstTeamStatistics.StartingEleven)
+            {
+                switch (player.Position)
+                {
+                    case Position.Defender:
+                        loadPlayer(Defenders1, player);
+                        break;
+                    case Position.Forward:
+                        loadPlayer(Forward1, player);
+                        break;
+                    case Position.Goalie:
+                        loadPlayer(Goalie1, player);
+                        break;
+                    case Position.Midfield:
+                        loadPlayer(Midfield1, player);
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            foreach (var player in secondTeamStatistics.StartingEleven)
+            {
+                switch (player.Position)
+                {
+                    case Position.Defender:
+                        loadPlayer(Defenders2, player);
+                        break;
+                    case Position.Forward:
+                        loadPlayer(Forward2, player);
+                        break;
+                    case Position.Goalie:
+                        loadPlayer(Goalie2, player);
+                        break;
+                    case Position.Midfield:
+                        loadPlayer(Midfield2, player);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        private void loadPlayer(Panel parent, Player player)
+        {
+            PlayerContainer playerContainer = new(player);
+            parent.Children.Add(playerContainer);
+        }
+
+        private async void loadTeams2()
+        {
+            team1Matches = await App.WorldCupRepository.GetMatchesByFifaCode(App.Config.Tournament, Team1.FifaCode);
+
+            var availableTeams = team1Matches
+                .Select(m => m.HomeTeam.Equals(team1) ? m.AwayTeam : m.HomeTeam)
+                //.Distinct()
+                .ToList();
+
+            this.Teams2 = availableTeams;
+            this.teams2ComboBox.IsEnabled = true;
+        }
+
+        private async void loadTeams1()
         {
             this.Teams1 = await App.WorldCupRepository.GetTeams(App.Config.Tournament);
             this.Team1 = App.Config.FavoriteTeam ?? teams1.First();
@@ -98,6 +210,30 @@ namespace App_WPF
             SettingsWindow settingsWindow = new();
             settingsWindow.Owner = this;
             settingsWindow.ShowDialog();
+        }
+
+        private void team1StatsButton_Click(object sender, RoutedEventArgs e)
+        {
+            showTeamStats(Team1.FifaCode);
+        }
+
+        private void team2StatsButton_Click(object sender, RoutedEventArgs e)
+        {
+            showTeamStats(Team2.Code);
+        }
+
+        private async Task showTeamStats(string fifaCode)
+        {
+            var teamStats = await App.WorldCupRepository.GetTeamResultsFor(App.Config.Tournament, fifaCode);
+            if (teamStats == null)
+            {
+                MessageBox.Show("No statistics available for this team.", "Statistics", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+
+            TeamResultsWindow teamResultsWindow = new(teamStats);
+            teamResultsWindow.Owner = this;
+            teamResultsWindow.ShowDialog();
         }
     }
 }

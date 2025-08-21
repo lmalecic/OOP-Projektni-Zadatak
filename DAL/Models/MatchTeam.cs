@@ -26,6 +26,9 @@ namespace DAL
                     return this.Code == team.FifaCode || this.Country == team.Country;
                 return false;
             }
+
+            public override string ToString()
+            => $"{Country} ({Code})";
         }
     }
 }

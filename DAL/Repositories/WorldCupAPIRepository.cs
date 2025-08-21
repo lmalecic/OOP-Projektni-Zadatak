@@ -34,14 +34,14 @@ namespace DAL
             return JsonConvert.DeserializeObject<IList<Team>>(await _httpClient.GetStringAsync(tournamentType.GetTeamsApiPath())) ?? new List<Team>();
         }
 
-        public async Task<IList<MatchResult>> GetTeamResults(TournamentType tournamentType)
+        public async Task<IList<TeamResult>> GetTeamResults(TournamentType tournamentType)
         {
-            return JsonConvert.DeserializeObject<IList<MatchResult>>(await _httpClient.GetStringAsync(tournamentType.GetResultsApiPath())) ?? new List<MatchResult>();
+            return JsonConvert.DeserializeObject<IList<TeamResult>>(await _httpClient.GetStringAsync(tournamentType.GetResultsApiPath())) ?? new List<TeamResult>();
         }
 
-        public async Task<IList<MatchResultsByGroup>> GetTeamResultsByGroup(TournamentType tournamentType)
+        public async Task<IList<TeamResultsByGroup>> GetTeamResultsByGroup(TournamentType tournamentType)
         {
-            return JsonConvert.DeserializeObject<IList<MatchResultsByGroup>>(await _httpClient.GetStringAsync(tournamentType.GetGroupResultsApiPath())) ?? new List<MatchResultsByGroup>();
+            return JsonConvert.DeserializeObject<IList<TeamResultsByGroup>>(await _httpClient.GetStringAsync(tournamentType.GetGroupResultsApiPath())) ?? new List<TeamResultsByGroup>();
         }
 
         public async Task<IList<Player>> GetTeamPlayers(TournamentType tournamentType, Team team)
@@ -140,6 +140,12 @@ namespace DAL
             }
 
             return null;
+        }
+
+        public async Task<TeamResult?> GetTeamResultsFor(TournamentType tournamentType, string fifaCode)
+        {
+            return (await GetTeamResults(tournamentType))
+                .FirstOrDefault(result => result.FifaCode.Equals(fifaCode, StringComparison.OrdinalIgnoreCase));
         }
     }
 }

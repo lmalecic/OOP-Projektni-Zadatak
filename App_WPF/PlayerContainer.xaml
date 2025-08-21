@@ -7,13 +7,13 @@
              mc:Ignorable="d" 
              d:DesignHeight="120" d:DesignWidth="100">
     <Grid ClipToBounds="False">
-        <Image Source="Images/PlayerSlot.png" Margin="10,10,10,0" Grid.RowSpan="2"/>
-        <TextBlock TextAlignment="Center" TextWrapping="Wrap" Text="Luka Modric" VerticalAlignment="Top" Foreground="White">
+        <Image x:Name="playerImage" Source="{Binding PlayerImageSource}" Margin="10,10,10,0" Grid.RowSpan="2"/>
+        <TextBlock Text="{Binding Player}" TextAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White">
             <TextBlock.Effect>
                 <DropShadowEffect ShadowDepth="2"/>
             </TextBlock.Effect>
         </TextBlock>
-        <Label Content="10" Grid.RowSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Black" FontSize="20" Foreground="White">
+        <Label Content="{Binding Player.ShirtNumber}" Grid.RowSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Black" FontSize="20" Foreground="White">
             <Label.Effect>
                 <DropShadowEffect ShadowDepth="2" Opacity="0.5"/>
             </Label.Effect>

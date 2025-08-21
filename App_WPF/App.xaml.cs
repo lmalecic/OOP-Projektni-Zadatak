@@ -12,6 +12,7 @@ namespace App_WPF
     {
         public static IRepository<Config> ConfigRepository = RepositoryFactory.GetConfigRepository();
         public static IWorldCupRepository WorldCupRepository = RepositoryFactory.GetWorldCupRepository();
+        public static ImageRepository ImageRepository = RepositoryFactory.GetImageRepository();
 
         public static Config Config { get; private set; } = ConfigRepository.Get();
 
@@ -32,6 +33,13 @@ namespace App_WPF
             }
 
             this.ShutdownMode = ShutdownMode.OnMainWindowClose;
+        }
+
+        protected override void OnExit(ExitEventArgs e)
+        {
+            base.OnExit(e);
+
+            ConfigRepository.Save(Config);
         }
     }
 

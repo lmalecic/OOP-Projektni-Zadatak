@@ -7,7 +7,7 @@ using Newtonsoft.Json.Converters;
 
 namespace DAL
 {
-    public class MatchResult
+    public class TeamResult
     {
         [JsonProperty("id")]
         public long Id { get; set; }
@@ -50,5 +50,8 @@ namespace DAL
 
         [JsonProperty("goal_differential")]
         public long GoalDifferential { get; set; }
+
+        public override string ToString()
+            => $"Stats for {AlternateName ?? Country}";
     }
 }
