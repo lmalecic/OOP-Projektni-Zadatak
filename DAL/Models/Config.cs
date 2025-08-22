@@ -9,18 +9,53 @@ using System.Threading.Tasks;
 using DAL.Converters;
 using System.Collections.ObjectModel;
 using DAL.Enums;
+using System.ComponentModel;
 
 namespace DAL
 {
-    public class Config
+    public class Config : INotifyPropertyChanged
     {
         public int MAX_FAVORITE_PLAYERS { get; } = 3;
 
-        public CultureInfo Culture { get; set; } = new CultureInfo("en");
-        public TournamentType Tournament { get; set; } = TournamentType.Men;
-        public SizeSetting SizeSetting { get; set; } = SizeSetting.Fullscreen;
+        private CultureInfo culture = new CultureInfo("en");
+        public CultureInfo Culture { 
+            get => culture;
+            set
+            {
+                if (culture == value)
+                    return;
 
-        private Dictionary<TournamentType, Team> favoriteTeamByTournament = [];
+                culture = value;
+                OnPropertyChanged(nameof(Culture));
+            }
+        }
+
+        private TournamentType tournament = TournamentType.Men;
+        public TournamentType Tournament {
+            get => tournament;
+            set {
+                if (tournament == value)
+                    return;
+
+                tournament = value;
+                OnPropertyChanged(nameof(Tournament));
+            }
+        }
+        private SizeSetting sizeSetting = SizeSetting.Fullscreen;
+        public SizeSetting SizeSetting {
+            get => sizeSetting;
+            set { 
+                if (sizeSetting == value)
+                    return;
+
+                sizeSetting = value;
+                OnPropertyChanged(nameof(SizeSetting));
+            }
+        }
+
+        public Dictionary<TournamentType, Team> favoriteTeamByTournament = [];
+
+        [JsonIgnore]
         public Team? FavoriteTeam {
             /*
                 absolute gigachad trenutak
@@ -67,6 +102,12 @@ namespace DAL
         }
 
         public Dictionary<TournamentType, Dictionary<string, IList<Player>>> FavoritePlayersByTeam = [];
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
 
         public IList<Player> GetFavoritePlayers()
         {

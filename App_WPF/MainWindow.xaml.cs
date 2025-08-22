@@ -1,5 +1,7 @@
 ﻿using DAL;
+using DAL.Enums;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
@@ -80,7 +82,7 @@ namespace App_WPF
         private IList<Match> team1Matches = [];
         private Match? selectedMatch;
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
         protected virtual void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
@@ -93,19 +95,69 @@ namespace App_WPF
             loadTeams1();
 
             PropertyChanged += MainWindow_PropertyChanged;
+            App.Config.PropertyChanged += Config_PropertyChanged;
+
+            setWindowSize(App.Config.SizeSetting);
+        }
+
+        private void Config_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(App.Config.Tournament))
+            {
+                loadTeams1();
+            }
+            else if (e.PropertyName == nameof(App.Config.SizeSetting))
+            {
+                setWindowSize(App.Config.SizeSetting);
+            }
+        }
+
+        private void setWindowSize(SizeSetting sizeSetting)
+        {
+            switch (sizeSetting)
+            {
+                case SizeSetting.Fullscreen:
+                    this.WindowState = WindowState.Maximized;
+                    break;
+                case SizeSetting.Windowed1:
+                    this.WindowState = WindowState.Normal;
+                    this.Width = 800;
+                    this.Height = 582;
+                    break;
+                case SizeSetting.Windowed2:
+                    this.WindowState = WindowState.Normal;
+                    this.Width = 1024;
+                    this.Height = 768;
+                    break;
+                case SizeSetting.Windowed3:
+                    this.WindowState = WindowState.Normal;
+                    this.Width = 1280;
+                    this.Height = 720;
+                    break;
+                default:
+                    break;
+            }
         }
 
         private void MainWindow_PropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(Team1))
             {
-                App.Config.FavoriteTeam = Team1;
+                if (Team1 != null)
+                {
+                    App.Config.FavoriteTeam = Team1;
+                }
+
                 team1StatsButton.IsEnabled = Team1 != null;
+                Team2 = null;
+                clearMatch();
                 loadTeams2();
             }
             else if (e.PropertyName == nameof(Team2))
             {
+
                 team2StatsButton.IsEnabled = Team2 != null;
+                clearMatch();
                 loadMatch();
             }
         }
@@ -130,15 +182,6 @@ namespace App_WPF
 
             matchResultLabel.Content = $"{firstTeam.Goals} : {secondTeam.Goals}";
             matchResultPanel.Visibility = Visibility.Visible;
-
-            Forward1.Children.Clear();
-            Forward2.Children.Clear();
-            Midfield1.Children.Clear();
-            Midfield2.Children.Clear();
-            Defenders1.Children.Clear();
-            Defenders2.Children.Clear();
-            Goalie1.Children.Clear();
-            Goalie2.Children.Clear();
 
             foreach (var player in firstTeamStatistics.StartingEleven)
             {
@@ -181,6 +224,18 @@ namespace App_WPF
                         break;
                 }
             }
+        }
+
+        private void clearMatch()
+        {
+            Forward1.Children.Clear();
+            Forward2.Children.Clear();
+            Midfield1.Children.Clear();
+            Midfield2.Children.Clear();
+            Defenders1.Children.Clear();
+            Defenders2.Children.Clear();
+            Goalie1.Children.Clear();
+            Goalie2.Children.Clear();
         }
 
         private void loadPlayer(Panel parent, Player player)
@@ -232,6 +287,7 @@ namespace App_WPF
             var availableTeams = team1Matches
                 .Select(m => m.HomeTeam.Equals(team1) ? m.AwayTeam : m.HomeTeam)
                 //.Distinct()
+                .OrderBy(m => m.Country)
                 .ToList();
 
             this.Teams2 = availableTeams;
@@ -240,8 +296,10 @@ namespace App_WPF
 
         private async void loadTeams1()
         {
-            this.Teams1 = await App.WorldCupRepository.GetTeams(App.Config.Tournament);
-            this.Team1 = App.Config.FavoriteTeam ?? teams1.First();
+            this.Teams1 = (await App.WorldCupRepository.GetTeams(App.Config.Tournament))
+                .OrderBy(t => t.Country)
+                .ToList();
+            this.Team1 = teams1.FirstOrDefault(t => t.Equals(App.Config.FavoriteTeam)) ?? teams1.FirstOrDefault();
         }
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
@@ -284,6 +342,16 @@ namespace App_WPF
             TeamResultsWindow teamResultsWindow = new(teamStats);
             teamResultsWindow.Owner = this;
             teamResultsWindow.ShowDialog();
+        }
+
+        private void Window_Closing(object sender, CancelEventArgs e)
+        {
+            ExitConfirmationWindow exitConfirmationWindow = new();
+            exitConfirmationWindow.Owner = this;
+            if (exitConfirmationWindow.ShowDialog() != true)
+            {
+                e.Cancel = true;
+            }
         }
     }
 }

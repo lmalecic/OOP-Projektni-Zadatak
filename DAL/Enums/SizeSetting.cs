@@ -9,8 +9,8 @@ namespace DAL.Enums
     public enum SizeSetting
     {
         Fullscreen,
-        Windowed800x600,
-        Windowed1024x768,
-        Windowed1280x720,
+        Windowed1,
+        Windowed2,
+        Windowed3,
     }
 }

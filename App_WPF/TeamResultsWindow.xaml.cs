@@ -21,7 +21,7 @@ namespace App_WPF
     /// </summary>
     public partial class TeamResultsWindow : Window, INotifyPropertyChanged
     {
-        private TeamResult teamResults;
+        private TeamResult teamResults = null!;
         public TeamResult TeamResults
         {
             get => teamResults;

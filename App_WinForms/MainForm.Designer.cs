@@ -174,7 +174,6 @@
             MaximizeBox = false;
             Name = "MainForm";
             SizeGripStyle = SizeGripStyle.Hide;
-            FormClosing += MainForm_FormClosing;
             splitContainer1.Panel1.ResumeLayout(false);
             splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)splitContainer1).EndInit();

@@ -38,7 +38,6 @@ namespace App_WPF
         protected override void OnExit(ExitEventArgs e)
         {
             base.OnExit(e);
-
             ConfigRepository.Save(Config);
         }
     }

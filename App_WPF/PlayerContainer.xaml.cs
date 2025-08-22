@@ -23,7 +23,7 @@ namespace App_WPF
     /// </summary>
     public partial class PlayerContainer : UserControl, INotifyPropertyChanged
     {
-        private Player player;
+        private Player player = null!;
         public Player Player
         {
             get => player;
@@ -37,7 +37,7 @@ namespace App_WPF
             }
         }
 
-        private BitmapImage playerImageSource;
+        private BitmapImage playerImageSource = null!;
         public BitmapImage PlayerImageSource
         {
             get => playerImageSource;

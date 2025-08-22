@@ -38,12 +38,12 @@
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                     <RadioButton Style="{StaticResource RadioButtonStyle}" Content="Fullscreen" GroupName="Size"
                                  IsChecked="{Binding SelectedSize, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Fullscreen}"/>
-                    <RadioButton Style="{StaticResource RadioButtonStyle}" Content="800x600" GroupName="Size"
-                                 IsChecked="{Binding SelectedSize, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Windowed800x600}"/>
+                    <RadioButton Style="{StaticResource RadioButtonStyle}" Content="800x582" GroupName="Size"
+                                 IsChecked="{Binding SelectedSize, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Windowed1}"/>
                     <RadioButton Style="{StaticResource RadioButtonStyle}" Content="1024x768" GroupName="Size"
-                                 IsChecked="{Binding SelectedSize, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Windowed1024x768}"/>
+                                 IsChecked="{Binding SelectedSize, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Windowed2}"/>
                     <RadioButton Style="{StaticResource RadioButtonStyle}" Content="1280x720" GroupName="Size"
-                                 IsChecked="{Binding SelectedSize, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Windowed1280x720}"/>
+                                 IsChecked="{Binding SelectedSize, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Windowed3}"/>
                 </StackPanel>
             </GroupBox>
         </StackPanel>
@@ -53,8 +53,8 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Button x:Name="CancelBtn" Style="{StaticResource ButtonStyle}" Grid.Column="0" Content="Cancel" Click="CancelBtn_Click" />
-            <Button x:Name="ConfirmBtn" Style="{StaticResource ButtonStyle}" Grid.Column="1" Content="Confirm" Click="ConfirmBtn_Click" />
+            <Button x:Name="CancelBtn" Style="{StaticResource ButtonStyle}" Grid.Column="0" Content="Cancel" Click="CancelBtn_Click" IsCancel="True" />
+            <Button x:Name="ConfirmBtn" Style="{StaticResource ButtonStyle}" Grid.Column="1" Content="Confirm" Click="ConfirmBtn_Click" IsDefault="True" />
         </Grid>
     </Grid>
 </Window>

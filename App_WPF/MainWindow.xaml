@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:App_WPF"
         mc:Ignorable="d"
-        Title="World Cup Tournaments" Height="582" Width="800" WindowStartupLocation="CenterScreen">
+        Title="World Cup Tournaments" Height="582" Width="800" WindowStartupLocation="CenterScreen" Closing="Window_Closing">
     <Window.Resources>
         <Style TargetType="Grid" x:Key="PlayersPanel">
             <Setter Property="Margin" Value="7"/>

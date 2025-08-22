@@ -34,6 +34,7 @@ namespace App_WinForms
 
         public MainForm()
         {
+            this.FormClosing += MainForm_FormClosing;
             this.Initialize();
         }
 
@@ -44,14 +45,11 @@ namespace App_WinForms
 
             InitializeComponent();
 
-            // Ensure drop targets are wired
             panel_Players.DragEnter += panel_Players_DragEnter;
             panel_Players.DragDrop += panel_Players_DragDrop;
             panel_FavoritePlayers.DragEnter += panel_FavoritePlayers_DragEnter;
             panel_FavoritePlayers.DragDrop += panel_FavoritePlayers_DragDrop;
 
-            cb_FavoriteTeam.DisplayMember = "DisplayName";
-            cb_FavoriteTeam.ValueMember = "Country";
             cb_FavoriteTeam.SelectionChangeCommitted += cb_FavoriteTeam_SelectionChangeCommitted;
 
             panel_Players.PlayerContainerAdded += Panel_Players_ContainerAdded;
@@ -59,6 +57,9 @@ namespace App_WinForms
             panel_FavoritePlayers.PlayerContainerAdded += Panel_FavoritePlayers_ContainerAdded;
             panel_FavoritePlayers.PlayerContainerRemoved += Panel_FavoritePlayers_ContainerRemoved;
 
+            cb_FavoriteTeam.DisplayMember = "DisplayName";
+            cb_FavoriteTeam.ValueMember = "Country";
+            
             OnTournamentChanged(App.Config.Tournament);
         }
 

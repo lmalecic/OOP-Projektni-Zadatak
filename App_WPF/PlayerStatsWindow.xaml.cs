@@ -23,7 +23,7 @@ namespace App_WPF
     /// </summary>
     public partial class PlayerStatsWindow : Window, INotifyPropertyChanged
     {
-        private PlayerStats playerStats;
+        private PlayerStats playerStats = null!;
         public PlayerStats PlayerStats
         {
             get => playerStats;
@@ -37,7 +37,7 @@ namespace App_WPF
             }
         }
 
-        private BitmapImage playerImageSource;
+        private BitmapImage playerImageSource = null!;
         public BitmapImage PlayerImageSource
         {
             get => playerImageSource;
