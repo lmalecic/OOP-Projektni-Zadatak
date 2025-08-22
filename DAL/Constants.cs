@@ -23,5 +23,7 @@ namespace DAL
 
         public static string IMAGES_PATH = "images";
         public static string IMAGES_PLAYERS_PATH = Path.Combine(IMAGES_PATH, "players");
+
+        public static string DEFAULT_PLAYER_IMAGE_PATH = "pack://application:,,,/Images/PlayerSlot.png";
     }
 }

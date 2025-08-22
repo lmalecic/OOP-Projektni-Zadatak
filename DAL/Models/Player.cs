@@ -24,6 +24,8 @@ namespace DAL
         [JsonConverter(typeof(PositionConverter))]
         public Position Position { get; set; }
 
+        public string NameWithNumber { get => $"{Name} ({ShirtNumber})"; }
+
         public string FormatImageFileName()
             => $"{Name.Replace(" ", "_")}_{ShirtNumber}";
 

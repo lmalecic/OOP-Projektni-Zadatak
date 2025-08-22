@@ -1,0 +1,177 @@
+﻿<Window x:Class="App_WPF.PlayerStatsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:App_WPF"
+        mc:Ignorable="d"
+        xmlns:converters="clr-namespace:App_WPF.Converters"
+        Title="PlayerStatsWindow" Height="185" Width="300"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterOwner">
+    <Window.Resources>
+        <converters:BooleanToStringConverter x:Key="BooleanToStringConverter"/>
+        <Style TargetType="StackPanel" x:Key="StatsStyle">
+            <Style.Resources>
+                <Style TargetType="Grid">
+                    <Setter Property="Margin" Value="0 0 8 0"/>
+                </Style>
+            </Style.Resources>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.7*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Label x:Name="PlayerNameLabel"
+               Content="{Binding PlayerStats.Player.NameWithNumber}"
+               Grid.ColumnSpan="2"
+               FontSize="16" FontWeight="Bold"
+               Margin="4 0 8 4"
+               Opacity="0">
+            <Label.RenderTransform>
+                <TranslateTransform X="-20"/>
+            </Label.RenderTransform>
+        </Label>
+
+        <UniformGrid VerticalAlignment="Stretch" Grid.Column="0" Grid.Row="1">
+            <Image x:Name="PlayerImage"
+                   Source="{Binding PlayerImageSource}"
+                   Margin="8 0 8 8"
+                   Stretch="Uniform"
+                   Opacity="0">
+                <Image.RenderTransform>
+                    <TranslateTransform X="-20"/>
+                </Image.RenderTransform>
+            </Image>
+        </UniformGrid>
+
+        <StackPanel Style="{StaticResource StatsStyle}" Grid.Column="1" Grid.Row="1">
+            <Grid x:Name="StatsRow1" Opacity="0">
+                <Grid.RenderTransform>
+                    <TranslateTransform Y="15"/>
+                </Grid.RenderTransform>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Label Content="Position:"/>
+                <Label Content="{Binding PlayerStats.Player.Position}" Grid.Column="1"/>
+            </Grid>
+
+            <Grid x:Name="StatsRow2" Opacity="0">
+                <Grid.RenderTransform>
+                    <TranslateTransform Y="15"/>
+                </Grid.RenderTransform>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Label Content="Captain:"/>
+                <Label Content="{Binding PlayerStats.Player.Captain, Converter={StaticResource BooleanToStringConverter}}" Grid.Column="1"/>
+            </Grid>
+
+            <Grid x:Name="StatsRow3" Opacity="0">
+                <Grid.RenderTransform>
+                    <TranslateTransform Y="15"/>
+                </Grid.RenderTransform>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Label Content="Goals scored:"/>
+                <Label Content="{Binding PlayerStats.GoalsScored}" Grid.Column="1"/>
+            </Grid>
+
+            <Grid x:Name="StatsRow4" Opacity="0">
+                <Grid.RenderTransform>
+                    <TranslateTransform Y="15"/>
+                </Grid.RenderTransform>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Label Content="Yellow cards:"/>
+                <Label Content="{Binding PlayerStats.YellowCards}" Grid.Column="1"/>
+            </Grid>
+        </StackPanel>
+    </Grid>
+
+    <Window.Triggers>
+        <EventTrigger RoutedEvent="Loaded">
+            <BeginStoryboard>
+                <Storyboard>
+                    <DoubleAnimation Storyboard.TargetName="PlayerNameLabel"
+                                     Storyboard.TargetProperty="Opacity"
+                                     To="1" Duration="0:0:0.3"/>
+                    <DoubleAnimation Storyboard.TargetName="PlayerNameLabel"
+                                     Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
+                                     From="-20" To="0" Duration="0:0:0.3">
+                        <DoubleAnimation.EasingFunction>
+                            <CubicEase EasingMode="EaseOut"/>
+                        </DoubleAnimation.EasingFunction>
+                    </DoubleAnimation>
+
+                    <DoubleAnimation Storyboard.TargetName="PlayerImage"
+                                     Storyboard.TargetProperty="Opacity"
+                                     To="1" Duration="0:0:0.3"/>
+                    <DoubleAnimation Storyboard.TargetName="PlayerImage"
+                                     Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
+                                     From="-20" To="0" Duration="0:0:0.3">
+                        <DoubleAnimation.EasingFunction>
+                            <CubicEase EasingMode="EaseOut"/>
+                        </DoubleAnimation.EasingFunction>
+                    </DoubleAnimation>
+
+                    <DoubleAnimation Storyboard.TargetName="StatsRow1"
+                                     Storyboard.TargetProperty="Opacity"
+                                     To="1" Duration="0:0:0.3" BeginTime="0:0:0"/>
+                    <DoubleAnimation Storyboard.TargetName="StatsRow1"
+                                     Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
+                                     From="15" To="0" Duration="0:0:0.3" BeginTime="0:0:0">
+                        <DoubleAnimation.EasingFunction>
+                            <CubicEase EasingMode="EaseOut"/>
+                        </DoubleAnimation.EasingFunction>
+                    </DoubleAnimation>
+                    <DoubleAnimation Storyboard.TargetName="StatsRow2"
+                                     Storyboard.TargetProperty="Opacity"
+                                     To="1" Duration="0:0:0.3" BeginTime="0:0:0.1"/>
+                    <DoubleAnimation Storyboard.TargetName="StatsRow2"
+                                     Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
+                                     From="15" To="0" Duration="0:0:0.3" BeginTime="0:0:0.1">
+                        <DoubleAnimation.EasingFunction>
+                            <CubicEase EasingMode="EaseOut"/>
+                        </DoubleAnimation.EasingFunction>
+                    </DoubleAnimation>
+                    <DoubleAnimation Storyboard.TargetName="StatsRow3"
+                                     Storyboard.TargetProperty="Opacity"
+                                     To="1" Duration="0:0:0.3" BeginTime="0:0:0.2"/>
+                    <DoubleAnimation Storyboard.TargetName="StatsRow3"
+                                     Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
+                                     From="15" To="0" Duration="0:0:0.3" BeginTime="0:0:0.2">
+                        <DoubleAnimation.EasingFunction>
+                            <CubicEase EasingMode="EaseOut"/>
+                        </DoubleAnimation.EasingFunction>
+                    </DoubleAnimation>
+                    <DoubleAnimation Storyboard.TargetName="StatsRow4"
+                                     Storyboard.TargetProperty="Opacity"
+                                     To="1" Duration="0:0:0.3" BeginTime="0:0:0.3"/>
+                    <DoubleAnimation Storyboard.TargetName="StatsRow4"
+                                     Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
+                                     From="15" To="0" Duration="0:0:0.3" BeginTime="0:0:0.3">
+                        <DoubleAnimation.EasingFunction>
+                            <CubicEase EasingMode="EaseOut"/>
+                        </DoubleAnimation.EasingFunction>
+                    </DoubleAnimation>
+                </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+    </Window.Triggers>
+</Window>

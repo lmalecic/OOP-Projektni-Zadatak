@@ -17,7 +17,7 @@
             </Style.Resources>
         </Style>
         <Style TargetType="Image" x:Key="FootballFieldImageStyle">
-            <Setter Property="Stretch" Value="UniformToFill"/>
+            <Setter Property="Stretch" Value="Fill"/>
         </Style>
         <Style TargetType="Button" x:Key="TeamInfoButton">
             <Setter Property="Height" Value="30"/>

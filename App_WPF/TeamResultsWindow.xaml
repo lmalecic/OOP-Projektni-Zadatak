@@ -4,12 +4,15 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:App_WPF"
+        xmlns:converters="clr-namespace:App_WPF.Converters"
         mc:Ignorable="d"
-        Title="Team Stats" Height="200" Width="300"
+        Title="Team Stats" Height="152" Width="300"
         ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
     <Window.Resources>
+        <converters:WinsLossesDrawsConverter x:Key="WinsLossesDrawsConverter"/>
         <ExponentialEase x:Key="ExpoOut" EasingMode="EaseOut" Exponent="5"/>
         <Style TargetType="Grid" x:Key="StatsGridStyle">
+            <Setter Property="Margin" Value="6 0"/>
             <Style.Resources>
                 <Style TargetType="Label">
                     <Setter Property="HorizontalAlignment" Value="Stretch"/>
@@ -17,105 +20,8 @@
             </Style.Resources>
         </Style>
     </Window.Resources>
-    <Window.Triggers>
-        <EventTrigger RoutedEvent="Window.Loaded">
-            <BeginStoryboard>
-                <Storyboard>
-                    <DoubleAnimation Storyboard.TargetName="TitleLabel"
-                                     Storyboard.TargetProperty="Opacity"
-                                     From="0" To="1" Duration="0:0:0.5"
-                                     EasingFunction="{StaticResource ExpoOut}"/>
-                    <DoubleAnimation Storyboard.TargetName="TitleLabel"
-                                     Storyboard.TargetProperty="RenderTransform.(TranslateTransform.Y)"
-                                     From="15" To="0" Duration="0:0:0.5"
-                                     EasingFunction="{StaticResource ExpoOut}"/>
 
-                    <DoubleAnimation Storyboard.TargetName="FifaLabel"
-                                     Storyboard.TargetProperty="Opacity"
-                                     BeginTime="0:0:0.1"
-                                     From="0" To="1" Duration="0:0:0.5"
-                                     EasingFunction="{StaticResource ExpoOut}"/>
-                    <DoubleAnimation Storyboard.TargetName="FifaLabel"
-                                     Storyboard.TargetProperty="RenderTransform.(TranslateTransform.Y)"
-                                     BeginTime="0:0:0.1"
-                                     From="15" To="0" Duration="0:0:0.5"
-                                     EasingFunction="{StaticResource ExpoOut}"/>
-                    <DoubleAnimation Storyboard.TargetName="GamesLabel"
-                                     Storyboard.TargetProperty="Opacity"
-                                     BeginTime="0:0:0.2"
-                                     From="0" To="1" Duration="0:0:0.5"
-                                     EasingFunction="{StaticResource ExpoOut}"/>
-                    <DoubleAnimation Storyboard.TargetName="GamesLabel"
-                                     Storyboard.TargetProperty="RenderTransform.(TranslateTransform.Y)"
-                                     BeginTime="0:0:0.2"
-                                     From="15" To="0" Duration="0:0:0.5"
-                                     EasingFunction="{StaticResource ExpoOut}"/>
-                    <DoubleAnimation Storyboard.TargetName="WinsLabel"
-                                     Storyboard.TargetProperty="Opacity"
-                                     BeginTime="0:0:0.3"
-                                     From="0" To="1" Duration="0:0:0.5"
-                                     EasingFunction="{StaticResource ExpoOut}"/>
-                    <DoubleAnimation Storyboard.TargetName="WinsLabel"
-                                     Storyboard.TargetProperty="RenderTransform.(TranslateTransform.Y)"
-                                     BeginTime="0:0:0.3"
-                                     From="15" To="0" Duration="0:0:0.5"
-                                     EasingFunction="{StaticResource ExpoOut}"/>
-                    <DoubleAnimation Storyboard.TargetName="LossesLabel"
-                                     Storyboard.TargetProperty="Opacity"
-                                     BeginTime="0:0:0.4"
-                                     From="0" To="1" Duration="0:0:0.5"
-                                     EasingFunction="{StaticResource ExpoOut}"/>
-                    <DoubleAnimation Storyboard.TargetName="LossesLabel"
-                                     Storyboard.TargetProperty="RenderTransform.(TranslateTransform.Y)"
-                                     BeginTime="0:0:0.4"
-                                     From="15" To="0" Duration="0:0:0.5"
-                                     EasingFunction="{StaticResource ExpoOut}"/>
-                    <DoubleAnimation Storyboard.TargetName="DrawsLabel"
-                                     Storyboard.TargetProperty="Opacity"
-                                     BeginTime="0:0:0.5"
-                                     From="0" To="1" Duration="0:0:0.5"
-                                     EasingFunction="{StaticResource ExpoOut}"/>
-                    <DoubleAnimation Storyboard.TargetName="DrawsLabel"
-                                     Storyboard.TargetProperty="RenderTransform.(TranslateTransform.Y)"
-                                     BeginTime="0:0:0.5"
-                                     From="15" To="0" Duration="0:0:0.5"
-                                     EasingFunction="{StaticResource ExpoOut}"/>
-                    <DoubleAnimation Storyboard.TargetName="GoalsForLabel"
-                                     Storyboard.TargetProperty="Opacity"
-                                     BeginTime="0:0:0.6"
-                                     From="0" To="1" Duration="0:0:0.5"
-                                     EasingFunction="{StaticResource ExpoOut}"/>
-                    <DoubleAnimation Storyboard.TargetName="GoalsForLabel"
-                                     Storyboard.TargetProperty="RenderTransform.(TranslateTransform.Y)"
-                                     BeginTime="0:0:0.6"
-                                     From="15" To="0" Duration="0:0:0.5"
-                                     EasingFunction="{StaticResource ExpoOut}"/>
-                    <DoubleAnimation Storyboard.TargetName="GoalsAgainstLabel"
-                                     Storyboard.TargetProperty="Opacity"
-                                     BeginTime="0:0:0.7"
-                                     From="0" To="1" Duration="0:0:0.5"
-                                     EasingFunction="{StaticResource ExpoOut}"/>
-                    <DoubleAnimation Storyboard.TargetName="GoalsAgainstLabel"
-                                     Storyboard.TargetProperty="RenderTransform.(TranslateTransform.Y)"
-                                     BeginTime="0:0:0.7"
-                                     From="15" To="0" Duration="0:0:0.5"
-                                     EasingFunction="{StaticResource ExpoOut}"/>
-                    <DoubleAnimation Storyboard.TargetName="GoalDiffLabel"
-                                     Storyboard.TargetProperty="Opacity"
-                                     BeginTime="0:0:0.8"
-                                     From="0" To="1" Duration="0:0:0.5"
-                                     EasingFunction="{StaticResource ExpoOut}"/>
-                    <DoubleAnimation Storyboard.TargetName="GoalDiffLabel"
-                                     Storyboard.TargetProperty="RenderTransform.(TranslateTransform.Y)"
-                                     BeginTime="0:0:0.8"
-                                     From="15" To="0" Duration="0:0:0.5"
-                                     EasingFunction="{StaticResource ExpoOut}"/>
-                </Storyboard>
-            </BeginStoryboard>
-        </EventTrigger>
-    </Window.Triggers>
-
-    <Grid Style="{StaticResource StatsGridStyle}" x:Name="RootGrid">
+    <Grid Style="{StaticResource StatsGridStyle}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
@@ -154,7 +60,7 @@
                     <Label Content="Matches played:"/>
                     <Label Grid.Column="1" Content="{Binding TeamResults.GamesPlayed}" HorizontalAlignment="Right"/>
                 </Grid>
-                <Grid x:Name="WinsLabel" Opacity="0" HorizontalAlignment="Stretch">
+                <Grid x:Name="RecordLabel" Opacity="0" HorizontalAlignment="Stretch">
                     <Grid.RenderTransform>
                         <TranslateTransform Y="0"/>
                     </Grid.RenderTransform>
@@ -162,30 +68,16 @@
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <Label Content="Wins:"/>
-                    <Label Grid.Column="1" Content="{Binding TeamResults.Wins}" HorizontalAlignment="Right"/>
-                </Grid>
-                <Grid x:Name="LossesLabel" Opacity="0" HorizontalAlignment="Stretch">
-                    <Grid.RenderTransform>
-                        <TranslateTransform Y="0"/>
-                    </Grid.RenderTransform>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <Label Content="Losses:"/>
-                    <Label Grid.Column="1" Content="{Binding TeamResults.Losses}" HorizontalAlignment="Right"/>
-                </Grid>
-                <Grid x:Name="DrawsLabel" Opacity="0" HorizontalAlignment="Stretch">
-                    <Grid.RenderTransform>
-                        <TranslateTransform Y="0"/>
-                    </Grid.RenderTransform>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <Label Content="Draws:"/>
-                    <Label Grid.Column="1" Content="{Binding TeamResults.Draws}" HorizontalAlignment="Right"/>
+                    <Label Content="W/L/D:"/>
+                    <Label Grid.Column="1" HorizontalAlignment="Right">
+                        <Label.Content>
+                            <MultiBinding Converter="{StaticResource WinsLossesDrawsConverter}" StringFormat="{}{0}/{1}/{2}">
+                                <Binding Path="TeamResults.Wins"/>
+                                <Binding Path="TeamResults.Losses"/>
+                                <Binding Path="TeamResults.Draws"/>
+                            </MultiBinding>
+                        </Label.Content>
+                    </Label>
                 </Grid>
             </StackPanel>
             <StackPanel Grid.Column="1">
@@ -225,4 +117,83 @@
             </StackPanel>
         </Grid>
     </Grid>
+
+    <Window.Triggers>
+        <EventTrigger RoutedEvent="Window.Loaded">
+            <BeginStoryboard>
+                <Storyboard>
+                    <DoubleAnimation Storyboard.TargetName="TitleLabel"
+                                 Storyboard.TargetProperty="Opacity"
+                                 From="0" To="1" Duration="0:0:0.5"
+                                 EasingFunction="{StaticResource ExpoOut}"/>
+                    <DoubleAnimation Storyboard.TargetName="TitleLabel"
+                                 Storyboard.TargetProperty="RenderTransform.(TranslateTransform.Y)"
+                                 From="15" To="0" Duration="0:0:0.5"
+                                 EasingFunction="{StaticResource ExpoOut}"/>
+
+                    <DoubleAnimation Storyboard.TargetName="FifaLabel"
+                                 Storyboard.TargetProperty="Opacity"
+                                 BeginTime="0:0:0.1"
+                                 From="0" To="1" Duration="0:0:0.5"
+                                 EasingFunction="{StaticResource ExpoOut}"/>
+                    <DoubleAnimation Storyboard.TargetName="FifaLabel"
+                                 Storyboard.TargetProperty="RenderTransform.(TranslateTransform.Y)"
+                                 BeginTime="0:0:0.1"
+                                 From="15" To="0" Duration="0:0:0.5"
+                                 EasingFunction="{StaticResource ExpoOut}"/>
+                    <DoubleAnimation Storyboard.TargetName="GamesLabel"
+                                 Storyboard.TargetProperty="Opacity"
+                                 BeginTime="0:0:0.2"
+                                 From="0" To="1" Duration="0:0:0.5"
+                                 EasingFunction="{StaticResource ExpoOut}"/>
+                    <DoubleAnimation Storyboard.TargetName="GamesLabel"
+                                 Storyboard.TargetProperty="RenderTransform.(TranslateTransform.Y)"
+                                 BeginTime="0:0:0.2"
+                                 From="15" To="0" Duration="0:0:0.5"
+                                 EasingFunction="{StaticResource ExpoOut}"/>
+                    <DoubleAnimation Storyboard.TargetName="RecordLabel"
+                                 Storyboard.TargetProperty="Opacity"
+                                 BeginTime="0:0:0.3"
+                                 From="0" To="1" Duration="0:0:0.5"
+                                 EasingFunction="{StaticResource ExpoOut}"/>
+                    <DoubleAnimation Storyboard.TargetName="RecordLabel"
+                                 Storyboard.TargetProperty="RenderTransform.(TranslateTransform.Y)"
+                                 BeginTime="0:0:0.3"
+                                 From="15" To="0" Duration="0:0:0.5"
+                                 EasingFunction="{StaticResource ExpoOut}"/>
+
+                    <DoubleAnimation Storyboard.TargetName="GoalsForLabel"
+                                 Storyboard.TargetProperty="Opacity"
+                                 BeginTime="0:0:0.6"
+                                 From="0" To="1" Duration="0:0:0.5"
+                                 EasingFunction="{StaticResource ExpoOut}"/>
+                    <DoubleAnimation Storyboard.TargetName="GoalsForLabel"
+                                 Storyboard.TargetProperty="RenderTransform.(TranslateTransform.Y)"
+                                 BeginTime="0:0:0.6"
+                                 From="15" To="0" Duration="0:0:0.5"
+                                 EasingFunction="{StaticResource ExpoOut}"/>
+                    <DoubleAnimation Storyboard.TargetName="GoalsAgainstLabel"
+                                 Storyboard.TargetProperty="Opacity"
+                                 BeginTime="0:0:0.7"
+                                 From="0" To="1" Duration="0:0:0.5"
+                                 EasingFunction="{StaticResource ExpoOut}"/>
+                    <DoubleAnimation Storyboard.TargetName="GoalsAgainstLabel"
+                                 Storyboard.TargetProperty="RenderTransform.(TranslateTransform.Y)"
+                                 BeginTime="0:0:0.7"
+                                 From="15" To="0" Duration="0:0:0.5"
+                                 EasingFunction="{StaticResource ExpoOut}"/>
+                    <DoubleAnimation Storyboard.TargetName="GoalDiffLabel"
+                                 Storyboard.TargetProperty="Opacity"
+                                 BeginTime="0:0:0.8"
+                                 From="0" To="1" Duration="0:0:0.5"
+                                 EasingFunction="{StaticResource ExpoOut}"/>
+                    <DoubleAnimation Storyboard.TargetName="GoalDiffLabel"
+                                 Storyboard.TargetProperty="RenderTransform.(TranslateTransform.Y)"
+                                 BeginTime="0:0:0.8"
+                                 From="15" To="0" Duration="0:0:0.5"
+                                 EasingFunction="{StaticResource ExpoOut}"/>
+                </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+    </Window.Triggers>
 </Window>

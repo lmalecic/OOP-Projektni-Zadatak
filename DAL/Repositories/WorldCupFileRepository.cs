@@ -108,6 +108,27 @@ namespace DAL
             };
         }
 
+        public PlayerStats GetPlayerStatsForMatch(Match match, Player player)
+        {
+            IList<TeamEvent> PlayerEvents = match
+                .HomeTeamEvents.Concat(match.AwayTeamEvents)
+                .Where(e => e.Player.Equals(player.Name, StringComparison.OrdinalIgnoreCase))
+                .ToList();
+
+            return new PlayerStats
+            {
+                Player = player,
+                Appearances = PlayerEvents.Any() ? 1 : 0,
+                GoalsScored = PlayerEvents.Count(e =>
+                    e.TypeOfEvent == TypeOfEvent.Goal ||
+                    e.TypeOfEvent == TypeOfEvent.GoalPenalty ||
+                    e.TypeOfEvent == TypeOfEvent.GoalOwn),
+                YellowCards = PlayerEvents.Count(e =>
+                    e.TypeOfEvent == TypeOfEvent.YellowCard ||
+                    e.TypeOfEvent == TypeOfEvent.YellowCardSecond)
+            };
+        }
+
         public VisitorStats GetVisitorStats(TournamentType tournamentType, Match match)
         {
             return new VisitorStats

@@ -22,6 +22,7 @@ namespace DAL
         public Task<IList<Match>> GetPlayerMatches(TournamentType tournamentType, Player player);
         public Task<IList<Match>> GetTeamMatches(TournamentType tournamentType, Team team);
         public Task<PlayerStats> GetPlayerStats(TournamentType tournamentType, Player player);
+        public PlayerStats GetPlayerStatsForMatch(Match match, Player player);
         public VisitorStats GetVisitorStats(TournamentType tournamentType, Match match);
         public Task<IList<PlayerStats>> GetPlayersLeaderboard(TournamentType tournamentType, Team team);
         public Task<IList<VisitorStats>> GetVisitorLeaderboards(TournamentType tournamentType, Team team);

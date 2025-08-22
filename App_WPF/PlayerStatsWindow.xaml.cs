@@ -1,6 +1,7 @@
 ﻿using DAL;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
@@ -13,25 +14,24 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace App_WPF
 {
     /// <summary>
-    /// Interaction logic for PlayerContainer.xaml
+    /// Interaction logic for PlayerStatsWindow.xaml
     /// </summary>
-    public partial class PlayerContainer : UserControl, INotifyPropertyChanged
+    public partial class PlayerStatsWindow : Window, INotifyPropertyChanged
     {
-        private Player player;
-        public Player Player
+        private PlayerStats playerStats;
+        public PlayerStats PlayerStats
         {
-            get => player;
+            get => playerStats;
             set
             {
-                if (player != value)
+                if (playerStats != value)
                 {
-                    player = value;
+                    playerStats = value;
                     OnPropertyChanged(nameof(Player));
                 }
             }
@@ -51,14 +51,13 @@ namespace App_WPF
             }
         }
 
-        public PlayerContainer(Player player)
+        public PlayerStatsWindow(PlayerStats playerStats)
         {
             InitializeComponent();
             this.DataContext = this;
-
             this.PropertyChanged += PlayerContainer_PropertyChanged;
 
-            Player = player;
+            this.PlayerStats = playerStats;
         }
 
         private void PlayerContainer_PropertyChanged(object? sender, PropertyChangedEventArgs e)
@@ -71,9 +70,9 @@ namespace App_WPF
 
         private async void OnPlayerChanged()
         {
-            if (this.Player != null)
+            if (this.PlayerStats != null)
             {
-                var imageBytes = await App.ImageRepository.LoadPlayerImage(Player);
+                var imageBytes = await App.ImageRepository.LoadPlayerImage(this.PlayerStats.Player);
                 BitmapImage image = new BitmapImage();
 
                 if (imageBytes != null)
@@ -97,7 +96,7 @@ namespace App_WPF
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
-        protected virtual void OnPropertyChanged(string propertyName)
+        protected void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }

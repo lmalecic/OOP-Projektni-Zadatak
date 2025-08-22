@@ -1,5 +1,6 @@
 ﻿using DAL;
 using System.ComponentModel;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -114,6 +115,7 @@ namespace App_WPF
             selectedMatch = team1Matches
                 .FirstOrDefault(m => (m.HomeTeam.Equals(team1) && m.AwayTeam.Equals(team2)) ||
                                      (m.AwayTeam.Equals(team1) && m.HomeTeam.Equals(team2)));
+
             if (selectedMatch == null)
             {
                 matchResultPanel.Visibility = Visibility.Hidden;
@@ -185,6 +187,35 @@ namespace App_WPF
         {
             PlayerContainer playerContainer = new(player);
             parent.Children.Add(playerContainer);
+
+            playerContainer.MouseLeftButtonUp += PlayerContainer_MouseLeftButtonUp;
+            playerContainer.Unloaded += (s, e) =>
+            {
+                playerContainer.MouseLeftButtonUp -= PlayerContainer_MouseLeftButtonUp;
+            };
+        }
+
+        private void PlayerContainer_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (sender is not PlayerContainer playerContainer)
+                return;
+
+            if (selectedMatch == null)
+            {
+                MessageBox.Show("Please select a match first.", "Player Statistics", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            var playerStats = App.WorldCupRepository.GetPlayerStatsForMatch(selectedMatch, playerContainer.Player);
+            if (playerStats == null)
+            {
+                MessageBox.Show("No statistics available for this player in the selected match.", "Player Statistics", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+
+            PlayerStatsWindow playerStatsWindow = new(playerStats);
+            playerStatsWindow.Owner = this;
+            playerStatsWindow.ShowDialog();
         }
 
         private async void loadTeams2()
